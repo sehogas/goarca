@@ -1,0 +1,1950 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Esta API Json Rest actua como proxy SOAP a los servicios web de ARCA.",
+        "title": "API proxy a los webservices de ARCA",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "Sebastian Hogas",
+            "email": "sehogas@gmail.com"
+        },
+        "version": "1.0"
+    },
+    "paths": {
+        "/coem/anular-caratula": {
+            "delete": {
+                "description": "Anular Carátula sin COEMs",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Comunicación de Embarque"
+                ],
+                "summary": "Anular Carátula",
+                "parameters": [
+                    {
+                        "description": "AnularCaratulaRequest",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/afip.IdentificadorCaraturaParams"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.MessageResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/coem/anular-coem": {
+            "delete": {
+                "description": "Anular COEM",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Comunicación de Embarque"
+                ],
+                "summary": "Anular COEM",
+                "parameters": [
+                    {
+                        "description": "AnularCOEMRequest",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/afip.IdentificadorCOEMParams"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.MessageResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/coem/cerrar-coem": {
+            "post": {
+                "description": "Cerrar COEM",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Comunicación de Embarque"
+                ],
+                "summary": "Cerrar COEM",
+                "parameters": [
+                    {
+                        "description": "CerrarCOEMRequest",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/afip.IdentificadorCOEMParams"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.MessageResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/coem/dummy": {
+            "get": {
+                "description": "Visualizar el estado del servicio web, del servicio de autenticación y de la base de datos de ARCA",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Comunicación de Embarque"
+                ],
+                "summary": "Muestra el estado del servicio",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.DummyResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/coem/rectificar-caratula": {
+            "put": {
+                "description": "Rectificar una Carátula sin COEMs",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Comunicación de Embarque"
+                ],
+                "summary": "Rectificar Carátula",
+                "parameters": [
+                    {
+                        "description": "RectificarCaratulaRequest",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/afip.RectificarCaratulaParams"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.MessageResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/coem/rectificar-coem": {
+            "put": {
+                "description": "Rectificar COEM",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Comunicación de Embarque"
+                ],
+                "summary": "Rectificar COEM",
+                "parameters": [
+                    {
+                        "description": "RectificarCOEMRequest",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/afip.RectificarCOEMParams"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.MessageResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/coem/registrar-caratula": {
+            "post": {
+                "description": "Registra una nueva Carátula",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Comunicación de Embarque"
+                ],
+                "summary": "Registrar Carátula",
+                "parameters": [
+                    {
+                        "description": "RegistrarCaratulaRequest",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/afip.CaratulaParams"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.MessageResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/coem/registrar-coem": {
+            "post": {
+                "description": "Registrar COEM en Carátula",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Comunicación de Embarque"
+                ],
+                "summary": "Registrar COEM",
+                "parameters": [
+                    {
+                        "description": "RegistrarCOEMRequest",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/afip.RegistrarCOEMParams"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.MessageResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/coem/solicitar-anulacion-coem": {
+            "post": {
+                "description": "Solicitar anulación COEM",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Comunicación de Embarque"
+                ],
+                "summary": "Solicitar Anulación COEM",
+                "parameters": [
+                    {
+                        "description": "SolicitarAnulacionCOEMRequest",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/afip.IdentificadorCOEMParams"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.MessageResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/coem/solicitar-cambio-buque": {
+            "put": {
+                "description": "Solicitar cambio de Buque para Carátulas con COEMs",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Comunicación de Embarque"
+                ],
+                "summary": "Solicitar cambio de Buque",
+                "parameters": [
+                    {
+                        "description": "SolicitarCambioBuqueRequest",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/afip.CambioBuqueParams"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.MessageResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/coem/solicitar-cambio-fechas": {
+            "put": {
+                "description": "Solicitar cambio de Fechas para Carátulas con COEMs",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Comunicación de Embarque"
+                ],
+                "summary": "Solicitar cambio de Fechas",
+                "parameters": [
+                    {
+                        "description": "CambioFechasParamsRequest",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/afip.CambioFechasParams"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.MessageResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/coem/solicitar-cambio-lot": {
+            "put": {
+                "description": "Solicitar cambio de Lugar Operativo para Carátulas con COEMs",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Comunicación de Embarque"
+                ],
+                "summary": "Solicitar cambio de LOT",
+                "parameters": [
+                    {
+                        "description": "CambioLOTParamsRequest",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/afip.CambioLOTParams"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.MessageResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/coem/solicitar-cierre-carga-conto-bulto": {
+            "post": {
+                "description": "Solicitar Cierre de Carga Contenedores y/o Bultos",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Comunicación de Embarque"
+                ],
+                "summary": "Solicitar Cierre de Carga Contenedores y/o Bultos",
+                "parameters": [
+                    {
+                        "description": "SolicitarCierreCargaContoBultoRequest",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/afip.SolicitarCierreCargaContoBultoParams"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.MessageResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/coem/solicitar-cierre-carga-granel": {
+            "post": {
+                "description": "Solicitar Cierre de Carga Granel",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Comunicación de Embarque"
+                ],
+                "summary": "Solicitar Cierre de Carga Granel",
+                "parameters": [
+                    {
+                        "description": "SolicitarCierreCargaGranel",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/afip.SolicitarCierreCargaGranelParams"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.MessageResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/coem/solicitar-no-abordo": {
+            "post": {
+                "description": "Solicitar No Abordo",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Comunicación de Embarque"
+                ],
+                "summary": "Solicitar No Abordo",
+                "parameters": [
+                    {
+                        "description": "SolicitarNoABordoRequest",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/afip.IdentificadorCOEMParams"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.MessageResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/coemcons/dummy": {
+            "get": {
+                "description": "Visualizar el estado del servicio web, del servicio de autenticación y de la base de datos de ARCA",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Consultas de Comunicación de Embarque"
+                ],
+                "summary": "Muestra el estado del servicio",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.DummyResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/coemcons/obtener-consulta-estados-coem": {
+            "get": {
+                "description": "Obtener Consulta Estados COEM",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Consultas de Comunicación de Embarque"
+                ],
+                "summary": "Obtener Consulta Estados COEM",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Identificador de la caratula",
+                        "name": "q",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/wscoemcons.ConsultaEstadoCOEM"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/coemcons/obtener-consulta-no-abordo": {
+            "get": {
+                "description": "Obtener Consulta No Abordo",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Consultas de Comunicación de Embarque"
+                ],
+                "summary": "Obtener Consulta No Abordo",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Identificador de la caratula",
+                        "name": "q",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/wscoemcons.ConsultaNoAbordo"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/coemcons/obtener-consulta-solicitudes": {
+            "get": {
+                "description": "Obtener Consulta de Solicitudes",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Consultas de Comunicación de Embarque"
+                ],
+                "summary": "Obtener Consulta de Solicitudes",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Identificador de la caratula",
+                        "name": "q",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/wscoemcons.ConsultaSolicitudes"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/gestabref/consultar-fecha-ult-act": {
+            "get": {
+                "description": "Obtiene la última actualización de la tabla consultada",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Consulta de Tablas de Referencia"
+                ],
+                "summary": "Obtener la Fecha de última actualización de la tabla",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Nombre de la tabla",
+                        "name": "argNombreTabla",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.FecUltActResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/gestabref/dummy": {
+            "get": {
+                "description": "Visualizar el estado del servicio web, del servicio de autenticación y de la base de datos de ARCA",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Consulta de Tablas de Referencia"
+                ],
+                "summary": "Muestra el estado del servicio",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.DummyResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/gestabref/lista-arancel": {
+            "get": {
+                "description": "Lista Arancel",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Consulta de Tablas de Referencia"
+                ],
+                "summary": "Lista Arancel",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Nombre de la tabla",
+                        "name": "argNombreTabla",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/wgestabref.Opcion"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/gestabref/lista-descripcion": {
+            "get": {
+                "description": "Lista Descripción",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Consulta de Tablas de Referencia"
+                ],
+                "summary": "Lista Descripción",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Nombre de la tabla",
+                        "name": "argNombreTabla",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/wgestabref.Descripcion"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/gestabref/lista-descripcion-decodificacion": {
+            "get": {
+                "description": "Lista Descripción Decodificación",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Consulta de Tablas de Referencia"
+                ],
+                "summary": "Lista Descripción Decodificación",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Nombre de la tabla",
+                        "name": "argNombreTabla",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/wgestabref.DescripcionCodificacion"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/gestabref/lista-empresas": {
+            "get": {
+                "description": "Lista de Empresas",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Consulta de Tablas de Referencia"
+                ],
+                "summary": "Lista de Empresas",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Nombre de la tabla",
+                        "name": "argNombreTabla",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/wgestabref.Empresa"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/gestabref/lista-lugares-operativos": {
+            "get": {
+                "description": "Lista de Lugares Operativos",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Consulta de Tablas de Referencia"
+                ],
+                "summary": "Lista de Lugares Operativos",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Nombre de la tabla",
+                        "name": "argNombreTabla",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/wgestabref.LugarOperativo"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/gestabref/lista-paises-aduanas": {
+            "get": {
+                "description": "Lista de Paises y Aduanas",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Consulta de Tablas de Referencia"
+                ],
+                "summary": "Lista de Paises y Aduanas",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Nombre de la tabla",
+                        "name": "argNombreTabla",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/wgestabref.PaisAduana"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/gestabref/lista-tablas-referencia": {
+            "get": {
+                "description": "Lista de Tablas de Referencia",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Consulta de Tablas de Referencia"
+                ],
+                "summary": "Lista de Tablas de Referencia",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/wgestabref.TablaReferencia"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/info": {
+            "get": {
+                "description": "Muesta información de la API",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "API"
+                ],
+                "summary": "Muesta información de la API",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.DummyResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "afip.CambioBuqueParams": {
+            "type": "object",
+            "required": [
+                "IdentificadorCaratula"
+            ],
+            "properties": {
+                "IdentificadorBuque": {
+                    "type": "string",
+                    "maxLength": 20
+                },
+                "IdentificadorCaratula": {
+                    "type": "string"
+                },
+                "NombreMedioTransporte": {
+                    "type": "string",
+                    "maxLength": 200
+                }
+            }
+        },
+        "afip.CambioFechasParams": {
+            "type": "object",
+            "required": [
+                "CodigoMotivo",
+                "FechaArribo",
+                "FechaZarpada",
+                "IdentificadorCaratula"
+            ],
+            "properties": {
+                "CodigoMotivo": {
+                    "type": "string",
+                    "maxLength": 2
+                },
+                "DescripcionMotivo": {
+                    "type": "string",
+                    "maxLength": 200
+                },
+                "FechaArribo": {
+                    "type": "string"
+                },
+                "FechaZarpada": {
+                    "type": "string"
+                },
+                "IdentificadorCaratula": {
+                    "type": "string"
+                }
+            }
+        },
+        "afip.CambioLOTParams": {
+            "type": "object",
+            "required": [
+                "CodigoLugarOperativo",
+                "IdentificadorCaratula"
+            ],
+            "properties": {
+                "CodigoLugarOperativo": {
+                    "type": "string",
+                    "maxLength": 5
+                },
+                "IdentificadorCaratula": {
+                    "type": "string"
+                }
+            }
+        },
+        "afip.CaratulaParams": {
+            "type": "object",
+            "required": [
+                "CodigoAduana",
+                "CodigoLugarOperativo",
+                "FechaArribo",
+                "FechaZarpada",
+                "NombreMedioTransporte",
+                "Via"
+            ],
+            "properties": {
+                "CodigoAduana": {
+                    "type": "string"
+                },
+                "CodigoLugarOperativo": {
+                    "type": "string"
+                },
+                "FechaArribo": {
+                    "type": "string"
+                },
+                "FechaZarpada": {
+                    "type": "string"
+                },
+                "IdentificadorBuque": {
+                    "type": "string",
+                    "maxLength": 20
+                },
+                "Itinerario": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/afip.PuertoDestinoParams"
+                    }
+                },
+                "NombreMedioTransporte": {
+                    "type": "string",
+                    "maxLength": 200
+                },
+                "NumeroViaje": {
+                    "type": "string",
+                    "maxLength": 16
+                },
+                "PuertoDestino": {
+                    "type": "string"
+                },
+                "Via": {
+                    "type": "string"
+                }
+            }
+        },
+        "afip.ContenedorCarga": {
+            "type": "object",
+            "required": [
+                "IdentificadorContenedor"
+            ],
+            "properties": {
+                "CuitATA": {
+                    "type": "string"
+                },
+                "Declaraciones": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "IdentificadorContenedor": {
+                    "type": "string"
+                },
+                "Peso": {
+                    "type": "number"
+                },
+                "Precintos": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "Tipo": {
+                    "type": "string"
+                }
+            }
+        },
+        "afip.ContenedorVacio": {
+            "type": "object",
+            "required": [
+                "IdentificadorContenedor"
+            ],
+            "properties": {
+                "CodigoPais": {
+                    "type": "string"
+                },
+                "CuitATA": {
+                    "type": "string"
+                },
+                "IdentificadorContenedor": {
+                    "type": "string"
+                },
+                "Tipo": {
+                    "type": "string"
+                }
+            }
+        },
+        "afip.DeclaracionCOEMGranel": {
+            "type": "object",
+            "properties": {
+                "DeclaracionesGranel": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/afip.DeclaracionGranel"
+                    }
+                },
+                "IdentificadorCOEM": {
+                    "type": "string"
+                }
+            }
+        },
+        "afip.DeclaracionCont": {
+            "type": "object",
+            "properties": {
+                "FechaEmbarque": {
+                    "type": "string"
+                },
+                "IdentificadorDeclaracion": {
+                    "type": "string"
+                }
+            }
+        },
+        "afip.DeclaracionGranel": {
+            "type": "object",
+            "properties": {
+                "FechaEmbarque": {
+                    "type": "string"
+                },
+                "IdentificadorCierreCumplido": {
+                    "type": "string"
+                },
+                "IdentificadorDeclaracion": {
+                    "type": "string"
+                },
+                "Items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/afip.ItemGranel"
+                    }
+                }
+            }
+        },
+        "afip.Embalaje": {
+            "type": "object",
+            "properties": {
+                "CantidadBultos": {
+                    "type": "integer"
+                },
+                "CodigoEmbalaje": {
+                    "type": "string"
+                },
+                "Peso": {
+                    "type": "number"
+                }
+            }
+        },
+        "afip.IdentificadorCOEMParams": {
+            "type": "object",
+            "required": [
+                "IdentificadorCOEM",
+                "IdentificadorCaratula"
+            ],
+            "properties": {
+                "IdentificadorCOEM": {
+                    "type": "string"
+                },
+                "IdentificadorCaratula": {
+                    "type": "string"
+                }
+            }
+        },
+        "afip.IdentificadorCaraturaParams": {
+            "type": "object",
+            "required": [
+                "IdentificadorCaratula"
+            ],
+            "properties": {
+                "IdentificadorCaratula": {
+                    "type": "string"
+                }
+            }
+        },
+        "afip.ItemGranel": {
+            "type": "object",
+            "properties": {
+                "CantidadReal": {
+                    "type": "number"
+                },
+                "NumeroItem": {
+                    "type": "integer"
+                }
+            }
+        },
+        "afip.MercaderiaSuelta": {
+            "type": "object",
+            "properties": {
+                "CuitATA": {
+                    "type": "string"
+                },
+                "Embalajes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/afip.Embalaje"
+                    }
+                },
+                "IdentificadorDeclaracion": {
+                    "type": "string"
+                }
+            }
+        },
+        "afip.PuertoDestinoParams": {
+            "type": "object",
+            "properties": {
+                "PuertoDestino": {
+                    "type": "string"
+                }
+            }
+        },
+        "afip.RectificarCOEMParams": {
+            "type": "object",
+            "required": [
+                "IdentificadorCOEM",
+                "IdentificadorCaratula"
+            ],
+            "properties": {
+                "ContenedoresConCarga": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/afip.ContenedorCarga"
+                    }
+                },
+                "ContenedoresVacios": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/afip.ContenedorVacio"
+                    }
+                },
+                "IdentificadorCOEM": {
+                    "type": "string"
+                },
+                "IdentificadorCaratula": {
+                    "type": "string"
+                },
+                "MercaderiasSueltas": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/afip.MercaderiaSuelta"
+                    }
+                }
+            }
+        },
+        "afip.RectificarCaratulaParams": {
+            "type": "object",
+            "required": [
+                "CodigoAduana",
+                "CodigoLugarOperativo",
+                "FechaArribo",
+                "FechaZarpada",
+                "IdentificadorCaratula",
+                "NombreMedioTransporte",
+                "Via"
+            ],
+            "properties": {
+                "CodigoAduana": {
+                    "type": "string"
+                },
+                "CodigoLugarOperativo": {
+                    "type": "string"
+                },
+                "FechaArribo": {
+                    "type": "string"
+                },
+                "FechaZarpada": {
+                    "type": "string"
+                },
+                "IdentificadorBuque": {
+                    "type": "string",
+                    "maxLength": 20
+                },
+                "IdentificadorCaratula": {
+                    "type": "string"
+                },
+                "Itinerario": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/afip.PuertoDestinoParams"
+                    }
+                },
+                "NombreMedioTransporte": {
+                    "type": "string",
+                    "maxLength": 200
+                },
+                "NumeroViaje": {
+                    "type": "string",
+                    "maxLength": 16
+                },
+                "PuertoDestino": {
+                    "type": "string"
+                },
+                "Via": {
+                    "type": "string"
+                }
+            }
+        },
+        "afip.RegistrarCOEMParams": {
+            "type": "object",
+            "required": [
+                "IdentificadorCaratula"
+            ],
+            "properties": {
+                "ContenedoresConCarga": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/afip.ContenedorCarga"
+                    }
+                },
+                "ContenedoresVacios": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/afip.ContenedorVacio"
+                    }
+                },
+                "IdentificadorCaratula": {
+                    "type": "string"
+                },
+                "MercaderiasSueltas": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/afip.MercaderiaSuelta"
+                    }
+                }
+            }
+        },
+        "afip.SolicitarCierreCargaContoBultoParams": {
+            "type": "object",
+            "required": [
+                "FechaZarpada",
+                "IdentificadorCaratula"
+            ],
+            "properties": {
+                "Declaraciones": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/afip.DeclaracionCont"
+                    }
+                },
+                "FechaZarpada": {
+                    "type": "string"
+                },
+                "IdentificadorCaratula": {
+                    "type": "string"
+                },
+                "NumeroViaje": {
+                    "type": "string"
+                }
+            }
+        },
+        "afip.SolicitarCierreCargaGranelParams": {
+            "type": "object",
+            "required": [
+                "FechaZarpada",
+                "IdentificadorCaratula"
+            ],
+            "properties": {
+                "DeclaracionesCOEMGranel": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/afip.DeclaracionCOEMGranel"
+                    }
+                },
+                "FechaZarpada": {
+                    "type": "string"
+                },
+                "IdentificadorCaratula": {
+                    "type": "string"
+                },
+                "NumeroViaje": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.DummyResponse": {
+            "type": "object",
+            "properties": {
+                "AppServer": {
+                    "type": "string"
+                },
+                "AuthServer": {
+                    "type": "string"
+                },
+                "DbServer": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.ErrorResponse": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.FecUltActResponse": {
+            "type": "object",
+            "properties": {
+                "FechaUltAct": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.MessageResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "soap.XSDDateTime": {
+            "type": "object"
+        },
+        "wgestabref.Descripcion": {
+            "type": "object",
+            "properties": {
+                "Codigo": {
+                    "type": "string"
+                },
+                "Descripcion": {
+                    "type": "string"
+                }
+            }
+        },
+        "wgestabref.DescripcionCodificacion": {
+            "type": "object",
+            "properties": {
+                "Codigo": {
+                    "type": "string"
+                },
+                "CodigoIso": {
+                    "type": "string"
+                },
+                "Descripcion": {
+                    "type": "string"
+                }
+            }
+        },
+        "wgestabref.Empresa": {
+            "type": "object",
+            "properties": {
+                "Cuit": {
+                    "type": "string"
+                },
+                "RazonSocial": {
+                    "type": "string"
+                }
+            }
+        },
+        "wgestabref.LugarOperativo": {
+            "type": "object",
+            "properties": {
+                "Aduana": {
+                    "type": "string"
+                },
+                "Codigo": {
+                    "type": "string"
+                },
+                "Descripcion": {
+                    "type": "string"
+                },
+                "LugarOperativo": {
+                    "type": "string"
+                },
+                "VigenciaDesde": {
+                    "type": "string"
+                },
+                "VigenciaHasta": {
+                    "type": "string"
+                }
+            }
+        },
+        "wgestabref.Opcion": {
+            "type": "object",
+            "properties": {
+                "Codigo": {
+                    "type": "string"
+                },
+                "Descripcion": {
+                    "type": "string"
+                },
+                "Opcion": {
+                    "type": "string"
+                },
+                "VigenciaDesde": {
+                    "type": "string"
+                },
+                "VigenciaHasta": {
+                    "type": "string"
+                }
+            }
+        },
+        "wgestabref.PaisAduana": {
+            "type": "object",
+            "properties": {
+                "Aduana": {
+                    "type": "string"
+                },
+                "Codigo": {
+                    "type": "string"
+                },
+                "Descripcion": {
+                    "type": "string"
+                },
+                "Pais": {
+                    "type": "string"
+                },
+                "VigenciaDesde": {
+                    "type": "string"
+                },
+                "VigenciaHasta": {
+                    "type": "string"
+                }
+            }
+        },
+        "wgestabref.TablaReferencia": {
+            "type": "object",
+            "properties": {
+                "IdTabRef": {
+                    "type": "string"
+                },
+                "TabRefDesc": {
+                    "type": "string"
+                },
+                "WebMethod": {
+                    "type": "string"
+                }
+            }
+        },
+        "wscoemcons.ConsultaEstadoCOEM": {
+            "type": "object",
+            "properties": {
+                "CODE": {
+                    "type": "string"
+                },
+                "CuitAlta": {
+                    "type": "string"
+                },
+                "Estado": {
+                    "type": "string"
+                },
+                "FechaEstado": {
+                    "$ref": "#/definitions/soap.XSDDateTime"
+                },
+                "IdentificadorCOEM": {
+                    "type": "string"
+                },
+                "Motivo": {
+                    "type": "string"
+                }
+            }
+        },
+        "wscoemcons.ConsultaNoAbordo": {
+            "type": "object",
+            "properties": {
+                "Contenedor": {
+                    "type": "string"
+                },
+                "Cuit": {
+                    "type": "string"
+                },
+                "DescripcionMotivo": {
+                    "type": "string"
+                },
+                "Destinacion": {
+                    "type": "string"
+                },
+                "FechaNoAbordo": {
+                    "$ref": "#/definitions/soap.XSDDateTime"
+                },
+                "IdentificadorCACE": {
+                    "type": "string"
+                },
+                "IdentificadorCOEM": {
+                    "type": "string"
+                },
+                "MotivoNoAbordo": {
+                    "type": "string"
+                },
+                "Tipo": {
+                    "type": "string"
+                },
+                "TipoNoAbordo": {
+                    "type": "string"
+                }
+            }
+        },
+        "wscoemcons.ConsultaSolicitudes": {
+            "type": "object",
+            "properties": {
+                "Estado": {
+                    "type": "string"
+                },
+                "FechaEstado": {
+                    "$ref": "#/definitions/soap.XSDDateTime"
+                },
+                "IdentificadorCACE": {
+                    "type": "string"
+                },
+                "IdentificadorCOEM": {
+                    "type": "string"
+                },
+                "NumeroSolicitud": {
+                    "type": "string"
+                },
+                "TipoSolicitud": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
