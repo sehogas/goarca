@@ -1089,6 +1089,60 @@ paths:
       summary: Obtener Consulta de Solicitudes
       tags:
       - Consultas de Comunicación de Embarque
+  /fe/comp-ultimo-autorizado:
+    get:
+      description: Consultar último comprobante autorizado
+      parameters:
+      - description: Punto de venta
+        in: query
+        name: ptoVta
+        required: true
+        type: string
+      - description: Tipo de comprobante
+        in: query
+        name: cbteTipo
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.DummyResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+      summary: Consultar último comprobante autorizado
+      tags:
+      - Factura Electrónica
+  /fe/dummy:
+    get:
+      description: Visualizar el estado del servicio web, del servicio de autenticación
+        y de la base de datos de ARCA
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.DummyResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+      summary: Muestra el estado del servicio
+      tags:
+      - Factura Electrónica
   /gestabref/consultar-fecha-ult-act:
     get:
       consumes:

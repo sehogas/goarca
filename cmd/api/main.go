@@ -25,6 +25,7 @@ var (
 	Wscoem      *afip.Wscoem
 	Wscoemcons  *afip.Wscoemcons
 	Wsgestabref *afip.Wsgestabref
+	Wsfe        *afip.Wsfe
 
 	validate *validator.Validate
 )
@@ -101,6 +102,11 @@ func main() {
 		log.Fatalln(err)
 	}
 
+	Wsfe, err = afip.NewWsfe(environment, cuit)
+	if err != nil {
+		log.Fatalln(err)
+	}
+
 	/* API Rest */
 	validate = validator.New(validator.WithRequiredStructEnabled())
 
@@ -164,11 +170,16 @@ func main() {
 	gestabref.HandleFunc("/lista-paises-aduanas", ListaPaisesAduanasHandler)
 	gestabref.HandleFunc("/lista-tablas-referencia", ListaTablasReferenciaHandler)
 
+	fe := http.NewServeMux()
+	fe.HandleFunc("/dummy", FEDummyHandler)
+	fe.HandleFunc("/comp-ultimo-autorizado", FECompUltimoAutorizadoHandler)
+
 	v1 := http.NewServeMux()
 	v1.HandleFunc("/info", InfoHandler)
 	v1.Handle("/coem/", http.StripPrefix("/coem", coem))
 	v1.Handle("/coemcons/", http.StripPrefix("/coemcons", coemcons))
 	v1.Handle("/gestabref/", http.StripPrefix("/gestabref", gestabref))
+	v1.Handle("/fe/", http.StripPrefix("/fe", fe))
 	router.Handle("/api/v1/", http.StripPrefix("/api/v1", v1))
 
 	stack := middleware.CreateStack(

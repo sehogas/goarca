@@ -970,6 +970,86 @@ const docTemplate = `{
                 }
             }
         },
+        "/fe/comp-ultimo-autorizado": {
+            "get": {
+                "description": "Consultar último comprobante autorizado",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Factura Electrónica"
+                ],
+                "summary": "Consultar último comprobante autorizado",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Punto de venta",
+                        "name": "ptoVta",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Tipo de comprobante",
+                        "name": "cbteTipo",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.DummyResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/fe/dummy": {
+            "get": {
+                "description": "Visualizar el estado del servicio web, del servicio de autenticación y de la base de datos de ARCA",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Factura Electrónica"
+                ],
+                "summary": "Muestra el estado del servicio",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.DummyResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/gestabref/consultar-fecha-ult-act": {
             "get": {
                 "description": "Obtiene la última actualización de la tabla consultada",

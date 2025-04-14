@@ -11,3 +11,7 @@ type DummyResponse struct {
 type FecUltActResponse struct {
 	FechaUltAct time.Time `json:"FechaUltAct"`
 }
+
+type CbteNroResponse struct {
+	CbteNro int32 `json:"CbteNro"`
+}
