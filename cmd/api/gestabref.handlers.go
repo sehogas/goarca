@@ -15,6 +15,7 @@ import (
 //	@Tags			Consulta de Tablas de Referencia
 //	@Produce		json
 //	@Success		200	{object}	dto.DummyResponse
+//	@Failure		401	{object}	dto.ErrorResponse
 //	@Failure		500	{object}	dto.ErrorResponse
 //	@Router			/gestabref/dummy [get]
 func DummyGesTabRefHandler(w http.ResponseWriter, r *http.Request) {
@@ -38,9 +39,10 @@ func DummyGesTabRefHandler(w http.ResponseWriter, r *http.Request) {
 //	@Accept			json
 //	@Produce		json
 //	@Param			argNombreTabla	query		string	true	"Nombre de la tabla"
-//	@Success		200	{object}	dto.FecUltActResponse
-//	@Failure		400	{object}	dto.ErrorResponse
-//	@Failure		500	{object}	dto.ErrorResponse
+//	@Success		200				{object}	dto.FecUltActResponse
+//	@Failure		400				{object}	dto.ErrorResponse
+//	@Failure		401				{object}	dto.ErrorResponse
+//	@Failure		500				{object}	dto.ErrorResponse
 //	@Router			/gestabref/consultar-fecha-ult-act [get]
 func ConsultarFechaUltActHandler(w http.ResponseWriter, r *http.Request) {
 	argNombreTabla := r.URL.Query().Get("argNombreTabla")
@@ -69,9 +71,10 @@ func ConsultarFechaUltActHandler(w http.ResponseWriter, r *http.Request) {
 //	@Accept			json
 //	@Produce		json
 //	@Param			argNombreTabla	query		string	true	"Nombre de la tabla"
-//	@Success		200	{array}		wgestabref.Opcion
-//	@Failure		400	{object}	dto.ErrorResponse
-//	@Failure		500	{object}	dto.ErrorResponse
+//	@Success		200				{array}		wgestabref.Opcion
+//	@Failure		400				{object}	dto.ErrorResponse
+//	@Failure		401				{object}	dto.ErrorResponse
+//	@Failure		500				{object}	dto.ErrorResponse
 //	@Router			/gestabref/lista-arancel [get]
 func ListaArancelHandler(w http.ResponseWriter, r *http.Request) {
 	argNombreTabla := r.URL.Query().Get("argNombreTabla")
@@ -98,9 +101,10 @@ func ListaArancelHandler(w http.ResponseWriter, r *http.Request) {
 //	@Accept			json
 //	@Produce		json
 //	@Param			argNombreTabla	query		string	true	"Nombre de la tabla"
-//	@Success		200	{array}		wgestabref.Descripcion
-//	@Failure		400	{object}	dto.ErrorResponse
-//	@Failure		500	{object}	dto.ErrorResponse
+//	@Success		200				{array}		wgestabref.Descripcion
+//	@Failure		400				{object}	dto.ErrorResponse
+//	@Failure		401				{object}	dto.ErrorResponse
+//	@Failure		500				{object}	dto.ErrorResponse
 //	@Router			/gestabref/lista-descripcion [get]
 func ListaDescripcionHandler(w http.ResponseWriter, r *http.Request) {
 	argNombreTabla := r.URL.Query().Get("argNombreTabla")
@@ -127,9 +131,10 @@ func ListaDescripcionHandler(w http.ResponseWriter, r *http.Request) {
 //	@Accept			json
 //	@Produce		json
 //	@Param			argNombreTabla	query		string	true	"Nombre de la tabla"
-//	@Success		200	{array}		wgestabref.DescripcionCodificacion
-//	@Failure		400	{object}	dto.ErrorResponse
-//	@Failure		500	{object}	dto.ErrorResponse
+//	@Success		200				{array}		wgestabref.DescripcionCodificacion
+//	@Failure		400				{object}	dto.ErrorResponse
+//	@Failure		401				{object}	dto.ErrorResponse
+//	@Failure		500				{object}	dto.ErrorResponse
 //	@Router			/gestabref/lista-descripcion-decodificacion [get]
 func ListaDescripcionDecodificacionHandler(w http.ResponseWriter, r *http.Request) {
 	argNombreTabla := r.URL.Query().Get("argNombreTabla")
@@ -156,9 +161,10 @@ func ListaDescripcionDecodificacionHandler(w http.ResponseWriter, r *http.Reques
 //	@Accept			json
 //	@Produce		json
 //	@Param			argNombreTabla	query		string	true	"Nombre de la tabla"
-//	@Success		200	{array}		wgestabref.Empresa
-//	@Failure		400	{object}	dto.ErrorResponse
-//	@Failure		500	{object}	dto.ErrorResponse
+//	@Success		200				{array}		wgestabref.Empresa
+//	@Failure		400				{object}	dto.ErrorResponse
+//	@Failure		401				{object}	dto.ErrorResponse
+//	@Failure		500				{object}	dto.ErrorResponse
 //	@Router			/gestabref/lista-empresas [get]
 func ListaEmpresasHandler(w http.ResponseWriter, r *http.Request) {
 	argNombreTabla := r.URL.Query().Get("argNombreTabla")
@@ -185,9 +191,10 @@ func ListaEmpresasHandler(w http.ResponseWriter, r *http.Request) {
 //	@Accept			json
 //	@Produce		json
 //	@Param			argNombreTabla	query		string	true	"Nombre de la tabla"
-//	@Success		200	{array}		wgestabref.LugarOperativo
-//	@Failure		400	{object}	dto.ErrorResponse
-//	@Failure		500	{object}	dto.ErrorResponse
+//	@Success		200				{array}		wgestabref.LugarOperativo
+//	@Failure		400				{object}	dto.ErrorResponse
+//	@Failure		401				{object}	dto.ErrorResponse
+//	@Failure		500				{object}	dto.ErrorResponse
 //	@Router			/gestabref/lista-lugares-operativos [get]
 func ListaLugaresOperativosHandler(w http.ResponseWriter, r *http.Request) {
 	argNombreTabla := r.URL.Query().Get("argNombreTabla")
@@ -214,9 +221,10 @@ func ListaLugaresOperativosHandler(w http.ResponseWriter, r *http.Request) {
 //	@Accept			json
 //	@Produce		json
 //	@Param			argNombreTabla	query		string	true	"Nombre de la tabla"
-//	@Success		200	{array}		wgestabref.PaisAduana
-//	@Failure		400	{object}	dto.ErrorResponse
-//	@Failure		500	{object}	dto.ErrorResponse
+//	@Success		200				{array}		wgestabref.PaisAduana
+//	@Failure		400				{object}	dto.ErrorResponse
+//	@Failure		401				{object}	dto.ErrorResponse
+//	@Failure		500				{object}	dto.ErrorResponse
 //	@Router			/gestabref/lista-paises-aduanas [get]
 func ListaPaisesAduanasHandler(w http.ResponseWriter, r *http.Request) {
 	argNombreTabla := r.URL.Query().Get("argNombreTabla")
@@ -244,6 +252,7 @@ func ListaPaisesAduanasHandler(w http.ResponseWriter, r *http.Request) {
 //	@Produce		json
 //	@Success		200	{array}		wgestabref.TablaReferencia
 //	@Failure		400	{object}	dto.ErrorResponse
+//	@Failure		401	{object}	dto.ErrorResponse
 //	@Failure		500	{object}	dto.ErrorResponse
 //	@Router			/gestabref/lista-tablas-referencia [get]
 func ListaTablasReferenciaHandler(w http.ResponseWriter, r *http.Request) {

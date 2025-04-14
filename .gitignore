@@ -21,3 +21,5 @@
 *.p12
 .env
 *.TA
+.apiKeys
+

@@ -14,6 +14,7 @@ import (
 //	@Tags			API
 //	@Produce		json
 //	@Success		200	{object}	dto.DummyResponse
+//	@Failure		401	{object}	dto.ErrorResponse
 //	@Router			/info [get]
 func InfoHandler(w http.ResponseWriter, r *http.Request) {
 	util.HttpResponseJSON(w, http.StatusOK, &dto.InfoResponse{

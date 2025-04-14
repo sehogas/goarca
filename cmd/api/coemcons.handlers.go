@@ -15,6 +15,7 @@ import (
 //	@Tags			Consultas de Comunicación de Embarque
 //	@Produce		json
 //	@Success		200	{object}	dto.DummyResponse
+//	@Failure		401	{object}	dto.ErrorResponse
 //	@Failure		500	{object}	dto.ErrorResponse
 //	@Router			/coemcons/dummy [get]
 func DummyCoemconsHandler(w http.ResponseWriter, r *http.Request) {
@@ -40,6 +41,7 @@ func DummyCoemconsHandler(w http.ResponseWriter, r *http.Request) {
 //	@Param			q	query		string	true	"Identificador de la caratula"
 //	@Success		200	{array}		wscoemcons.ConsultaEstadoCOEM
 //	@Failure		400	{object}	dto.ErrorResponse
+//	@Failure		401	{object}	dto.ErrorResponse
 //	@Failure		500	{object}	dto.ErrorResponse
 //	@Router			/coemcons/obtener-consulta-estados-coem [get]
 func ObtenerConsultaEstadosCOEMHandler(w http.ResponseWriter, r *http.Request) {
@@ -69,6 +71,7 @@ func ObtenerConsultaEstadosCOEMHandler(w http.ResponseWriter, r *http.Request) {
 //	@Param			q	query		string	true	"Identificador de la caratula"
 //	@Success		200	{array}		wscoemcons.ConsultaNoAbordo
 //	@Failure		400	{object}	dto.ErrorResponse
+//	@Failure		401	{object}	dto.ErrorResponse
 //	@Failure		500	{object}	dto.ErrorResponse
 //	@Router			/coemcons/obtener-consulta-no-abordo [get]
 func ObtenerConsultaNoAbordoHandler(w http.ResponseWriter, r *http.Request) {
@@ -98,6 +101,7 @@ func ObtenerConsultaNoAbordoHandler(w http.ResponseWriter, r *http.Request) {
 //	@Param			q	query		string	true	"Identificador de la caratula"
 //	@Success		200	{array}		wscoemcons.ConsultaSolicitudes
 //	@Failure		400	{object}	dto.ErrorResponse
+//	@Failure		401	{object}	dto.ErrorResponse
 //	@Failure		500	{object}	dto.ErrorResponse
 //	@Router			/coemcons/obtener-consulta-solicitudes [get]
 func ObtenerConsultaSolicitudesHandler(w http.ResponseWriter, r *http.Request) {

@@ -18,7 +18,9 @@ import (
 //	@Tags			Comunicación de Embarque
 //	@Produce		json
 //	@Success		200	{object}	dto.DummyResponse
+//	@Failure		401	{object}	dto.ErrorResponse
 //	@Failure		500	{object}	dto.ErrorResponse
+//
 //	@Router			/coem/dummy [get]
 func DummyCoemHandler(w http.ResponseWriter, r *http.Request) {
 	appServer, authServer, dbServer, err := Wscoem.Dummy()
@@ -43,6 +45,7 @@ func DummyCoemHandler(w http.ResponseWriter, r *http.Request) {
 //	@Param			request	body		afip.CaratulaParams	true	"RegistrarCaratulaRequest"
 //	@Success		200		{object}	dto.MessageResponse
 //	@Failure		400		{object}	dto.ErrorResponse
+//	@Failure		401		{object}	dto.ErrorResponse
 //	@Failure		500		{object}	dto.ErrorResponse
 //	@Router			/coem/registrar-caratula [post]
 func RegistrarCaratulaHandler(w http.ResponseWriter, r *http.Request) {
@@ -77,6 +80,7 @@ func RegistrarCaratulaHandler(w http.ResponseWriter, r *http.Request) {
 //	@Param			request	body		afip.RectificarCaratulaParams	true	"RectificarCaratulaRequest"
 //	@Success		200		{object}	dto.MessageResponse
 //	@Failure		400		{object}	dto.ErrorResponse
+//	@Failure		401		{object}	dto.ErrorResponse
 //	@Failure		500		{object}	dto.ErrorResponse
 //	@Router			/coem/rectificar-caratula [put]
 func RectificarCaratulaHandler(w http.ResponseWriter, r *http.Request) {
@@ -111,6 +115,7 @@ func RectificarCaratulaHandler(w http.ResponseWriter, r *http.Request) {
 //	@Param			request	body		afip.IdentificadorCaraturaParams	true	"AnularCaratulaRequest"
 //	@Success		200		{object}	dto.MessageResponse
 //	@Failure		400		{object}	dto.ErrorResponse
+//	@Failure		401		{object}	dto.ErrorResponse
 //	@Failure		500		{object}	dto.ErrorResponse
 //	@Router			/coem/anular-caratula [delete]
 func AnularCaratulaHandler(w http.ResponseWriter, r *http.Request) {
@@ -147,6 +152,7 @@ func AnularCaratulaHandler(w http.ResponseWriter, r *http.Request) {
 //	@Param			request	body		afip.CambioBuqueParams	true	"SolicitarCambioBuqueRequest"
 //	@Success		200		{object}	dto.MessageResponse
 //	@Failure		400		{object}	dto.ErrorResponse
+//	@Failure		401		{object}	dto.ErrorResponse
 //	@Failure		500		{object}	dto.ErrorResponse
 //	@Router			/coem/solicitar-cambio-buque [put]
 func SolicitarCambioBuqueHandler(w http.ResponseWriter, r *http.Request) {
@@ -181,6 +187,7 @@ func SolicitarCambioBuqueHandler(w http.ResponseWriter, r *http.Request) {
 //	@Param			request	body		afip.CambioFechasParams	true	"CambioFechasParamsRequest"
 //	@Success		200		{object}	dto.MessageResponse
 //	@Failure		400		{object}	dto.ErrorResponse
+//	@Failure		401		{object}	dto.ErrorResponse
 //	@Failure		500		{object}	dto.ErrorResponse
 //	@Router			/coem/solicitar-cambio-fechas [put]
 func SolicitarCambioFechasHandler(w http.ResponseWriter, r *http.Request) {
@@ -215,6 +222,7 @@ func SolicitarCambioFechasHandler(w http.ResponseWriter, r *http.Request) {
 //	@Param			request	body		afip.CambioLOTParams	true	"CambioLOTParamsRequest"
 //	@Success		200		{object}	dto.MessageResponse
 //	@Failure		400		{object}	dto.ErrorResponse
+//	@Failure		401		{object}	dto.ErrorResponse
 //	@Failure		500		{object}	dto.ErrorResponse
 //	@Router			/coem/solicitar-cambio-lot [put]
 func SolicitarCambioLOTHandler(w http.ResponseWriter, r *http.Request) {
@@ -249,6 +257,7 @@ func SolicitarCambioLOTHandler(w http.ResponseWriter, r *http.Request) {
 //	@Param			request	body		afip.RegistrarCOEMParams	true	"RegistrarCOEMRequest"
 //	@Success		200		{object}	dto.MessageResponse
 //	@Failure		400		{object}	dto.ErrorResponse
+//	@Failure		401		{object}	dto.ErrorResponse
 //	@Failure		500		{object}	dto.ErrorResponse
 //	@Router			/coem/registrar-coem [post]
 func RegistrarCOEMHandler(w http.ResponseWriter, r *http.Request) {
@@ -283,6 +292,7 @@ func RegistrarCOEMHandler(w http.ResponseWriter, r *http.Request) {
 //	@Param			request	body		afip.RectificarCOEMParams	true	"RectificarCOEMRequest"
 //	@Success		200		{object}	dto.MessageResponse
 //	@Failure		400		{object}	dto.ErrorResponse
+//	@Failure		401		{object}	dto.ErrorResponse
 //	@Failure		500		{object}	dto.ErrorResponse
 //	@Router			/coem/rectificar-coem [put]
 func RectificarCOEMHandler(w http.ResponseWriter, r *http.Request) {
@@ -317,6 +327,7 @@ func RectificarCOEMHandler(w http.ResponseWriter, r *http.Request) {
 //	@Param			request	body		afip.IdentificadorCOEMParams	true	"CerrarCOEMRequest"
 //	@Success		200		{object}	dto.MessageResponse
 //	@Failure		400		{object}	dto.ErrorResponse
+//	@Failure		401		{object}	dto.ErrorResponse
 //	@Failure		500		{object}	dto.ErrorResponse
 //	@Router			/coem/cerrar-coem [post]
 func CerrarCOEMHandler(w http.ResponseWriter, r *http.Request) {
@@ -351,6 +362,7 @@ func CerrarCOEMHandler(w http.ResponseWriter, r *http.Request) {
 //	@Param			request	body		afip.IdentificadorCOEMParams	true	"AnularCOEMRequest"
 //	@Success		200		{object}	dto.MessageResponse
 //	@Failure		400		{object}	dto.ErrorResponse
+//	@Failure		401		{object}	dto.ErrorResponse
 //	@Failure		500		{object}	dto.ErrorResponse
 //	@Router			/coem/anular-coem [delete]
 func AnularCOEMHandler(w http.ResponseWriter, r *http.Request) {
@@ -385,6 +397,7 @@ func AnularCOEMHandler(w http.ResponseWriter, r *http.Request) {
 //	@Param			request	body		afip.IdentificadorCOEMParams	true	"SolicitarAnulacionCOEMRequest"
 //	@Success		200		{object}	dto.MessageResponse
 //	@Failure		400		{object}	dto.ErrorResponse
+//	@Failure		401		{object}	dto.ErrorResponse
 //	@Failure		500		{object}	dto.ErrorResponse
 //	@Router			/coem/solicitar-anulacion-coem [post]
 func SolicitarAnulacionCOEMHandler(w http.ResponseWriter, r *http.Request) {
@@ -419,6 +432,7 @@ func SolicitarAnulacionCOEMHandler(w http.ResponseWriter, r *http.Request) {
 //	@Param			request	body		afip.IdentificadorCOEMParams	true	"SolicitarNoABordoRequest"
 //	@Success		200		{object}	dto.MessageResponse
 //	@Failure		400		{object}	dto.ErrorResponse
+//	@Failure		401		{object}	dto.ErrorResponse
 //	@Failure		500		{object}	dto.ErrorResponse
 //	@Router			/coem/solicitar-no-abordo [post]
 func SolicitarNoABordoHandler(w http.ResponseWriter, r *http.Request) {
@@ -453,6 +467,7 @@ func SolicitarNoABordoHandler(w http.ResponseWriter, r *http.Request) {
 //	@Param			request	body		afip.SolicitarCierreCargaContoBultoParams	true	"SolicitarCierreCargaContoBultoRequest"
 //	@Success		200		{object}	dto.MessageResponse
 //	@Failure		400		{object}	dto.ErrorResponse
+//	@Failure		401		{object}	dto.ErrorResponse
 //	@Failure		500		{object}	dto.ErrorResponse
 //	@Router			/coem/solicitar-cierre-carga-conto-bulto [post]
 func SolicitarCierreCargaContoBultoHandler(w http.ResponseWriter, r *http.Request) {
@@ -487,6 +502,7 @@ func SolicitarCierreCargaContoBultoHandler(w http.ResponseWriter, r *http.Reques
 //	@Param			request	body		afip.SolicitarCierreCargaGranelParams	true	"SolicitarCierreCargaGranel"
 //	@Success		200		{object}	dto.MessageResponse
 //	@Failure		400		{object}	dto.ErrorResponse
+//	@Failure		401		{object}	dto.ErrorResponse
 //	@Failure		500		{object}	dto.ErrorResponse
 //	@Router			/coem/solicitar-cierre-carga-granel [post]
 func SolicitarCierreCargaGranelHandler(w http.ResponseWriter, r *http.Request) {
