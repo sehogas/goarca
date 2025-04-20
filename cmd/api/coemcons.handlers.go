@@ -39,12 +39,12 @@ func DummyCoemconsHandler(w http.ResponseWriter, r *http.Request) {
 //	@Tags			Consultas de Comunicación de Embarque
 //	@Accept			json
 //	@Produce		json
-//	@Param			x-api-key	header		string	true	"API Key de acceso"
-//	@Param			q			query		string	true	"Identificador de la caratula"
-//	@Success		200			{array}		wscoemcons.ConsultaEstadoCOEM
-//	@Failure		400			{object}	dto.ErrorResponse
-//	@Failure		401			{object}	dto.ErrorResponse
-//	@Failure		500			{object}	dto.ErrorResponse
+//	@Param			x-api-key		header		string	true	"API Key de acceso"
+//	@Param			identificador	query		string	true	"Identificador de la caratula"
+//	@Success		200				{array}		wscoemcons.ConsultaEstadoCOEM
+//	@Failure		400				{object}	dto.ErrorResponse
+//	@Failure		401				{object}	dto.ErrorResponse
+//	@Failure		500				{object}	dto.ErrorResponse
 //	@Router			/coemcons/obtener-consulta-estados-coem [get]
 func ObtenerConsultaEstadosCOEMHandler(w http.ResponseWriter, r *http.Request) {
 	identificadorCaratula := r.URL.Query().Get("identificador")
@@ -70,12 +70,12 @@ func ObtenerConsultaEstadosCOEMHandler(w http.ResponseWriter, r *http.Request) {
 //	@Tags			Consultas de Comunicación de Embarque
 //	@Accept			json
 //	@Produce		json
-//	@Param			x-api-key	header		string	true	"API Key de acceso"
-//	@Param			q			query		string	true	"Identificador de la caratula"
-//	@Success		200			{array}		wscoemcons.ConsultaNoAbordo
-//	@Failure		400			{object}	dto.ErrorResponse
-//	@Failure		401			{object}	dto.ErrorResponse
-//	@Failure		500			{object}	dto.ErrorResponse
+//	@Param			x-api-key		header		string	true	"API Key de acceso"
+//	@Param			identificador	query		string	true	"Identificador de la caratula"
+//	@Success		200				{array}		wscoemcons.ConsultaNoAbordo
+//	@Failure		400				{object}	dto.ErrorResponse
+//	@Failure		401				{object}	dto.ErrorResponse
+//	@Failure		500				{object}	dto.ErrorResponse
 //	@Router			/coemcons/obtener-consulta-no-abordo [get]
 func ObtenerConsultaNoAbordoHandler(w http.ResponseWriter, r *http.Request) {
 	identificadorCaratula := r.URL.Query().Get("identificador")
@@ -101,12 +101,12 @@ func ObtenerConsultaNoAbordoHandler(w http.ResponseWriter, r *http.Request) {
 //	@Tags			Consultas de Comunicación de Embarque
 //	@Accept			json
 //	@Produce		json
-//	@Param			x-api-key	header		string	true	"API Key de acceso"
-//	@Param			q			query		string	true	"Identificador de la caratula"
-//	@Success		200			{array}		wscoemcons.ConsultaSolicitudes
-//	@Failure		400			{object}	dto.ErrorResponse
-//	@Failure		401			{object}	dto.ErrorResponse
-//	@Failure		500			{object}	dto.ErrorResponse
+//	@Param			x-api-key		header		string	true	"API Key de acceso"
+//	@Param			identificador	query		string	true	"Identificador de la caratula"
+//	@Success		200				{array}		wscoemcons.ConsultaSolicitudes
+//	@Failure		400				{object}	dto.ErrorResponse
+//	@Failure		401				{object}	dto.ErrorResponse
+//	@Failure		500				{object}	dto.ErrorResponse
 //	@Router			/coemcons/obtener-consulta-solicitudes [get]
 func ObtenerConsultaSolicitudesHandler(w http.ResponseWriter, r *http.Request) {
 	identificadorCaratula := r.URL.Query().Get("identificador")

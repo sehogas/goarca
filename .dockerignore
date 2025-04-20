@@ -1,0 +1,10 @@
+*.example
+.env
+/data/*.TA
+/keys/*.csr
+/keys/*.pem
+/keys/*.prv
+/keys/*.crt
+/keys/*.key
+/.github
+

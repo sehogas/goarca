@@ -3,7 +3,7 @@ services:
     image: shogas/goarca
     restart: always
     ports:
-      - 3100:3000
+      - 4433:4433
     volumes:
       - ./keys:/keys:ro
     env_file:

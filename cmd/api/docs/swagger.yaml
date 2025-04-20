@@ -1079,7 +1079,7 @@ paths:
         type: string
       - description: Identificador de la caratula
         in: query
-        name: q
+        name: identificador
         required: true
         type: string
       produces:
@@ -1119,7 +1119,7 @@ paths:
         type: string
       - description: Identificador de la caratula
         in: query
-        name: q
+        name: identificador
         required: true
         type: string
       produces:
@@ -1159,7 +1159,7 @@ paths:
         type: string
       - description: Identificador de la caratula
         in: query
-        name: q
+        name: identificador
         required: true
         type: string
       produces:
