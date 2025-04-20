@@ -1,6 +1,7 @@
 package main
 
 import (
+	"crypto/tls"
 	"fmt"
 	"log"
 	"net/http"
@@ -78,8 +79,7 @@ func main() {
 		log.Fatalln("Falta variable de entorno KEYS_FILE")
 	}
 
-	port := 3000
-
+	port := 4433
 	if os.Getenv("PORT") != "" {
 		port, err = strconv.Atoi(os.Getenv("PORT"))
 		if err != nil {
@@ -127,7 +127,7 @@ func main() {
 
 	docs.SwaggerInfo.Host = os.Getenv("HOST")
 	docs.SwaggerInfo.BasePath = "/api/v1"
-	docs.SwaggerInfo.Schemes = []string{"http", "https"}
+	docs.SwaggerInfo.Schemes = []string{"https"}
 
 	router.HandleFunc("/swagger/", httpSwagger.Handler(
 		httpSwagger.URL("/swagger/doc.json"),
@@ -184,9 +184,22 @@ func main() {
 
 	stack := middleware.CreateStack(
 		middlewareCors.Handler,
+		middleware.Recovery,
 		middleware.Logging,
 		middlewareApiKey.Handler,
 	)
+
+	cfg := &tls.Config{
+		MinVersion:               tls.VersionTLS12,
+		CurvePreferences:         []tls.CurveID{tls.CurveP521, tls.CurveP384, tls.CurveP256},
+		PreferServerCipherSuites: true,
+		CipherSuites: []uint16{
+			tls.TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,
+			tls.TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA,
+			tls.TLS_RSA_WITH_AES_256_GCM_SHA384,
+			tls.TLS_RSA_WITH_AES_256_CBC_SHA,
+		},
+	}
 
 	server := &http.Server{
 		Addr:         fmt.Sprintf(":%d", port),
@@ -194,13 +207,15 @@ func main() {
 		IdleTimeout:  time.Minute,
 		ReadTimeout:  10 * time.Second,
 		WriteTimeout: 30 * time.Second,
+		TLSConfig:    cfg,
+		TLSNextProto: make(map[string]func(*http.Server, *tls.Conn, http.Handler), 0),
 	}
 
 	go util.GracefulShutdown(server)
 
 	log.Printf("Starting server on port %v", server.Addr)
-	err = server.ListenAndServe()
+	err = server.ListenAndServeTLS("keys/server.crt", "keys/server.key")
 	if err != nil && err != http.ErrServerClosed {
-		panic(fmt.Sprintf("http server error: %s", err))
+		log.Fatalf("http server error: %s", err)
 	}
 }

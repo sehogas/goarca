@@ -22,4 +22,4 @@
 .env
 *.TA
 .apiKeys
-
+*.key

@@ -14,9 +14,10 @@ import (
 //	@Description	Visualizar el estado del servicio web, del servicio de autenticación y de la base de datos de ARCA
 //	@Tags			Consulta de Tablas de Referencia
 //	@Produce		json
-//	@Success		200	{object}	dto.DummyResponse
-//	@Failure		401	{object}	dto.ErrorResponse
-//	@Failure		500	{object}	dto.ErrorResponse
+//	@Param			x-api-key	header		string	true	"API Key de acceso"
+//	@Success		200			{object}	dto.DummyResponse
+//	@Failure		401			{object}	dto.ErrorResponse
+//	@Failure		500			{object}	dto.ErrorResponse
 //	@Router			/gestabref/dummy [get]
 func DummyGesTabRefHandler(w http.ResponseWriter, r *http.Request) {
 	appServer, authServer, dbServer, err := Wscoemcons.Dummy()
@@ -38,6 +39,7 @@ func DummyGesTabRefHandler(w http.ResponseWriter, r *http.Request) {
 //	@Tags			Consulta de Tablas de Referencia
 //	@Accept			json
 //	@Produce		json
+//	@Param			x-api-key		header		string	true	"API Key de acceso"
 //	@Param			argNombreTabla	query		string	true	"Nombre de la tabla"
 //	@Success		200				{object}	dto.FecUltActResponse
 //	@Failure		400				{object}	dto.ErrorResponse
@@ -70,6 +72,7 @@ func ConsultarFechaUltActHandler(w http.ResponseWriter, r *http.Request) {
 //	@Tags			Consulta de Tablas de Referencia
 //	@Accept			json
 //	@Produce		json
+//	@Param			x-api-key		header		string	true	"API Key de acceso"
 //	@Param			argNombreTabla	query		string	true	"Nombre de la tabla"
 //	@Success		200				{array}		wgestabref.Opcion
 //	@Failure		400				{object}	dto.ErrorResponse
@@ -100,6 +103,7 @@ func ListaArancelHandler(w http.ResponseWriter, r *http.Request) {
 //	@Tags			Consulta de Tablas de Referencia
 //	@Accept			json
 //	@Produce		json
+//	@Param			x-api-key		header		string	true	"API Key de acceso"
 //	@Param			argNombreTabla	query		string	true	"Nombre de la tabla"
 //	@Success		200				{array}		wgestabref.Descripcion
 //	@Failure		400				{object}	dto.ErrorResponse
@@ -130,6 +134,7 @@ func ListaDescripcionHandler(w http.ResponseWriter, r *http.Request) {
 //	@Tags			Consulta de Tablas de Referencia
 //	@Accept			json
 //	@Produce		json
+//	@Param			x-api-key		header		string	true	"API Key de acceso"
 //	@Param			argNombreTabla	query		string	true	"Nombre de la tabla"
 //	@Success		200				{array}		wgestabref.DescripcionCodificacion
 //	@Failure		400				{object}	dto.ErrorResponse
@@ -160,6 +165,7 @@ func ListaDescripcionDecodificacionHandler(w http.ResponseWriter, r *http.Reques
 //	@Tags			Consulta de Tablas de Referencia
 //	@Accept			json
 //	@Produce		json
+//	@Param			x-api-key		header		string	true	"API Key de acceso"
 //	@Param			argNombreTabla	query		string	true	"Nombre de la tabla"
 //	@Success		200				{array}		wgestabref.Empresa
 //	@Failure		400				{object}	dto.ErrorResponse
@@ -190,6 +196,7 @@ func ListaEmpresasHandler(w http.ResponseWriter, r *http.Request) {
 //	@Tags			Consulta de Tablas de Referencia
 //	@Accept			json
 //	@Produce		json
+//	@Param			x-api-key		header		string	true	"API Key de acceso"
 //	@Param			argNombreTabla	query		string	true	"Nombre de la tabla"
 //	@Success		200				{array}		wgestabref.LugarOperativo
 //	@Failure		400				{object}	dto.ErrorResponse
@@ -220,6 +227,7 @@ func ListaLugaresOperativosHandler(w http.ResponseWriter, r *http.Request) {
 //	@Tags			Consulta de Tablas de Referencia
 //	@Accept			json
 //	@Produce		json
+//	@Param			x-api-key		header		string	true	"API Key de acceso"
 //	@Param			argNombreTabla	query		string	true	"Nombre de la tabla"
 //	@Success		200				{array}		wgestabref.PaisAduana
 //	@Failure		400				{object}	dto.ErrorResponse
@@ -250,10 +258,11 @@ func ListaPaisesAduanasHandler(w http.ResponseWriter, r *http.Request) {
 //	@Tags			Consulta de Tablas de Referencia
 //	@Accept			json
 //	@Produce		json
-//	@Success		200	{array}		wgestabref.TablaReferencia
-//	@Failure		400	{object}	dto.ErrorResponse
-//	@Failure		401	{object}	dto.ErrorResponse
-//	@Failure		500	{object}	dto.ErrorResponse
+//	@Param			x-api-key	header		string	true	"API Key de acceso"
+//	@Success		200			{array}		wgestabref.TablaReferencia
+//	@Failure		400			{object}	dto.ErrorResponse
+//	@Failure		401			{object}	dto.ErrorResponse
+//	@Failure		500			{object}	dto.ErrorResponse
 //	@Router			/gestabref/lista-tablas-referencia [get]
 func ListaTablasReferenciaHandler(w http.ResponseWriter, r *http.Request) {
 	data, err := Wsgestabref.ListaTablasReferencia()

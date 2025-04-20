@@ -34,6 +34,13 @@ const docTemplate = `{
                 "summary": "Anular Carátula",
                 "parameters": [
                     {
+                        "type": "string",
+                        "description": "API Key de acceso",
+                        "name": "x-api-key",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
                         "description": "AnularCaratulaRequest",
                         "name": "request",
                         "in": "body",
@@ -85,6 +92,13 @@ const docTemplate = `{
                 ],
                 "summary": "Anular COEM",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key de acceso",
+                        "name": "x-api-key",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "description": "AnularCOEMRequest",
                         "name": "request",
@@ -138,6 +152,13 @@ const docTemplate = `{
                 "summary": "Cerrar COEM",
                 "parameters": [
                     {
+                        "type": "string",
+                        "description": "API Key de acceso",
+                        "name": "x-api-key",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
                         "description": "CerrarCOEMRequest",
                         "name": "request",
                         "in": "body",
@@ -185,6 +206,15 @@ const docTemplate = `{
                     "Comunicación de Embarque"
                 ],
                 "summary": "Muestra el estado del servicio",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key de acceso",
+                        "name": "x-api-key",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -221,6 +251,13 @@ const docTemplate = `{
                 ],
                 "summary": "Rectificar Carátula",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key de acceso",
+                        "name": "x-api-key",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "description": "RectificarCaratulaRequest",
                         "name": "request",
@@ -274,6 +311,13 @@ const docTemplate = `{
                 "summary": "Rectificar COEM",
                 "parameters": [
                     {
+                        "type": "string",
+                        "description": "API Key de acceso",
+                        "name": "x-api-key",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
                         "description": "RectificarCOEMRequest",
                         "name": "request",
                         "in": "body",
@@ -325,6 +369,13 @@ const docTemplate = `{
                 ],
                 "summary": "Registrar Carátula",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key de acceso",
+                        "name": "x-api-key",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "description": "RegistrarCaratulaRequest",
                         "name": "request",
@@ -378,6 +429,13 @@ const docTemplate = `{
                 "summary": "Registrar COEM",
                 "parameters": [
                     {
+                        "type": "string",
+                        "description": "API Key de acceso",
+                        "name": "x-api-key",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
                         "description": "RegistrarCOEMRequest",
                         "name": "request",
                         "in": "body",
@@ -429,6 +487,13 @@ const docTemplate = `{
                 ],
                 "summary": "Solicitar Anulación COEM",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key de acceso",
+                        "name": "x-api-key",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "description": "SolicitarAnulacionCOEMRequest",
                         "name": "request",
@@ -482,6 +547,13 @@ const docTemplate = `{
                 "summary": "Solicitar cambio de Buque",
                 "parameters": [
                     {
+                        "type": "string",
+                        "description": "API Key de acceso",
+                        "name": "x-api-key",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
                         "description": "SolicitarCambioBuqueRequest",
                         "name": "request",
                         "in": "body",
@@ -533,6 +605,13 @@ const docTemplate = `{
                 ],
                 "summary": "Solicitar cambio de Fechas",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key de acceso",
+                        "name": "x-api-key",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "description": "CambioFechasParamsRequest",
                         "name": "request",
@@ -586,6 +665,13 @@ const docTemplate = `{
                 "summary": "Solicitar cambio de LOT",
                 "parameters": [
                     {
+                        "type": "string",
+                        "description": "API Key de acceso",
+                        "name": "x-api-key",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
                         "description": "CambioLOTParamsRequest",
                         "name": "request",
                         "in": "body",
@@ -637,6 +723,13 @@ const docTemplate = `{
                 ],
                 "summary": "Solicitar Cierre de Carga Contenedores y/o Bultos",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key de acceso",
+                        "name": "x-api-key",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "description": "SolicitarCierreCargaContoBultoRequest",
                         "name": "request",
@@ -690,6 +783,13 @@ const docTemplate = `{
                 "summary": "Solicitar Cierre de Carga Granel",
                 "parameters": [
                     {
+                        "type": "string",
+                        "description": "API Key de acceso",
+                        "name": "x-api-key",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
                         "description": "SolicitarCierreCargaGranel",
                         "name": "request",
                         "in": "body",
@@ -742,6 +842,13 @@ const docTemplate = `{
                 "summary": "Solicitar No Abordo",
                 "parameters": [
                     {
+                        "type": "string",
+                        "description": "API Key de acceso",
+                        "name": "x-api-key",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
                         "description": "SolicitarNoABordoRequest",
                         "name": "request",
                         "in": "body",
@@ -789,6 +896,15 @@ const docTemplate = `{
                     "Consultas de Comunicación de Embarque"
                 ],
                 "summary": "Muestra el estado del servicio",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key de acceso",
+                        "name": "x-api-key",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -825,6 +941,13 @@ const docTemplate = `{
                 ],
                 "summary": "Obtener Consulta Estados COEM",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key de acceso",
+                        "name": "x-api-key",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "type": "string",
                         "description": "Identificador de la caratula",
@@ -880,6 +1003,13 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
+                        "description": "API Key de acceso",
+                        "name": "x-api-key",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
                         "description": "Identificador de la caratula",
                         "name": "q",
                         "in": "query",
@@ -931,6 +1061,13 @@ const docTemplate = `{
                 ],
                 "summary": "Obtener Consulta de Solicitudes",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key de acceso",
+                        "name": "x-api-key",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "type": "string",
                         "description": "Identificador de la caratula",
@@ -1066,6 +1203,13 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
+                        "description": "API Key de acceso",
+                        "name": "x-api-key",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
                         "description": "Nombre de la tabla",
                         "name": "argNombreTabla",
                         "in": "query",
@@ -1110,6 +1254,15 @@ const docTemplate = `{
                     "Consulta de Tablas de Referencia"
                 ],
                 "summary": "Muestra el estado del servicio",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key de acceso",
+                        "name": "x-api-key",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -1146,6 +1299,13 @@ const docTemplate = `{
                 ],
                 "summary": "Lista Arancel",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key de acceso",
+                        "name": "x-api-key",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "type": "string",
                         "description": "Nombre de la tabla",
@@ -1201,6 +1361,13 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
+                        "description": "API Key de acceso",
+                        "name": "x-api-key",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
                         "description": "Nombre de la tabla",
                         "name": "argNombreTabla",
                         "in": "query",
@@ -1252,6 +1419,13 @@ const docTemplate = `{
                 ],
                 "summary": "Lista Descripción Decodificación",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key de acceso",
+                        "name": "x-api-key",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "type": "string",
                         "description": "Nombre de la tabla",
@@ -1307,6 +1481,13 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
+                        "description": "API Key de acceso",
+                        "name": "x-api-key",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
                         "description": "Nombre de la tabla",
                         "name": "argNombreTabla",
                         "in": "query",
@@ -1358,6 +1539,13 @@ const docTemplate = `{
                 ],
                 "summary": "Lista de Lugares Operativos",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key de acceso",
+                        "name": "x-api-key",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "type": "string",
                         "description": "Nombre de la tabla",
@@ -1413,6 +1601,13 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
+                        "description": "API Key de acceso",
+                        "name": "x-api-key",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
                         "description": "Nombre de la tabla",
                         "name": "argNombreTabla",
                         "in": "query",
@@ -1463,6 +1658,15 @@ const docTemplate = `{
                     "Consulta de Tablas de Referencia"
                 ],
                 "summary": "Lista de Tablas de Referencia",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key de acceso",
+                        "name": "x-api-key",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -1504,6 +1708,15 @@ const docTemplate = `{
                     "API"
                 ],
                 "summary": "Muesta información de la API",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key de acceso",
+                        "name": "x-api-key",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",

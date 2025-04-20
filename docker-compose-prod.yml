@@ -1,0 +1,13 @@
+services:
+  api-arca:
+    image: shogas/goarca
+    restart: always
+    ports:
+      - 3100:3000
+    volumes:
+      - ./keys:/keys:ro
+    env_file:
+      - .env
+
+volumes:
+  keys:

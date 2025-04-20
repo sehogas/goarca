@@ -47,6 +47,12 @@ API Restful Json que sirve todos los endpoints de los siguientes webservices ARC
 $ gowsdl -o wgescomunicacionembarque.go -d ws/ -p wscoem  wsdl/wgescomunicacionembarque.xml
 ```
 
+### Generar dentro de ./keys los certificados del servidor para https
+
+```
+$ openssl req -x509 -nodes -newkey rsa:2048 -keyout server.rsa.key -out server.rsa.crt -days 3650
+```
+
 ---
 #### Créditos
   Para la conexión soap y la generación del archivo wsaa.go se utilizó https://github.com/hooklift/gowsdl/

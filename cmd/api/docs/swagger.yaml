@@ -470,6 +470,11 @@ paths:
       - application/json
       description: Anular Carátula sin COEMs
       parameters:
+      - description: API Key de acceso
+        in: header
+        name: x-api-key
+        required: true
+        type: string
       - description: AnularCaratulaRequest
         in: body
         name: request
@@ -504,6 +509,11 @@ paths:
       - application/json
       description: Anular COEM
       parameters:
+      - description: API Key de acceso
+        in: header
+        name: x-api-key
+        required: true
+        type: string
       - description: AnularCOEMRequest
         in: body
         name: request
@@ -538,6 +548,11 @@ paths:
       - application/json
       description: Cerrar COEM
       parameters:
+      - description: API Key de acceso
+        in: header
+        name: x-api-key
+        required: true
+        type: string
       - description: CerrarCOEMRequest
         in: body
         name: request
@@ -570,6 +585,12 @@ paths:
     get:
       description: Visualizar el estado del servicio web, del servicio de autenticación
         y de la base de datos de ARCA
+      parameters:
+      - description: API Key de acceso
+        in: header
+        name: x-api-key
+        required: true
+        type: string
       produces:
       - application/json
       responses:
@@ -594,6 +615,11 @@ paths:
       - application/json
       description: Rectificar una Carátula sin COEMs
       parameters:
+      - description: API Key de acceso
+        in: header
+        name: x-api-key
+        required: true
+        type: string
       - description: RectificarCaratulaRequest
         in: body
         name: request
@@ -628,6 +654,11 @@ paths:
       - application/json
       description: Rectificar COEM
       parameters:
+      - description: API Key de acceso
+        in: header
+        name: x-api-key
+        required: true
+        type: string
       - description: RectificarCOEMRequest
         in: body
         name: request
@@ -662,6 +693,11 @@ paths:
       - application/json
       description: Registra una nueva Carátula
       parameters:
+      - description: API Key de acceso
+        in: header
+        name: x-api-key
+        required: true
+        type: string
       - description: RegistrarCaratulaRequest
         in: body
         name: request
@@ -696,6 +732,11 @@ paths:
       - application/json
       description: Registrar COEM en Carátula
       parameters:
+      - description: API Key de acceso
+        in: header
+        name: x-api-key
+        required: true
+        type: string
       - description: RegistrarCOEMRequest
         in: body
         name: request
@@ -730,6 +771,11 @@ paths:
       - application/json
       description: Solicitar anulación COEM
       parameters:
+      - description: API Key de acceso
+        in: header
+        name: x-api-key
+        required: true
+        type: string
       - description: SolicitarAnulacionCOEMRequest
         in: body
         name: request
@@ -764,6 +810,11 @@ paths:
       - application/json
       description: Solicitar cambio de Buque para Carátulas con COEMs
       parameters:
+      - description: API Key de acceso
+        in: header
+        name: x-api-key
+        required: true
+        type: string
       - description: SolicitarCambioBuqueRequest
         in: body
         name: request
@@ -798,6 +849,11 @@ paths:
       - application/json
       description: Solicitar cambio de Fechas para Carátulas con COEMs
       parameters:
+      - description: API Key de acceso
+        in: header
+        name: x-api-key
+        required: true
+        type: string
       - description: CambioFechasParamsRequest
         in: body
         name: request
@@ -832,6 +888,11 @@ paths:
       - application/json
       description: Solicitar cambio de Lugar Operativo para Carátulas con COEMs
       parameters:
+      - description: API Key de acceso
+        in: header
+        name: x-api-key
+        required: true
+        type: string
       - description: CambioLOTParamsRequest
         in: body
         name: request
@@ -866,6 +927,11 @@ paths:
       - application/json
       description: Solicitar Cierre de Carga Contenedores y/o Bultos
       parameters:
+      - description: API Key de acceso
+        in: header
+        name: x-api-key
+        required: true
+        type: string
       - description: SolicitarCierreCargaContoBultoRequest
         in: body
         name: request
@@ -900,6 +966,11 @@ paths:
       - application/json
       description: Solicitar Cierre de Carga Granel
       parameters:
+      - description: API Key de acceso
+        in: header
+        name: x-api-key
+        required: true
+        type: string
       - description: SolicitarCierreCargaGranel
         in: body
         name: request
@@ -934,6 +1005,11 @@ paths:
       - application/json
       description: Solicitar No Abordo
       parameters:
+      - description: API Key de acceso
+        in: header
+        name: x-api-key
+        required: true
+        type: string
       - description: SolicitarNoABordoRequest
         in: body
         name: request
@@ -966,6 +1042,12 @@ paths:
     get:
       description: Visualizar el estado del servicio web, del servicio de autenticación
         y de la base de datos de ARCA
+      parameters:
+      - description: API Key de acceso
+        in: header
+        name: x-api-key
+        required: true
+        type: string
       produces:
       - application/json
       responses:
@@ -990,6 +1072,11 @@ paths:
       - application/json
       description: Obtener Consulta Estados COEM
       parameters:
+      - description: API Key de acceso
+        in: header
+        name: x-api-key
+        required: true
+        type: string
       - description: Identificador de la caratula
         in: query
         name: q
@@ -1025,6 +1112,11 @@ paths:
       - application/json
       description: Obtener Consulta No Abordo
       parameters:
+      - description: API Key de acceso
+        in: header
+        name: x-api-key
+        required: true
+        type: string
       - description: Identificador de la caratula
         in: query
         name: q
@@ -1060,6 +1152,11 @@ paths:
       - application/json
       description: Obtener Consulta de Solicitudes
       parameters:
+      - description: API Key de acceso
+        in: header
+        name: x-api-key
+        required: true
+        type: string
       - description: Identificador de la caratula
         in: query
         name: q
@@ -1149,6 +1246,11 @@ paths:
       - application/json
       description: Obtiene la última actualización de la tabla consultada
       parameters:
+      - description: API Key de acceso
+        in: header
+        name: x-api-key
+        required: true
+        type: string
       - description: Nombre de la tabla
         in: query
         name: argNombreTabla
@@ -1180,6 +1282,12 @@ paths:
     get:
       description: Visualizar el estado del servicio web, del servicio de autenticación
         y de la base de datos de ARCA
+      parameters:
+      - description: API Key de acceso
+        in: header
+        name: x-api-key
+        required: true
+        type: string
       produces:
       - application/json
       responses:
@@ -1204,6 +1312,11 @@ paths:
       - application/json
       description: Lista Arancel
       parameters:
+      - description: API Key de acceso
+        in: header
+        name: x-api-key
+        required: true
+        type: string
       - description: Nombre de la tabla
         in: query
         name: argNombreTabla
@@ -1239,6 +1352,11 @@ paths:
       - application/json
       description: Lista Descripción
       parameters:
+      - description: API Key de acceso
+        in: header
+        name: x-api-key
+        required: true
+        type: string
       - description: Nombre de la tabla
         in: query
         name: argNombreTabla
@@ -1274,6 +1392,11 @@ paths:
       - application/json
       description: Lista Descripción Decodificación
       parameters:
+      - description: API Key de acceso
+        in: header
+        name: x-api-key
+        required: true
+        type: string
       - description: Nombre de la tabla
         in: query
         name: argNombreTabla
@@ -1309,6 +1432,11 @@ paths:
       - application/json
       description: Lista de Empresas
       parameters:
+      - description: API Key de acceso
+        in: header
+        name: x-api-key
+        required: true
+        type: string
       - description: Nombre de la tabla
         in: query
         name: argNombreTabla
@@ -1344,6 +1472,11 @@ paths:
       - application/json
       description: Lista de Lugares Operativos
       parameters:
+      - description: API Key de acceso
+        in: header
+        name: x-api-key
+        required: true
+        type: string
       - description: Nombre de la tabla
         in: query
         name: argNombreTabla
@@ -1379,6 +1512,11 @@ paths:
       - application/json
       description: Lista de Paises y Aduanas
       parameters:
+      - description: API Key de acceso
+        in: header
+        name: x-api-key
+        required: true
+        type: string
       - description: Nombre de la tabla
         in: query
         name: argNombreTabla
@@ -1413,6 +1551,12 @@ paths:
       consumes:
       - application/json
       description: Lista de Tablas de Referencia
+      parameters:
+      - description: API Key de acceso
+        in: header
+        name: x-api-key
+        required: true
+        type: string
       produces:
       - application/json
       responses:
@@ -1440,6 +1584,12 @@ paths:
   /info:
     get:
       description: Muesta información de la API
+      parameters:
+      - description: API Key de acceso
+        in: header
+        name: x-api-key
+        required: true
+        type: string
       produces:
       - application/json
       responses:

@@ -15,6 +15,7 @@ func HttpResponseJSON(w http.ResponseWriter, statusCode int, obj interface{}, lo
 	if err != nil {
 		return err
 	}
+	w.Header().Add("Strict-Transport-Security", "max-age=63072000; includeSubDomains")
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(statusCode)
 	w.Write(dataParams)

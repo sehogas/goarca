@@ -40,7 +40,7 @@ func (m *ApiKeyMiddleware) Handler(next http.Handler) http.Handler {
 
 		authorization := r.Header.Get("x-api-key")
 		if err := m.CheckAPIKey(authorization); err != nil {
-			util.HttpResponseJSON(w, http.StatusInternalServerError, &dto.ErrorResponse{Error: "invalid api key"}, errors.New("invalid api key"))
+			util.HttpResponseJSON(w, http.StatusUnauthorized, &dto.ErrorResponse{Error: "invalid api key"}, errors.New("invalid api key"))
 			return
 		}
 		next.ServeHTTP(w, r)
