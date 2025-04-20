@@ -20,5 +20,5 @@ COPY --from=root-certs /etc/group /etc/group
 COPY --chown=1001:1001 --from=root-certs /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 COPY --chown=1001:1001 --from=builder /build/api-arca /
 USER app
-EXPOSE 3000
+EXPOSE 4433
 ENTRYPOINT ["/api-arca"]
