@@ -14,7 +14,7 @@ import (
 //	@Tags			API
 //	@Produce		json
 //	@Param			x-api-key	header		string	true	"API Key de acceso"
-//	@Success		200			{object}	dto.DummyResponse
+//	@Success		200			{object}	dto.InfoResponse
 //	@Failure		401			{object}	dto.ErrorResponse
 //	@Router			/info [get]
 func InfoHandler(w http.ResponseWriter, r *http.Request) {

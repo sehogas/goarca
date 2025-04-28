@@ -35,7 +35,7 @@ func DummyCoemconsHandler(w http.ResponseWriter, r *http.Request) {
 // ObtenerConsultaEstadosCOEMHandler godoc
 //
 //	@Summary		Obtener Consulta Estados COEM
-//	@Description	Obtener Consulta Estados COEM
+//	@Description	Obtiene una lista de comunicaciones de embarque comprendidas en la cabecera informada.
 //	@Tags			Consultas de Comunicación de Embarque
 //	@Accept			json
 //	@Produce		json
@@ -66,7 +66,7 @@ func ObtenerConsultaEstadosCOEMHandler(w http.ResponseWriter, r *http.Request) {
 // ObtenerConsultaNoAbordoHandler godoc
 //
 //	@Summary		Obtener Consulta No Abordo
-//	@Description	Obtener Consulta No Abordo
+//	@Description	Obtiene una lista de aquellas comunicaciones de embarque relacionadas con la carátula de referencia para las cuales se ha definido el no abordaje parcial o total de su contenido, el cual puede tratarse de bultos sueltos, mercadería a granel, contenedores de carga o cont¢nedores vacíos.
 //	@Tags			Consultas de Comunicación de Embarque
 //	@Accept			json
 //	@Produce		json
@@ -97,7 +97,7 @@ func ObtenerConsultaNoAbordoHandler(w http.ResponseWriter, r *http.Request) {
 // ObtenerConsultaSolicitudesHandler godoc
 //
 //	@Summary		Obtener Consulta de Solicitudes
-//	@Description	Obtener Consulta de Solicitudes
+//	@Description	Obtiene la lista de solicitudes de comunicaciones asociadas a la cabecera informada. Número y tipo de solicitud, estado y fecha.
 //	@Tags			Consultas de Comunicación de Embarque
 //	@Accept			json
 //	@Produce		json

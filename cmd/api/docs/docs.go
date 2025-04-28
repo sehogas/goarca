@@ -21,7 +21,7 @@ const docTemplate = `{
     "paths": {
         "/coem/anular-caratula": {
             "delete": {
-                "description": "Anular Carátula sin COEMs",
+                "description": "Método que permite eliminar una carátula. Si se encuentran COEMs en estado Presentada o Autorizada se detiene la ejecución.",
                 "consumes": [
                     "application/json"
                 ],
@@ -80,7 +80,7 @@ const docTemplate = `{
         },
         "/coem/anular-coem": {
             "delete": {
-                "description": "Anular COEM",
+                "description": "Método a través del cual se anula una COEM. La COEM debe estar en estado en CURSO o REGISTRADA.",
                 "consumes": [
                     "application/json"
                 ],
@@ -139,7 +139,7 @@ const docTemplate = `{
         },
         "/coem/cerrar-coem": {
             "post": {
-                "description": "Cerrar COEM",
+                "description": "Método a través del cual se cierra la carga de una COEM asociada a una Carátula, permitiendo que el operador Aduanero pueda trabajar con ella. La COEM debe estar en estado CUR.",
                 "consumes": [
                     "application/json"
                 ],
@@ -239,7 +239,7 @@ const docTemplate = `{
         },
         "/coem/rectificar-caratula": {
             "put": {
-                "description": "Rectificar una Carátula sin COEMs",
+                "description": "Permite rectificar los datos de una Carátula previamente creada con el método RegistrarCaratula. Entre las restricciones, no se permitirá cargar datos idénticos a otra Carátula existente, ni modificar aquella carátula que tenga COEMs asociados.",
                 "consumes": [
                     "application/json"
                 ],
@@ -298,7 +298,7 @@ const docTemplate = `{
         },
         "/coem/rectificar-coem": {
             "put": {
-                "description": "Rectificar COEM",
+                "description": "Método a través del cual se modifican los valores de una COEM. La COEM debe estar en curso o registrada. No se habilita rectificar una COEM presentada o autorizada. No debe existir solicitud de cierre de carga iniciada o aprobada.",
                 "consumes": [
                     "application/json"
                 ],
@@ -357,7 +357,7 @@ const docTemplate = `{
         },
         "/coem/registrar-caratula": {
             "post": {
-                "description": "Registra una nueva Carátula",
+                "description": "Crea el identificador necesario para inicializar el circuito de comunicación de embarque.",
                 "consumes": [
                     "application/json"
                 ],
@@ -416,7 +416,7 @@ const docTemplate = `{
         },
         "/coem/registrar-coem": {
             "post": {
-                "description": "Registrar COEM en Carátula",
+                "description": "Método a través del cual se registran los valores de una COEM comprendidos en información de Contenedores con Carga, Contenedores Vacíos y Mercadería suelta, asociados a un Identificador de Carátula previamente creado con el método RegistrarCaratula.",
                 "consumes": [
                     "application/json"
                 ],
@@ -475,7 +475,7 @@ const docTemplate = `{
         },
         "/coem/solicitar-anulacion-coem": {
             "post": {
-                "description": "Solicitar anulación COEM",
+                "description": "Método a través del cual se solicita la anulación de una COEM cuando ya se encuentra en estado PRESENTADA o AUTORIZADA, caso contrario puede utilizar el método AnularCOEM.",
                 "consumes": [
                     "application/json"
                 ],
@@ -534,7 +534,7 @@ const docTemplate = `{
         },
         "/coem/solicitar-cambio-buque": {
             "put": {
-                "description": "Solicitar cambio de Buque para Carátulas con COEMs",
+                "description": "Método a través del cual se modificarán el Identificador y/o nombre del buque. Deben existir COEMs presentadas o autorizadas, caso contrario aún se puede enviar la rectificación de la carátula. No debe existir solicitud de cierre de carga iniciada o aprobada.",
                 "consumes": [
                     "application/json"
                 ],
@@ -593,7 +593,7 @@ const docTemplate = `{
         },
         "/coem/solicitar-cambio-fechas": {
             "put": {
-                "description": "Solicitar cambio de Fechas para Carátulas con COEMs",
+                "description": "Método a través del cual se modifican las Fechas de Arribo y/o Fecha de Zarpada de la Carátula. Deben existir COEMs presentadas o autorizadas, caso contrario aún se puede enviar la rectificación de la carátula. No debe existir solicitud de cierre de carga iniciada o aprobada.",
                 "consumes": [
                     "application/json"
                 ],
@@ -652,7 +652,7 @@ const docTemplate = `{
         },
         "/coem/solicitar-cambio-lot": {
             "put": {
-                "description": "Solicitar cambio de Lugar Operativo para Carátulas con COEMs",
+                "description": "Método a través del cual se modifica el Lugar Operativo de la Carátula. Deben existir COEMs presentadas o autorizadas, caso contrario aún se puede enviar la rectificación de la carátula. No debe existir solicitud de cierre de carga iniciada o aprobada.",
                 "consumes": [
                     "application/json"
                 ],
@@ -711,7 +711,7 @@ const docTemplate = `{
         },
         "/coem/solicitar-cierre-carga-conto-bulto": {
             "post": {
-                "description": "Solicitar Cierre de Carga Contenedores y/o Bultos",
+                "description": "Método a través del cual se solicita el cierre de carga de una Carátula que contiene COMEs cuyos permisos de embarque amparan contenedores o bultos sueltos (no Granel). Todas las COEMs deben estar en estado AUTORIZADA o ANULADA. No se consideran las marcadas como NO ABORDO. No debe existir solicitud de cierre de carga contenedores o bultos sueltos iniciada o aprobada.",
                 "consumes": [
                     "application/json"
                 ],
@@ -770,7 +770,7 @@ const docTemplate = `{
         },
         "/coem/solicitar-cierre-carga-granel": {
             "post": {
-                "description": "Solicitar Cierre de Carga Granel",
+                "description": "Método a través del cual se solicita el cierre de carga de una Carátula que contiene COEMs cuyos permisos de embarque contienen Mercadería a granel. Todas las COEMs deben estar en estado AUTORIZADA o ANULADA. No se consideran las líneas marcadas como NO ABORDO. Requiere detalle de todas las COMEs, Permisos de Embarque e ítems abordo. No debe existir solicitud de cierre de carga granel iniciada o aprobada.",
                 "consumes": [
                     "application/json"
                 ],
@@ -829,7 +829,7 @@ const docTemplate = `{
         },
         "/coem/solicitar-no-abordo": {
             "post": {
-                "description": "Solicitar No Abordo",
+                "description": "Método a través del cual se solicita no abordar una o varias líneas de mercadería o contenedores asociados a una carátula/COEM. La COEM debe estar en estado PRESENTADA o AUTORIZADA. No debe existir solicitud de cierre de carga iniciada o aprobada.",
                 "consumes": [
                     "application/json"
                 ],
@@ -929,7 +929,7 @@ const docTemplate = `{
         },
         "/coemcons/obtener-consulta-estados-coem": {
             "get": {
-                "description": "Obtener Consulta Estados COEM",
+                "description": "Obtiene una lista de comunicaciones de embarque comprendidas en la cabecera informada.",
                 "consumes": [
                     "application/json"
                 ],
@@ -989,7 +989,7 @@ const docTemplate = `{
         },
         "/coemcons/obtener-consulta-no-abordo": {
             "get": {
-                "description": "Obtener Consulta No Abordo",
+                "description": "Obtiene una lista de aquellas comunicaciones de embarque relacionadas con la carátula de referencia para las cuales se ha definido el no abordaje parcial o total de su contenido, el cual puede tratarse de bultos sueltos, mercadería a granel, contenedores de carga o cont¢nedores vacíos.",
                 "consumes": [
                     "application/json"
                 ],
@@ -1049,7 +1049,7 @@ const docTemplate = `{
         },
         "/coemcons/obtener-consulta-solicitudes": {
             "get": {
-                "description": "Obtener Consulta de Solicitudes",
+                "description": "Obtiene la lista de solicitudes de comunicaciones asociadas a la cabecera informada. Número y tipo de solicitud, estado y fecha.",
                 "consumes": [
                     "application/json"
                 ],
@@ -1189,7 +1189,7 @@ const docTemplate = `{
         },
         "/gestabref/consultar-fecha-ult-act": {
             "get": {
-                "description": "Obtiene la última actualización de la tabla consultada",
+                "description": "Retorna la fecha de última actualización de la tabla consultada.",
                 "consumes": [
                     "application/json"
                 ],
@@ -1287,7 +1287,7 @@ const docTemplate = `{
         },
         "/gestabref/lista-arancel": {
             "get": {
-                "description": "Lista Arancel",
+                "description": "Retorna tabla del tipo código / descripción / opción / vigencia.",
                 "consumes": [
                     "application/json"
                 ],
@@ -1347,7 +1347,7 @@ const docTemplate = `{
         },
         "/gestabref/lista-descripcion": {
             "get": {
-                "description": "Lista Descripción",
+                "description": "Emite tabla del tipo código / descripción.",
                 "consumes": [
                     "application/json"
                 ],
@@ -1467,7 +1467,7 @@ const docTemplate = `{
         },
         "/gestabref/lista-empresas": {
             "get": {
-                "description": "Lista de Empresas",
+                "description": "Emite tabla del tipo cuit / razón social.",
                 "consumes": [
                     "application/json"
                 ],
@@ -1527,7 +1527,7 @@ const docTemplate = `{
         },
         "/gestabref/lista-lugares-operativos": {
             "get": {
-                "description": "Lista de Lugares Operativos",
+                "description": "Emite tabla del tipo código / descripción / vigencia / aduana / lugar operativo.",
                 "consumes": [
                     "application/json"
                 ],
@@ -1587,7 +1587,7 @@ const docTemplate = `{
         },
         "/gestabref/lista-paises-aduanas": {
             "get": {
-                "description": "Lista de Paises y Aduanas",
+                "description": "Emite tabla del tipo código / descripción / vigencia /país o aduana.",
                 "consumes": [
                     "application/json"
                 ],
@@ -1647,7 +1647,7 @@ const docTemplate = `{
         },
         "/gestabref/lista-tablas-referencia": {
             "get": {
-                "description": "Lista de Tablas de Referencia",
+                "description": "Emite tabla del tipo: Tabla de Referencia / Descripción Tabla Referencia / WebMethod (que se debe utilizar para obtener los datos de dicha tabla).",
                 "consumes": [
                     "application/json"
                 ],
@@ -1721,7 +1721,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/dto.DummyResponse"
+                            "$ref": "#/definitions/dto.InfoResponse"
                         }
                     },
                     "401": {
@@ -2209,6 +2209,14 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "FechaUltAct": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.InfoResponse": {
+            "type": "object",
+            "properties": {
+                "version": {
                     "type": "string"
                 }
             }

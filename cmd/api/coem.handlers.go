@@ -39,7 +39,7 @@ func DummyCoemHandler(w http.ResponseWriter, r *http.Request) {
 // RegistrarCaratulaHandler godoc
 //
 //	@Summary		Registrar Carátula
-//	@Description	Registra una nueva Carátula
+//	@Description	Crea el identificador necesario para inicializar el circuito de comunicación de embarque.
 //	@Tags			Comunicación de Embarque
 //	@Accept			json
 //	@Produce		json
@@ -75,7 +75,7 @@ func RegistrarCaratulaHandler(w http.ResponseWriter, r *http.Request) {
 // RectificarCaratulaHandler godoc
 //
 //	@Summary		Rectificar Carátula
-//	@Description	Rectificar una Carátula sin COEMs
+//	@Description	Permite rectificar los datos de una Carátula previamente creada con el método RegistrarCaratula. Entre las restricciones, no se permitirá cargar datos idénticos a otra Carátula existente, ni modificar aquella carátula que tenga COEMs asociados.
 //	@Tags			Comunicación de Embarque
 //	@Accept			json
 //	@Produce		json
@@ -111,7 +111,7 @@ func RectificarCaratulaHandler(w http.ResponseWriter, r *http.Request) {
 // AnularCaratulaHandler godoc
 //
 //	@Summary		Anular Carátula
-//	@Description	Anular Carátula sin COEMs
+//	@Description	Método que permite eliminar una carátula. Si se encuentran COEMs en estado Presentada o Autorizada se detiene la ejecución.
 //	@Tags			Comunicación de Embarque
 //	@Accept			json
 //	@Produce		json
@@ -149,7 +149,7 @@ func AnularCaratulaHandler(w http.ResponseWriter, r *http.Request) {
 // SolicitarCambioBuqueHandler godoc
 //
 //	@Summary		Solicitar cambio de Buque
-//	@Description	Solicitar cambio de Buque para Carátulas con COEMs
+//	@Description	Método a través del cual se modificarán el Identificador y/o nombre del buque. Deben existir COEMs presentadas o autorizadas, caso contrario aún se puede enviar la rectificación de la carátula. No debe existir solicitud de cierre de carga iniciada o aprobada.
 //	@Tags			Comunicación de Embarque
 //	@Accept			json
 //	@Produce		json
@@ -185,7 +185,7 @@ func SolicitarCambioBuqueHandler(w http.ResponseWriter, r *http.Request) {
 // SolicitarCambioFechasHandler godoc
 //
 //	@Summary		Solicitar cambio de Fechas
-//	@Description	Solicitar cambio de Fechas para Carátulas con COEMs
+//	@Description	Método a través del cual se modifican las Fechas de Arribo y/o Fecha de Zarpada de la Carátula. Deben existir COEMs presentadas o autorizadas, caso contrario aún se puede enviar la rectificación de la carátula. No debe existir solicitud de cierre de carga iniciada o aprobada.
 //	@Tags			Comunicación de Embarque
 //	@Accept			json
 //	@Produce		json
@@ -221,7 +221,7 @@ func SolicitarCambioFechasHandler(w http.ResponseWriter, r *http.Request) {
 // SolicitarCambioLOTHandler godoc
 //
 //	@Summary		Solicitar cambio de LOT
-//	@Description	Solicitar cambio de Lugar Operativo para Carátulas con COEMs
+//	@Description	Método a través del cual se modifica el Lugar Operativo de la Carátula. Deben existir COEMs presentadas o autorizadas, caso contrario aún se puede enviar la rectificación de la carátula. No debe existir solicitud de cierre de carga iniciada o aprobada.
 //	@Tags			Comunicación de Embarque
 //	@Accept			json
 //	@Produce		json
@@ -257,7 +257,7 @@ func SolicitarCambioLOTHandler(w http.ResponseWriter, r *http.Request) {
 // RegistrarCOEMHandler godoc
 //
 //	@Summary		Registrar COEM
-//	@Description	Registrar COEM en Carátula
+//	@Description	Método a través del cual se registran los valores de una COEM comprendidos en información de Contenedores con Carga, Contenedores Vacíos y Mercadería suelta, asociados a un Identificador de Carátula previamente creado con el método RegistrarCaratula.
 //	@Tags			Comunicación de Embarque
 //	@Accept			json
 //	@Produce		json
@@ -293,7 +293,7 @@ func RegistrarCOEMHandler(w http.ResponseWriter, r *http.Request) {
 // RectificarCOEMHandler godoc
 //
 //	@Summary		Rectificar COEM
-//	@Description	Rectificar COEM
+//	@Description	Método a través del cual se modifican los valores de una COEM. La COEM debe estar en curso o registrada. No se habilita rectificar una COEM presentada o autorizada. No debe existir solicitud de cierre de carga iniciada o aprobada.
 //	@Tags			Comunicación de Embarque
 //	@Accept			json
 //	@Produce		json
@@ -329,7 +329,7 @@ func RectificarCOEMHandler(w http.ResponseWriter, r *http.Request) {
 // CerrarCOEMHandler godoc
 //
 //	@Summary		Cerrar COEM
-//	@Description	Cerrar COEM
+//	@Description	Método a través del cual se cierra la carga de una COEM asociada a una Carátula, permitiendo que el operador Aduanero pueda trabajar con ella. La COEM debe estar en estado CUR.
 //	@Tags			Comunicación de Embarque
 //	@Accept			json
 //	@Produce		json
@@ -365,7 +365,7 @@ func CerrarCOEMHandler(w http.ResponseWriter, r *http.Request) {
 // AnularCOEMHandler godoc
 //
 //	@Summary		Anular COEM
-//	@Description	Anular COEM
+//	@Description	Método a través del cual se anula una COEM. La COEM debe estar en estado en CURSO o REGISTRADA.
 //	@Tags			Comunicación de Embarque
 //	@Accept			json
 //	@Produce		json
@@ -401,7 +401,7 @@ func AnularCOEMHandler(w http.ResponseWriter, r *http.Request) {
 // SolicitarAnulacionCOEMHandler godoc
 //
 //	@Summary		Solicitar Anulación COEM
-//	@Description	Solicitar anulación COEM
+//	@Description	Método a través del cual se solicita la anulación de una COEM cuando ya se encuentra en estado PRESENTADA o AUTORIZADA, caso contrario puede utilizar el método AnularCOEM.
 //	@Tags			Comunicación de Embarque
 //	@Accept			json
 //	@Produce		json
@@ -437,7 +437,7 @@ func SolicitarAnulacionCOEMHandler(w http.ResponseWriter, r *http.Request) {
 // SolicitarNoABordoHandler godoc
 //
 //	@Summary		Solicitar No Abordo
-//	@Description	Solicitar No Abordo
+//	@Description	Método a través del cual se solicita no abordar una o varias líneas de mercadería o contenedores asociados a una carátula/COEM. La COEM debe estar en estado PRESENTADA o AUTORIZADA. No debe existir solicitud de cierre de carga iniciada o aprobada.
 //	@Tags			Comunicación de Embarque
 //	@Accept			json
 //	@Produce		json
@@ -473,7 +473,7 @@ func SolicitarNoABordoHandler(w http.ResponseWriter, r *http.Request) {
 // SolicitarCierreCargaContoBultoHandler godoc
 //
 //	@Summary		Solicitar Cierre de Carga Contenedores y/o Bultos
-//	@Description	Solicitar Cierre de Carga Contenedores y/o Bultos
+//	@Description	Método a través del cual se solicita el cierre de carga de una Carátula que contiene COMEs cuyos permisos de embarque amparan contenedores o bultos sueltos (no Granel). Todas las COEMs deben estar en estado AUTORIZADA o ANULADA. No se consideran las marcadas como NO ABORDO. No debe existir solicitud de cierre de carga contenedores o bultos sueltos iniciada o aprobada.
 //	@Tags			Comunicación de Embarque
 //	@Accept			json
 //	@Produce		json
@@ -509,7 +509,7 @@ func SolicitarCierreCargaContoBultoHandler(w http.ResponseWriter, r *http.Reques
 // SolicitarCierreCargaGranelHandler godoc
 //
 //	@Summary		Solicitar Cierre de Carga Granel
-//	@Description	Solicitar Cierre de Carga Granel
+//	@Description	Método a través del cual se solicita el cierre de carga de una Carátula que contiene COEMs cuyos permisos de embarque contienen Mercadería a granel. Todas las COEMs deben estar en estado AUTORIZADA o ANULADA. No se consideran las líneas marcadas como NO ABORDO. Requiere detalle de todas las COMEs, Permisos de Embarque e ítems abordo. No debe existir solicitud de cierre de carga granel iniciada o aprobada.
 //	@Tags			Comunicación de Embarque
 //	@Accept			json
 //	@Produce		json

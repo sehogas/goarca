@@ -35,7 +35,7 @@ func DummyGesTabRefHandler(w http.ResponseWriter, r *http.Request) {
 // ConsultarFechaUltActHandler godoc
 //
 //	@Summary		Obtener la Fecha de última actualización de la tabla
-//	@Description	Obtiene la última actualización de la tabla consultada
+//	@Description	Retorna la fecha de última actualización de la tabla consultada.
 //	@Tags			Consulta de Tablas de Referencia
 //	@Accept			json
 //	@Produce		json
@@ -68,7 +68,7 @@ func ConsultarFechaUltActHandler(w http.ResponseWriter, r *http.Request) {
 // ListaArancelHandler godoc
 //
 //	@Summary		Lista Arancel
-//	@Description	Lista Arancel
+//	@Description	Retorna tabla del tipo código / descripción / opción / vigencia.
 //	@Tags			Consulta de Tablas de Referencia
 //	@Accept			json
 //	@Produce		json
@@ -99,7 +99,7 @@ func ListaArancelHandler(w http.ResponseWriter, r *http.Request) {
 // ListaDescripcionHandler godoc
 //
 //	@Summary		Lista Descripción
-//	@Description	Lista Descripción
+//	@Description	Emite tabla del tipo código / descripción.
 //	@Tags			Consulta de Tablas de Referencia
 //	@Accept			json
 //	@Produce		json
@@ -161,7 +161,7 @@ func ListaDescripcionDecodificacionHandler(w http.ResponseWriter, r *http.Reques
 // ListaEmpresasHandler godoc
 //
 //	@Summary		Lista de Empresas
-//	@Description	Lista de Empresas
+//	@Description	Emite tabla del tipo cuit / razón social.
 //	@Tags			Consulta de Tablas de Referencia
 //	@Accept			json
 //	@Produce		json
@@ -192,7 +192,7 @@ func ListaEmpresasHandler(w http.ResponseWriter, r *http.Request) {
 // ListaLugaresOperativosHandler godoc
 //
 //	@Summary		Lista de Lugares Operativos
-//	@Description	Lista de Lugares Operativos
+//	@Description	Emite tabla del tipo código / descripción / vigencia / aduana / lugar operativo.
 //	@Tags			Consulta de Tablas de Referencia
 //	@Accept			json
 //	@Produce		json
@@ -223,7 +223,7 @@ func ListaLugaresOperativosHandler(w http.ResponseWriter, r *http.Request) {
 // ListaPaisesAduanasHandler godoc
 //
 //	@Summary		Lista de Paises y Aduanas
-//	@Description	Lista de Paises y Aduanas
+//	@Description	Emite tabla del tipo código / descripción / vigencia /país o aduana.
 //	@Tags			Consulta de Tablas de Referencia
 //	@Accept			json
 //	@Produce		json
@@ -254,7 +254,7 @@ func ListaPaisesAduanasHandler(w http.ResponseWriter, r *http.Request) {
 // ListaTablasReferenciaHandler godoc
 //
 //	@Summary		Lista de Tablas de Referencia
-//	@Description	Lista de Tablas de Referencia
+//	@Description	Emite tabla del tipo: Tabla de Referencia / Descripción Tabla Referencia / WebMethod (que se debe utilizar para obtener los datos de dicha tabla).
 //	@Tags			Consulta de Tablas de Referencia
 //	@Accept			json
 //	@Produce		json
