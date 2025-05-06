@@ -413,7 +413,7 @@ func (ws *Wscoem) RegistrarCOEM(params *RegistrarCOEMParams) (string, error) {
 	var mercaderiasSueltas []*wscoem.MercaderiaSuelta
 
 	if params.ContenedoresCarga != nil {
-		for _, v := range *params.ContenedoresCarga {
+		for _, v := range params.ContenedoresCarga {
 			var precintos []*wscoem.Precinto
 			for _, p := range v.Precintos {
 				precintos = append(precintos, &wscoem.Precinto{
@@ -442,7 +442,7 @@ func (ws *Wscoem) RegistrarCOEM(params *RegistrarCOEMParams) (string, error) {
 	}
 
 	if params.ContenedoresVacios != nil {
-		for _, v := range *params.ContenedoresVacios {
+		for _, v := range params.ContenedoresVacios {
 			contenedoresVacios = append(contenedoresVacios, &wscoem.ContenedorVacio{
 				IdentificadorContenedor: v.IdentificadorContenedor,
 				Tipo:                    v.Tipo,
@@ -453,9 +453,9 @@ func (ws *Wscoem) RegistrarCOEM(params *RegistrarCOEMParams) (string, error) {
 	}
 
 	if params.MercaderiasSueltas != nil {
-		for _, v := range *params.MercaderiasSueltas {
+		for _, v := range params.MercaderiasSueltas {
 			var embalajes []*wscoem.Embalaje
-			for _, e := range *v.Embalajes {
+			for _, e := range v.Embalajes {
 				embalajes = append(embalajes, &wscoem.Embalaje{
 					CodigoEmbalaje: e.CodigoEmbalaje,
 					Peso:           e.Peso,
@@ -536,7 +536,7 @@ func (ws *Wscoem) RectificarCOEM(params *RectificarCOEMParams) (string, error) {
 	var mercaderiasSueltas []*wscoem.MercaderiaSuelta
 
 	if params.ContenedoresCarga != nil {
-		for _, v := range *params.ContenedoresCarga {
+		for _, v := range params.ContenedoresCarga {
 			var precintos []*wscoem.Precinto
 			for _, p := range v.Precintos {
 				precintos = append(precintos, &wscoem.Precinto{
@@ -565,7 +565,7 @@ func (ws *Wscoem) RectificarCOEM(params *RectificarCOEMParams) (string, error) {
 	}
 
 	if params.ContenedoresVacios != nil {
-		for _, v := range *params.ContenedoresVacios {
+		for _, v := range params.ContenedoresVacios {
 			contenedoresVacios = append(contenedoresVacios, &wscoem.ContenedorVacio{
 				IdentificadorContenedor: v.IdentificadorContenedor,
 				Tipo:                    v.Tipo,
@@ -576,9 +576,9 @@ func (ws *Wscoem) RectificarCOEM(params *RectificarCOEMParams) (string, error) {
 	}
 
 	if params.MercaderiasSueltas != nil {
-		for _, v := range *params.MercaderiasSueltas {
+		for _, v := range params.MercaderiasSueltas {
 			var embalajes []*wscoem.Embalaje
-			for _, e := range *v.Embalajes {
+			for _, e := range v.Embalajes {
 				embalajes = append(embalajes, &wscoem.Embalaje{
 					CodigoEmbalaje: e.CodigoEmbalaje,
 					Peso:           e.Peso,
@@ -807,7 +807,7 @@ func (ws *Wscoem) SolicitarNoABordo(params *SolicitarNoABordoParams) (string, er
 	var declaraciones []*wscoem.Declaracion
 
 	if params.ContenedoresCarga != nil {
-		for _, v := range *params.ContenedoresCarga {
+		for _, v := range params.ContenedoresCarga {
 			contenedoresCarga = append(contenedoresCarga, &wscoem.Contenedor{
 				IdentificadorContenedor: v.IdentificadorContenedor,
 			})
@@ -815,7 +815,7 @@ func (ws *Wscoem) SolicitarNoABordo(params *SolicitarNoABordoParams) (string, er
 	}
 
 	if params.ContenedoresVacios != nil {
-		for _, v := range *params.ContenedoresVacios {
+		for _, v := range params.ContenedoresVacios {
 			contenedoresVacios = append(contenedoresVacios, &wscoem.Contenedor{
 				IdentificadorContenedor: v.IdentificadorContenedor,
 			})
@@ -823,7 +823,7 @@ func (ws *Wscoem) SolicitarNoABordo(params *SolicitarNoABordoParams) (string, er
 	}
 
 	if params.MercaderiasSueltas != nil {
-		for _, v := range *params.MercaderiasSueltas {
+		for _, v := range params.MercaderiasSueltas {
 			declaraciones = append(declaraciones, &wscoem.Declaracion{
 				IdentificadorDeclaracion: v.IdentificadorDeclaracion,
 			})
@@ -893,7 +893,7 @@ func (ws *Wscoem) SolicitarCierreCargaContoBulto(params *SolicitarCierreCargaCon
 	var declaraciones []*wscoem.DeclaracionCont
 
 	if params.Declaraciones != nil {
-		for _, v := range *params.Declaraciones {
+		for _, v := range params.Declaraciones {
 			declaraciones = append(declaraciones, &wscoem.DeclaracionCont{
 				IdentificadorDeclaracion: v.IdentificadorDeclaracion,
 				FechaEmbarque:            soap.CreateXsdDateTime(v.FechaEmbarque, true),
@@ -957,12 +957,12 @@ func (ws *Wscoem) SolicitarCierreCargaGranel(params *SolicitarCierreCargaGranelP
 	var declaracionesCoemGranel []*wscoem.CoemGranel
 
 	if params.DeclaracionesCOEMGranel != nil {
-		for _, v := range *params.DeclaracionesCOEMGranel {
+		for _, v := range params.DeclaracionesCOEMGranel {
 			var declaracionesGranel []*wscoem.DeclaracionGranel
-			for _, d := range *params.DeclaracionesCOEMGranel {
-				for _, g := range *d.DeclaracionesGranel {
+			for _, d := range params.DeclaracionesCOEMGranel {
+				for _, g := range d.DeclaracionesGranel {
 					var items []*wscoem.Item
-					for _, i := range *g.Items {
+					for _, i := range g.Items {
 						items = append(items, &wscoem.Item{
 							NumeroItem:   i.NumeroItem,
 							CantidadReal: i.CantidadReal,

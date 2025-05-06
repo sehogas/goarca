@@ -76,13 +76,13 @@ type Embalaje struct {
 type MercaderiaSuelta struct {
 	IdentificadorDeclaracion string      `json:"IdentificadorDeclaracion"`
 	CuitATA                  string      `json:"CuitATA,omitempty"`
-	Embalajes                *[]Embalaje `json:"Embalajes"`
+	Embalajes                []*Embalaje `json:"Embalajes"`
 }
 
 type COEMParams struct {
-	ContenedoresCarga  *[]ContenedorCarga  `json:"ContenedoresConCarga,omitempty"`
-	ContenedoresVacios *[]ContenedorVacio  `json:"ContenedoresVacios,omitempty"`
-	MercaderiasSueltas *[]MercaderiaSuelta `json:"MercaderiasSueltas,omitempty"`
+	ContenedoresCarga  []*ContenedorCarga  `json:"ContenedoresConCarga,omitempty"`
+	ContenedoresVacios []*ContenedorVacio  `json:"ContenedoresVacios,omitempty"`
+	MercaderiasSueltas []*MercaderiaSuelta `json:"MercaderiasSueltas,omitempty"`
 }
 
 type IdentificadorCOEMParams struct {
@@ -109,9 +109,9 @@ type DeclaracionNoABordo struct {
 }
 
 type NoABordoParams struct {
-	ContenedoresCarga  *[]ContenedorNoABordo  `json:"ContenedoresCarga,omitempty"`
-	ContenedoresVacios *[]ContenedorNoABordo  `json:"ContenedoresVacios,omitempty"`
-	MercaderiasSueltas *[]DeclaracionNoABordo `json:"MercaderiasSueltas,omitempty"`
+	ContenedoresCarga  []*ContenedorNoABordo  `json:"ContenedoresCarga,omitempty"`
+	ContenedoresVacios []*ContenedorNoABordo  `json:"ContenedoresVacios,omitempty"`
+	MercaderiasSueltas []*DeclaracionNoABordo `json:"MercaderiasSueltas,omitempty"`
 }
 
 type DeclaracionCont struct {
@@ -120,7 +120,7 @@ type DeclaracionCont struct {
 }
 
 type CierreCargaContoBultoParams struct {
-	Declaraciones *[]DeclaracionCont `json:"Declaraciones"`
+	Declaraciones []*DeclaracionCont `json:"Declaraciones"`
 }
 
 type ItemGranel struct {
@@ -132,16 +132,16 @@ type DeclaracionGranel struct {
 	IdentificadorDeclaracion    string        `json:"IdentificadorDeclaracion"`
 	FechaEmbarque               time.Time     `json:"FechaEmbarque"`
 	IdentificadorCierreCumplido string        `json:"IdentificadorCierreCumplido"`
-	Items                       *[]ItemGranel `json:"Items"`
+	Items                       []*ItemGranel `json:"Items"`
 }
 
 type DeclaracionCOEMGranel struct {
 	IdentificadorCOEM   string               `json:"IdentificadorCOEM"`
-	DeclaracionesGranel *[]DeclaracionGranel `json:"DeclaracionesGranel"`
+	DeclaracionesGranel []*DeclaracionGranel `json:"DeclaracionesGranel"`
 }
 
 type CierreCargaGranelParams struct {
-	DeclaracionesCOEMGranel *[]DeclaracionCOEMGranel `json:"DeclaracionesCOEMGranel"`
+	DeclaracionesCOEMGranel []*DeclaracionCOEMGranel `json:"DeclaracionesCOEMGranel"`
 }
 
 type SolicitarNoABordoParams struct {
