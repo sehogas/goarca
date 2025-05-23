@@ -36,8 +36,8 @@ type CambioBuqueParams struct {
 
 type CambioFechasParams struct {
 	*IdentificadorCaraturaParams
-	FechaArribo       time.Time `json:"FechaArribo" validate:"required,datetime"`
-	FechaZarpada      time.Time `json:"FechaZarpada" validate:"required,datetime"`
+	FechaArribo       time.Time `json:"FechaArribo" validate:"required"`
+	FechaZarpada      time.Time `json:"FechaZarpada" validate:"required"`
 	CodigoMotivo      string    `json:"CodigoMotivo" validate:"required,lte=2"`
 	DescripcionMotivo string    `json:"DescripcionMotivo,omitempty" validate:"lte=200"`
 }
@@ -153,14 +153,14 @@ type SolicitarNoABordoParams struct {
 
 type SolicitarCierreCargaContoBultoParams struct {
 	*IdentificadorCaraturaParams
-	FechaZarpada time.Time `json:"FechaZarpada" validate:"required,datetime"`
+	FechaZarpada time.Time `json:"FechaZarpada" validate:"required"`
 	NumeroViaje  string    `json:"NumeroViaje,omitempty" validate:"len=16"`
 	*CierreCargaContoBultoParams
 }
 
 type SolicitarCierreCargaGranelParams struct {
 	*IdentificadorCaraturaParams
-	FechaZarpada time.Time `json:"FechaZarpada" validate:"required,datetime"`
+	FechaZarpada time.Time `json:"FechaZarpada" validate:"required"`
 	NumeroViaje  string    `json:"NumeroViaje,omitempty" validate:"len=16"`
 	*CierreCargaGranelParams
 }
