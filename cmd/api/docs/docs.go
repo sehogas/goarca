@@ -854,7 +854,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/afip.IdentificadorCOEMParams"
+                            "$ref": "#/definitions/afip.SolicitarNoABordoParams"
                         }
                     }
                 ],
@@ -1879,6 +1879,17 @@ const docTemplate = `{
                 }
             }
         },
+        "afip.ContenedorNoABordo": {
+            "type": "object",
+            "required": [
+                "IdentificadorContenedor"
+            ],
+            "properties": {
+                "IdentificadorContenedor": {
+                    "type": "string"
+                }
+            }
+        },
         "afip.ContenedorVacio": {
             "type": "object",
             "required": [
@@ -1941,6 +1952,14 @@ const docTemplate = `{
                     "items": {
                         "$ref": "#/definitions/afip.ItemGranel"
                     }
+                }
+            }
+        },
+        "afip.DeclaracionNoABordo": {
+            "type": "object",
+            "properties": {
+                "IdentificadorDeclaracion": {
+                    "type": "string"
                 }
             }
         },
@@ -2180,6 +2199,48 @@ const docTemplate = `{
                 },
                 "NumeroViaje": {
                     "type": "string"
+                }
+            }
+        },
+        "afip.SolicitarNoABordoParams": {
+            "type": "object",
+            "required": [
+                "CodigoMotivo",
+                "IdentificadorCOEM",
+                "IdentificadorCaratula"
+            ],
+            "properties": {
+                "CodigoMotivo": {
+                    "type": "string",
+                    "maxLength": 2
+                },
+                "ContenedoresCarga": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/afip.ContenedorNoABordo"
+                    }
+                },
+                "ContenedoresVacios": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/afip.ContenedorNoABordo"
+                    }
+                },
+                "DescripcionMotivo": {
+                    "type": "string",
+                    "maxLength": 200
+                },
+                "IdentificadorCOEM": {
+                    "type": "string"
+                },
+                "IdentificadorCaratula": {
+                    "type": "string"
+                },
+                "MercaderiasSueltas": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/afip.DeclaracionNoABordo"
+                    }
                 }
             }
         },

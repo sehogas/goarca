@@ -99,6 +99,13 @@ definitions:
     required:
     - IdentificadorContenedor
     type: object
+  afip.ContenedorNoABordo:
+    properties:
+      IdentificadorContenedor:
+        type: string
+    required:
+    - IdentificadorContenedor
+    type: object
   afip.ContenedorVacio:
     properties:
       CodigoPais:
@@ -140,6 +147,11 @@ definitions:
         items:
           $ref: '#/definitions/afip.ItemGranel'
         type: array
+    type: object
+  afip.DeclaracionNoABordo:
+    properties:
+      IdentificadorDeclaracion:
+        type: string
     type: object
   afip.Embalaje:
     properties:
@@ -299,6 +311,35 @@ definitions:
         type: string
     required:
     - FechaZarpada
+    - IdentificadorCaratula
+    type: object
+  afip.SolicitarNoABordoParams:
+    properties:
+      CodigoMotivo:
+        maxLength: 2
+        type: string
+      ContenedoresCarga:
+        items:
+          $ref: '#/definitions/afip.ContenedorNoABordo'
+        type: array
+      ContenedoresVacios:
+        items:
+          $ref: '#/definitions/afip.ContenedorNoABordo'
+        type: array
+      DescripcionMotivo:
+        maxLength: 200
+        type: string
+      IdentificadorCOEM:
+        type: string
+      IdentificadorCaratula:
+        type: string
+      MercaderiasSueltas:
+        items:
+          $ref: '#/definitions/afip.DeclaracionNoABordo'
+        type: array
+    required:
+    - CodigoMotivo
+    - IdentificadorCOEM
     - IdentificadorCaratula
     type: object
   dto.DummyResponse:
@@ -1057,7 +1098,7 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/afip.IdentificadorCOEMParams'
+          $ref: '#/definitions/afip.SolicitarNoABordoParams'
       produces:
       - application/json
       responses:

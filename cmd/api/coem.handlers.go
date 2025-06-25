@@ -442,7 +442,7 @@ func SolicitarAnulacionCOEMHandler(w http.ResponseWriter, r *http.Request) {
 //	@Accept			json
 //	@Produce		json
 //	@Param			x-api-key	header		string							true	"API Key de acceso"
-//	@Param			request		body		afip.IdentificadorCOEMParams	true	"SolicitarNoABordoRequest"
+//	@Param			request		body		afip.SolicitarNoABordoParams	true	"SolicitarNoABordoRequest"
 //	@Success		200			{object}	dto.MessageResponse
 //	@Failure		400			{object}	dto.ErrorResponse
 //	@Failure		401			{object}	dto.ErrorResponse
