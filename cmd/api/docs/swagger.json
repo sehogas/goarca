@@ -1099,7 +1099,63 @@
                 }
             }
         },
-        "/fe/comp-ultimo-autorizado": {
+        "/fe/CAESolicitar": {
+            "post": {
+                "description": "Solicitar CAE",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Factura Electrónica"
+                ],
+                "summary": "Solicitar CAE",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key de acceso",
+                        "name": "x-api-key",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "FECAESolicitarRequest",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.FECAESolicitarRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.DummyResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/fe/CompUltimoAutorizado": {
             "get": {
                 "description": "Consultar último comprobante autorizado",
                 "produces": [
@@ -1110,6 +1166,13 @@
                 ],
                 "summary": "Consultar último comprobante autorizado",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key de acceso",
+                        "name": "x-api-key",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "type": "string",
                         "description": "Punto de venta",
@@ -1147,7 +1210,7 @@
                 }
             }
         },
-        "/fe/dummy": {
+        "/fe/Dummy": {
             "get": {
                 "description": "Visualizar el estado del servicio web, del servicio de autenticación y de la base de datos de ARCA",
                 "produces": [
@@ -1157,11 +1220,372 @@
                     "Factura Electrónica"
                 ],
                 "summary": "Muestra el estado del servicio",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key de acceso",
+                        "name": "x-api-key",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/dto.DummyResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/fe/GetPtosVenta": {
+            "get": {
+                "description": "Este método permite consultar los puntos de venta para ambos tipos de Código de Autorización (CAE y CAEA) gestionados previamente por la CUIT emisora.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Factura Electrónica"
+                ],
+                "summary": "Listar Puntos de Venta",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key de acceso",
+                        "name": "x-api-key",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/wsfe.PtoVenta"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/fe/GetTiposCbte": {
+            "get": {
+                "description": "Este método permite consultar los tipos de comprobantes habilitados en este WS.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Factura Electrónica"
+                ],
+                "summary": "Listar Tipos de Comprobante",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key de acceso",
+                        "name": "x-api-key",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/wsfe.CbteTipo"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/fe/GetTiposConcepto": {
+            "get": {
+                "description": "Este método devuelve los tipos de conceptos posibles en este WS.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Factura Electrónica"
+                ],
+                "summary": "Listar Tipos de Concepto",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key de acceso",
+                        "name": "x-api-key",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/wsfe.ConceptoTipo"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/fe/GetTiposDoc": {
+            "get": {
+                "description": "Este método retorna el universo de tipos de documentos disponibles en el presente WS.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Factura Electrónica"
+                ],
+                "summary": "Listar Tipos de Documento",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key de acceso",
+                        "name": "x-api-key",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/wsfe.DocTipo"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/fe/GetTiposIva": {
+            "get": {
+                "description": "Mediante este método se obtiene la totalidad de alícuotas de IVA posibles de uso en el presente WS, detallando código y descripción.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Factura Electrónica"
+                ],
+                "summary": "Listar Tipos de IVA",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key de acceso",
+                        "name": "x-api-key",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/wsfe.IvaTipo"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/fe/GetTiposMonedas": {
+            "get": {
+                "description": "Este método retorna el universo de Monedas disponibles en el presente WS, indicando id y descripción de cada una.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Factura Electrónica"
+                ],
+                "summary": "Listar Tipos de Monedas",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key de acceso",
+                        "name": "x-api-key",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/wsfe.Moneda"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/fe/GetTiposOpcional": {
+            "get": {
+                "description": "Este método permite consultar los códigos y descripciones de los tipos de datos Opcionales que se encuentran habilitados para ser usados en el WS",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Factura Electrónica"
+                ],
+                "summary": "Listar Tipos Opcional",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key de acceso",
+                        "name": "x-api-key",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/wsfe.OpcionalTipo"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/fe/GetTiposTributos": {
+            "get": {
+                "description": "Devuelve los posibles códigos de tributos que puede contener un comprobante y su descripción.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Factura Electrónica"
+                ],
+                "summary": "Listar Tipos Tributos",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key de acceso",
+                        "name": "x-api-key",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/wsfe.TributoTipo"
+                            }
                         }
                     },
                     "401": {
@@ -2258,6 +2682,20 @@
                 }
             }
         },
+        "dto.FECAESolicitarRequest": {
+            "type": "object",
+            "properties": {
+                "Cabecera": {
+                    "$ref": "#/definitions/wsfe.FECabRequest"
+                },
+                "Detalle": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/wsfe.FECAEDetRequest"
+                    }
+                }
+            }
+        },
         "dto.FecUltActResponse": {
             "type": "object",
             "properties": {
@@ -2479,6 +2917,403 @@
                 },
                 "TipoSolicitud": {
                     "type": "string"
+                }
+            }
+        },
+        "wsfe.Actividad": {
+            "type": "object",
+            "properties": {
+                "Id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "wsfe.AlicIva": {
+            "type": "object",
+            "properties": {
+                "BaseImp": {
+                    "type": "number"
+                },
+                "Id": {
+                    "type": "integer"
+                },
+                "Importe": {
+                    "type": "number"
+                }
+            }
+        },
+        "wsfe.ArrayOfActividad": {
+            "type": "object",
+            "properties": {
+                "Actividad": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/wsfe.Actividad"
+                    }
+                }
+            }
+        },
+        "wsfe.ArrayOfAlicIva": {
+            "type": "object",
+            "properties": {
+                "AlicIva": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/wsfe.AlicIva"
+                    }
+                }
+            }
+        },
+        "wsfe.ArrayOfCbteAsoc": {
+            "type": "object",
+            "properties": {
+                "CbteAsoc": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/wsfe.CbteAsoc"
+                    }
+                }
+            }
+        },
+        "wsfe.ArrayOfComprador": {
+            "type": "object",
+            "properties": {
+                "Comprador": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/wsfe.Comprador"
+                    }
+                }
+            }
+        },
+        "wsfe.ArrayOfOpcional": {
+            "type": "object",
+            "properties": {
+                "Opcional": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/wsfe.Opcional"
+                    }
+                }
+            }
+        },
+        "wsfe.ArrayOfTributo": {
+            "type": "object",
+            "properties": {
+                "Tributo": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/wsfe.Tributo"
+                    }
+                }
+            }
+        },
+        "wsfe.CbteAsoc": {
+            "type": "object",
+            "properties": {
+                "CbteFch": {
+                    "type": "string"
+                },
+                "Cuit": {
+                    "type": "string"
+                },
+                "Nro": {
+                    "type": "integer"
+                },
+                "PtoVta": {
+                    "type": "integer"
+                },
+                "Tipo": {
+                    "type": "integer"
+                }
+            }
+        },
+        "wsfe.CbteTipo": {
+            "type": "object",
+            "properties": {
+                "Desc": {
+                    "type": "string"
+                },
+                "FchDesde": {
+                    "type": "string"
+                },
+                "FchHasta": {
+                    "type": "string"
+                },
+                "Id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "wsfe.Comprador": {
+            "type": "object",
+            "properties": {
+                "DocNro": {
+                    "type": "integer"
+                },
+                "DocTipo": {
+                    "type": "integer"
+                },
+                "Porcentaje": {
+                    "type": "number"
+                }
+            }
+        },
+        "wsfe.ConceptoTipo": {
+            "type": "object",
+            "properties": {
+                "Desc": {
+                    "type": "string"
+                },
+                "FchDesde": {
+                    "type": "string"
+                },
+                "FchHasta": {
+                    "type": "string"
+                },
+                "Id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "wsfe.DocTipo": {
+            "type": "object",
+            "properties": {
+                "Desc": {
+                    "type": "string"
+                },
+                "FchDesde": {
+                    "type": "string"
+                },
+                "FchHasta": {
+                    "type": "string"
+                },
+                "Id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "wsfe.FECAEDetRequest": {
+            "type": "object",
+            "properties": {
+                "Actividades": {
+                    "$ref": "#/definitions/wsfe.ArrayOfActividad"
+                },
+                "CanMisMonExt": {
+                    "type": "string"
+                },
+                "CbteDesde": {
+                    "type": "integer"
+                },
+                "CbteFch": {
+                    "type": "string"
+                },
+                "CbteHasta": {
+                    "type": "integer"
+                },
+                "CbtesAsoc": {
+                    "$ref": "#/definitions/wsfe.ArrayOfCbteAsoc"
+                },
+                "Compradores": {
+                    "$ref": "#/definitions/wsfe.ArrayOfComprador"
+                },
+                "Concepto": {
+                    "type": "integer"
+                },
+                "CondicionIVAReceptorId": {
+                    "type": "integer"
+                },
+                "DocNro": {
+                    "type": "integer"
+                },
+                "DocTipo": {
+                    "type": "integer"
+                },
+                "FchServDesde": {
+                    "type": "string"
+                },
+                "FchServHasta": {
+                    "type": "string"
+                },
+                "FchVtoPago": {
+                    "type": "string"
+                },
+                "ImpIVA": {
+                    "type": "number"
+                },
+                "ImpNeto": {
+                    "type": "number"
+                },
+                "ImpOpEx": {
+                    "type": "number"
+                },
+                "ImpTotConc": {
+                    "type": "number"
+                },
+                "ImpTotal": {
+                    "type": "number"
+                },
+                "ImpTrib": {
+                    "type": "number"
+                },
+                "Iva": {
+                    "$ref": "#/definitions/wsfe.ArrayOfAlicIva"
+                },
+                "MonCotiz": {
+                    "type": "number"
+                },
+                "MonId": {
+                    "type": "string"
+                },
+                "Opcionales": {
+                    "$ref": "#/definitions/wsfe.ArrayOfOpcional"
+                },
+                "PeriodoAsoc": {
+                    "$ref": "#/definitions/wsfe.Periodo"
+                },
+                "Tributos": {
+                    "$ref": "#/definitions/wsfe.ArrayOfTributo"
+                }
+            }
+        },
+        "wsfe.FECabRequest": {
+            "type": "object",
+            "properties": {
+                "CantReg": {
+                    "type": "integer"
+                },
+                "CbteTipo": {
+                    "type": "integer"
+                },
+                "PtoVta": {
+                    "type": "integer"
+                }
+            }
+        },
+        "wsfe.IvaTipo": {
+            "type": "object",
+            "properties": {
+                "Desc": {
+                    "type": "string"
+                },
+                "FchDesde": {
+                    "type": "string"
+                },
+                "FchHasta": {
+                    "type": "string"
+                },
+                "Id": {
+                    "type": "string"
+                }
+            }
+        },
+        "wsfe.Moneda": {
+            "type": "object",
+            "properties": {
+                "Desc": {
+                    "type": "string"
+                },
+                "FchDesde": {
+                    "type": "string"
+                },
+                "FchHasta": {
+                    "type": "string"
+                },
+                "Id": {
+                    "type": "string"
+                }
+            }
+        },
+        "wsfe.Opcional": {
+            "type": "object",
+            "properties": {
+                "Id": {
+                    "type": "string"
+                },
+                "Valor": {
+                    "type": "string"
+                }
+            }
+        },
+        "wsfe.OpcionalTipo": {
+            "type": "object",
+            "properties": {
+                "Desc": {
+                    "type": "string"
+                },
+                "FchDesde": {
+                    "type": "string"
+                },
+                "FchHasta": {
+                    "type": "string"
+                },
+                "Id": {
+                    "type": "string"
+                }
+            }
+        },
+        "wsfe.Periodo": {
+            "type": "object",
+            "properties": {
+                "FchDesde": {
+                    "type": "string"
+                },
+                "FchHasta": {
+                    "type": "string"
+                }
+            }
+        },
+        "wsfe.PtoVenta": {
+            "type": "object",
+            "properties": {
+                "Bloqueado": {
+                    "type": "string"
+                },
+                "EmisionTipo": {
+                    "type": "string"
+                },
+                "FchBaja": {
+                    "type": "string"
+                },
+                "Nro": {
+                    "type": "integer"
+                }
+            }
+        },
+        "wsfe.Tributo": {
+            "type": "object",
+            "properties": {
+                "Alic": {
+                    "type": "number"
+                },
+                "BaseImp": {
+                    "type": "number"
+                },
+                "Desc": {
+                    "type": "string"
+                },
+                "Id": {
+                    "type": "integer"
+                },
+                "Importe": {
+                    "type": "number"
+                }
+            }
+        },
+        "wsfe.TributoTipo": {
+            "type": "object",
+            "properties": {
+                "Desc": {
+                    "type": "string"
+                },
+                "FchDesde": {
+                    "type": "string"
+                },
+                "FchHasta": {
+                    "type": "string"
+                },
+                "Id": {
+                    "type": "integer"
                 }
             }
         }

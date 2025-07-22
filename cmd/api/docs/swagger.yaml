@@ -356,6 +356,15 @@ definitions:
       error:
         type: string
     type: object
+  dto.FECAESolicitarRequest:
+    properties:
+      Cabecera:
+        $ref: '#/definitions/wsfe.FECabRequest'
+      Detalle:
+        items:
+          $ref: '#/definitions/wsfe.FECAEDetRequest'
+        type: array
+    type: object
   dto.FecUltActResponse:
     properties:
       FechaUltAct:
@@ -500,6 +509,263 @@ definitions:
         type: string
       TipoSolicitud:
         type: string
+    type: object
+  wsfe.Actividad:
+    properties:
+      Id:
+        type: integer
+    type: object
+  wsfe.AlicIva:
+    properties:
+      BaseImp:
+        type: number
+      Id:
+        type: integer
+      Importe:
+        type: number
+    type: object
+  wsfe.ArrayOfActividad:
+    properties:
+      Actividad:
+        items:
+          $ref: '#/definitions/wsfe.Actividad'
+        type: array
+    type: object
+  wsfe.ArrayOfAlicIva:
+    properties:
+      AlicIva:
+        items:
+          $ref: '#/definitions/wsfe.AlicIva'
+        type: array
+    type: object
+  wsfe.ArrayOfCbteAsoc:
+    properties:
+      CbteAsoc:
+        items:
+          $ref: '#/definitions/wsfe.CbteAsoc'
+        type: array
+    type: object
+  wsfe.ArrayOfComprador:
+    properties:
+      Comprador:
+        items:
+          $ref: '#/definitions/wsfe.Comprador'
+        type: array
+    type: object
+  wsfe.ArrayOfOpcional:
+    properties:
+      Opcional:
+        items:
+          $ref: '#/definitions/wsfe.Opcional'
+        type: array
+    type: object
+  wsfe.ArrayOfTributo:
+    properties:
+      Tributo:
+        items:
+          $ref: '#/definitions/wsfe.Tributo'
+        type: array
+    type: object
+  wsfe.CbteAsoc:
+    properties:
+      CbteFch:
+        type: string
+      Cuit:
+        type: string
+      Nro:
+        type: integer
+      PtoVta:
+        type: integer
+      Tipo:
+        type: integer
+    type: object
+  wsfe.CbteTipo:
+    properties:
+      Desc:
+        type: string
+      FchDesde:
+        type: string
+      FchHasta:
+        type: string
+      Id:
+        type: integer
+    type: object
+  wsfe.Comprador:
+    properties:
+      DocNro:
+        type: integer
+      DocTipo:
+        type: integer
+      Porcentaje:
+        type: number
+    type: object
+  wsfe.ConceptoTipo:
+    properties:
+      Desc:
+        type: string
+      FchDesde:
+        type: string
+      FchHasta:
+        type: string
+      Id:
+        type: integer
+    type: object
+  wsfe.DocTipo:
+    properties:
+      Desc:
+        type: string
+      FchDesde:
+        type: string
+      FchHasta:
+        type: string
+      Id:
+        type: integer
+    type: object
+  wsfe.FECAEDetRequest:
+    properties:
+      Actividades:
+        $ref: '#/definitions/wsfe.ArrayOfActividad'
+      CanMisMonExt:
+        type: string
+      CbteDesde:
+        type: integer
+      CbteFch:
+        type: string
+      CbteHasta:
+        type: integer
+      CbtesAsoc:
+        $ref: '#/definitions/wsfe.ArrayOfCbteAsoc'
+      Compradores:
+        $ref: '#/definitions/wsfe.ArrayOfComprador'
+      Concepto:
+        type: integer
+      CondicionIVAReceptorId:
+        type: integer
+      DocNro:
+        type: integer
+      DocTipo:
+        type: integer
+      FchServDesde:
+        type: string
+      FchServHasta:
+        type: string
+      FchVtoPago:
+        type: string
+      ImpIVA:
+        type: number
+      ImpNeto:
+        type: number
+      ImpOpEx:
+        type: number
+      ImpTotConc:
+        type: number
+      ImpTotal:
+        type: number
+      ImpTrib:
+        type: number
+      Iva:
+        $ref: '#/definitions/wsfe.ArrayOfAlicIva'
+      MonCotiz:
+        type: number
+      MonId:
+        type: string
+      Opcionales:
+        $ref: '#/definitions/wsfe.ArrayOfOpcional'
+      PeriodoAsoc:
+        $ref: '#/definitions/wsfe.Periodo'
+      Tributos:
+        $ref: '#/definitions/wsfe.ArrayOfTributo'
+    type: object
+  wsfe.FECabRequest:
+    properties:
+      CantReg:
+        type: integer
+      CbteTipo:
+        type: integer
+      PtoVta:
+        type: integer
+    type: object
+  wsfe.IvaTipo:
+    properties:
+      Desc:
+        type: string
+      FchDesde:
+        type: string
+      FchHasta:
+        type: string
+      Id:
+        type: string
+    type: object
+  wsfe.Moneda:
+    properties:
+      Desc:
+        type: string
+      FchDesde:
+        type: string
+      FchHasta:
+        type: string
+      Id:
+        type: string
+    type: object
+  wsfe.Opcional:
+    properties:
+      Id:
+        type: string
+      Valor:
+        type: string
+    type: object
+  wsfe.OpcionalTipo:
+    properties:
+      Desc:
+        type: string
+      FchDesde:
+        type: string
+      FchHasta:
+        type: string
+      Id:
+        type: string
+    type: object
+  wsfe.Periodo:
+    properties:
+      FchDesde:
+        type: string
+      FchHasta:
+        type: string
+    type: object
+  wsfe.PtoVenta:
+    properties:
+      Bloqueado:
+        type: string
+      EmisionTipo:
+        type: string
+      FchBaja:
+        type: string
+      Nro:
+        type: integer
+    type: object
+  wsfe.Tributo:
+    properties:
+      Alic:
+        type: number
+      BaseImp:
+        type: number
+      Desc:
+        type: string
+      Id:
+        type: integer
+      Importe:
+        type: number
+    type: object
+  wsfe.TributoTipo:
+    properties:
+      Desc:
+        type: string
+      FchDesde:
+        type: string
+      FchHasta:
+        type: string
+      Id:
+        type: integer
     type: object
 info:
   contact:
@@ -1274,10 +1540,52 @@ paths:
       summary: Obtener Consulta de Solicitudes
       tags:
       - Consultas de Comunicación de Embarque
-  /fe/comp-ultimo-autorizado:
+  /fe/CAESolicitar:
+    post:
+      description: Solicitar CAE
+      parameters:
+      - description: API Key de acceso
+        in: header
+        name: x-api-key
+        required: true
+        type: string
+      - description: FECAESolicitarRequest
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.FECAESolicitarRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.DummyResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+      summary: Solicitar CAE
+      tags:
+      - Factura Electrónica
+  /fe/CompUltimoAutorizado:
     get:
       description: Consultar último comprobante autorizado
       parameters:
+      - description: API Key de acceso
+        in: header
+        name: x-api-key
+        required: true
+        type: string
       - description: Punto de venta
         in: query
         name: ptoVta
@@ -1306,10 +1614,16 @@ paths:
       summary: Consultar último comprobante autorizado
       tags:
       - Factura Electrónica
-  /fe/dummy:
+  /fe/Dummy:
     get:
       description: Visualizar el estado del servicio web, del servicio de autenticación
         y de la base de datos de ARCA
+      parameters:
+      - description: API Key de acceso
+        in: header
+        name: x-api-key
+        required: true
+        type: string
       produces:
       - application/json
       responses:
@@ -1326,6 +1640,247 @@ paths:
           schema:
             $ref: '#/definitions/dto.ErrorResponse'
       summary: Muestra el estado del servicio
+      tags:
+      - Factura Electrónica
+  /fe/GetPtosVenta:
+    get:
+      description: Este método permite consultar los puntos de venta para ambos tipos
+        de Código de Autorización (CAE y CAEA) gestionados previamente por la CUIT
+        emisora.
+      parameters:
+      - description: API Key de acceso
+        in: header
+        name: x-api-key
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/wsfe.PtoVenta'
+            type: array
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+      summary: Listar Puntos de Venta
+      tags:
+      - Factura Electrónica
+  /fe/GetTiposCbte:
+    get:
+      description: Este método permite consultar los tipos de comprobantes habilitados
+        en este WS.
+      parameters:
+      - description: API Key de acceso
+        in: header
+        name: x-api-key
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/wsfe.CbteTipo'
+            type: array
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+      summary: Listar Tipos de Comprobante
+      tags:
+      - Factura Electrónica
+  /fe/GetTiposConcepto:
+    get:
+      description: Este método devuelve los tipos de conceptos posibles en este WS.
+      parameters:
+      - description: API Key de acceso
+        in: header
+        name: x-api-key
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/wsfe.ConceptoTipo'
+            type: array
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+      summary: Listar Tipos de Concepto
+      tags:
+      - Factura Electrónica
+  /fe/GetTiposDoc:
+    get:
+      description: Este método retorna el universo de tipos de documentos disponibles
+        en el presente WS.
+      parameters:
+      - description: API Key de acceso
+        in: header
+        name: x-api-key
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/wsfe.DocTipo'
+            type: array
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+      summary: Listar Tipos de Documento
+      tags:
+      - Factura Electrónica
+  /fe/GetTiposIva:
+    get:
+      description: Mediante este método se obtiene la totalidad de alícuotas de IVA
+        posibles de uso en el presente WS, detallando código y descripción.
+      parameters:
+      - description: API Key de acceso
+        in: header
+        name: x-api-key
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/wsfe.IvaTipo'
+            type: array
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+      summary: Listar Tipos de IVA
+      tags:
+      - Factura Electrónica
+  /fe/GetTiposMonedas:
+    get:
+      description: Este método retorna el universo de Monedas disponibles en el presente
+        WS, indicando id y descripción de cada una.
+      parameters:
+      - description: API Key de acceso
+        in: header
+        name: x-api-key
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/wsfe.Moneda'
+            type: array
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+      summary: Listar Tipos de Monedas
+      tags:
+      - Factura Electrónica
+  /fe/GetTiposOpcional:
+    get:
+      description: Este método permite consultar los códigos y descripciones de los
+        tipos de datos Opcionales que se encuentran habilitados para ser usados en
+        el WS
+      parameters:
+      - description: API Key de acceso
+        in: header
+        name: x-api-key
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/wsfe.OpcionalTipo'
+            type: array
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+      summary: Listar Tipos Opcional
+      tags:
+      - Factura Electrónica
+  /fe/GetTiposTributos:
+    get:
+      description: Devuelve los posibles códigos de tributos que puede contener un
+        comprobante y su descripción.
+      parameters:
+      - description: API Key de acceso
+        in: header
+        name: x-api-key
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/wsfe.TributoTipo'
+            type: array
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+      summary: Listar Tipos Tributos
       tags:
       - Factura Electrónica
   /gestabref/consultar-fecha-ult-act:

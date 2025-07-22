@@ -1,6 +1,10 @@
 package dto
 
-import "time"
+import (
+	"time"
+
+	"github.com/sehogas/goarca/ws/wsfe"
+)
 
 type DummyResponse struct {
 	AppServer  string `json:"AppServer"`
@@ -14,4 +18,9 @@ type FecUltActResponse struct {
 
 type CbteNroResponse struct {
 	CbteNro int32 `json:"CbteNro"`
+}
+
+type FECAESolicitarRequest struct {
+	Cab *wsfe.FECabRequest      `json:"Cabecera"`
+	Det []*wsfe.FECAEDetRequest `json:"Detalle"`
 }
