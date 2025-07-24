@@ -19,66 +19,7 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/coem/anular-caratula": {
-            "delete": {
-                "description": "Método que permite eliminar una carátula. Si se encuentran COEMs en estado Presentada o Autorizada se detiene la ejecución.",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Comunicación de Embarque"
-                ],
-                "summary": "Anular Carátula",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "API Key de acceso",
-                        "name": "x-api-key",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "description": "AnularCaratulaRequest",
-                        "name": "request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/afip.IdentificadorCaraturaParams"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/dto.MessageResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/dto.ErrorResponse"
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "schema": {
-                            "$ref": "#/definitions/dto.ErrorResponse"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/dto.ErrorResponse"
-                        }
-                    }
-                }
-            }
-        },
-        "/coem/anular-coem": {
+        "/coem/AnularCOEM": {
             "delete": {
                 "description": "Método a través del cual se anula una COEM. La COEM debe estar en estado en CURSO o REGISTRADA.",
                 "consumes": [
@@ -105,7 +46,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/afip.IdentificadorCOEMParams"
+                            "$ref": "#/definitions/wscoem.AnularCOEMRequest"
                         }
                     }
                 ],
@@ -113,7 +54,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/dto.MessageResponse"
+                            "$ref": "#/definitions/wscoem.AnularEmbarqueRta"
                         }
                     },
                     "400": {
@@ -137,7 +78,66 @@ const docTemplate = `{
                 }
             }
         },
-        "/coem/cerrar-coem": {
+        "/coem/AnularCaratula": {
+            "delete": {
+                "description": "Método que permite eliminar una carátula. Si se encuentran COEMs en estado Presentada o Autorizada se detiene la ejecución.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Comunicación de Embarque"
+                ],
+                "summary": "Anular Carátula",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key de acceso",
+                        "name": "x-api-key",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "AnularCaratulaRequest",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/wscoem.AnularCaratulaRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/wscoem.AnularEmbarqueRta"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/coem/CerrarCOEM": {
             "post": {
                 "description": "Método a través del cual se cierra la carga de una COEM asociada a una Carátula, permitiendo que el operador Aduanero pueda trabajar con ella. La COEM debe estar en estado CUR.",
                 "consumes": [
@@ -164,7 +164,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/afip.IdentificadorCOEMParams"
+                            "$ref": "#/definitions/wscoem.CerrarCOEMRequest"
                         }
                     }
                 ],
@@ -172,7 +172,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/dto.MessageResponse"
+                            "$ref": "#/definitions/wscoem.RegistrarEmbarqueRta"
                         }
                     },
                     "400": {
@@ -196,7 +196,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/coem/dummy": {
+        "/coem/Dummy": {
             "get": {
                 "description": "Visualizar el estado del servicio web, del servicio de autenticación y de la base de datos de ARCA",
                 "produces": [
@@ -219,7 +219,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/dto.DummyResponse"
+                            "$ref": "#/definitions/wscoem.ResultadoEjecucionDummy"
                         }
                     },
                     "401": {
@@ -237,66 +237,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/coem/rectificar-caratula": {
-            "put": {
-                "description": "Permite rectificar los datos de una Carátula previamente creada con el método RegistrarCaratula. Entre las restricciones, no se permitirá cargar datos idénticos a otra Carátula existente, ni modificar aquella carátula que tenga COEMs asociados.",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Comunicación de Embarque"
-                ],
-                "summary": "Rectificar Carátula",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "API Key de acceso",
-                        "name": "x-api-key",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "description": "RectificarCaratulaRequest",
-                        "name": "request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/afip.RectificarCaratulaParams"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/dto.MessageResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/dto.ErrorResponse"
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "schema": {
-                            "$ref": "#/definitions/dto.ErrorResponse"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/dto.ErrorResponse"
-                        }
-                    }
-                }
-            }
-        },
-        "/coem/rectificar-coem": {
+        "/coem/RectificarCOEM": {
             "put": {
                 "description": "Método a través del cual se modifican los valores de una COEM. La COEM debe estar en curso o registrada. No se habilita rectificar una COEM presentada o autorizada. No debe existir solicitud de cierre de carga iniciada o aprobada.",
                 "consumes": [
@@ -323,7 +264,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/afip.RectificarCOEMParams"
+                            "$ref": "#/definitions/wscoem.RectificarCOEMRequest"
                         }
                     }
                 ],
@@ -331,7 +272,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/dto.MessageResponse"
+                            "$ref": "#/definitions/wscoem.RectificarEmbarqueRta"
                         }
                     },
                     "400": {
@@ -355,9 +296,9 @@ const docTemplate = `{
                 }
             }
         },
-        "/coem/registrar-caratula": {
-            "post": {
-                "description": "Crea el identificador necesario para inicializar el circuito de comunicación de embarque.",
+        "/coem/RectificarCaratula": {
+            "put": {
+                "description": "Permite rectificar los datos de una Carátula previamente creada con el método RegistrarCaratula. Entre las restricciones, no se permitirá cargar datos idénticos a otra Carátula existente, ni modificar aquella carátula que tenga COEMs asociados.",
                 "consumes": [
                     "application/json"
                 ],
@@ -367,7 +308,7 @@ const docTemplate = `{
                 "tags": [
                     "Comunicación de Embarque"
                 ],
-                "summary": "Registrar Carátula",
+                "summary": "Rectificar Carátula",
                 "parameters": [
                     {
                         "type": "string",
@@ -377,12 +318,12 @@ const docTemplate = `{
                         "required": true
                     },
                     {
-                        "description": "RegistrarCaratulaRequest",
+                        "description": "RectificarCaratulaRequest",
                         "name": "request",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/afip.CaratulaParams"
+                            "$ref": "#/definitions/wscoem.RectificarCaratulaRequest"
                         }
                     }
                 ],
@@ -390,7 +331,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/dto.MessageResponse"
+                            "$ref": "#/definitions/wscoem.RectificarEmbarqueRta"
                         }
                     },
                     "400": {
@@ -414,7 +355,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/coem/registrar-coem": {
+        "/coem/RegistrarCOEM": {
             "post": {
                 "description": "Método a través del cual se registran los valores de una COEM comprendidos en información de Contenedores con Carga, Contenedores Vacíos y Mercadería suelta, asociados a un Identificador de Carátula previamente creado con el método RegistrarCaratula.",
                 "consumes": [
@@ -441,7 +382,66 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/afip.RegistrarCOEMParams"
+                            "$ref": "#/definitions/wscoem.RegistrarCOEMRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/wscoem.RegistrarEmbarqueRta"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/coem/RegistrarCaratula": {
+            "post": {
+                "description": "Crea el identificador necesario para inicializar el circuito de comunicación de embarque.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Comunicación de Embarque"
+                ],
+                "summary": "Registrar Carátula",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key de acceso",
+                        "name": "x-api-key",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "RegistrarCaratulaRequest",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/wscoem.RegistrarCaratulaRequest"
                         }
                     }
                 ],
@@ -473,7 +473,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/coem/solicitar-anulacion-coem": {
+        "/coem/SolicitarAnulacionCOEM": {
             "post": {
                 "description": "Método a través del cual se solicita la anulación de una COEM cuando ya se encuentra en estado PRESENTADA o AUTORIZADA, caso contrario puede utilizar el método AnularCOEM.",
                 "consumes": [
@@ -500,7 +500,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/afip.IdentificadorCOEMParams"
+                            "$ref": "#/definitions/wscoem.SolicitarAnulacionCOEMRequest"
                         }
                     }
                 ],
@@ -508,7 +508,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/dto.MessageResponse"
+                            "$ref": "#/definitions/wscoem.RegistrarEmbarqueRta"
                         }
                     },
                     "400": {
@@ -532,7 +532,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/coem/solicitar-cambio-buque": {
+        "/coem/SolicitarCambioBuque": {
             "put": {
                 "description": "Método a través del cual se modificarán el Identificador y/o nombre del buque. Deben existir COEMs presentadas o autorizadas, caso contrario aún se puede enviar la rectificación de la carátula. No debe existir solicitud de cierre de carga iniciada o aprobada.",
                 "consumes": [
@@ -559,7 +559,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/afip.CambioBuqueParams"
+                            "$ref": "#/definitions/wscoem.SolicitarCambioBuqueRequest"
                         }
                     }
                 ],
@@ -567,7 +567,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/dto.MessageResponse"
+                            "$ref": "#/definitions/wscoem.RegistrarEmbarqueRta"
                         }
                     },
                     "400": {
@@ -591,7 +591,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/coem/solicitar-cambio-fechas": {
+        "/coem/SolicitarCambioFechas": {
             "put": {
                 "description": "Método a través del cual se modifican las Fechas de Arribo y/o Fecha de Zarpada de la Carátula. Deben existir COEMs presentadas o autorizadas, caso contrario aún se puede enviar la rectificación de la carátula. No debe existir solicitud de cierre de carga iniciada o aprobada.",
                 "consumes": [
@@ -613,12 +613,12 @@ const docTemplate = `{
                         "required": true
                     },
                     {
-                        "description": "CambioFechasParamsRequest",
+                        "description": "SolicitarCambioFechasRequest",
                         "name": "request",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/afip.CambioFechasParams"
+                            "$ref": "#/definitions/wscoem.SolicitarCambioFechasRequest"
                         }
                     }
                 ],
@@ -626,7 +626,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/dto.MessageResponse"
+                            "$ref": "#/definitions/wscoem.RegistrarEmbarqueRta"
                         }
                     },
                     "400": {
@@ -650,7 +650,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/coem/solicitar-cambio-lot": {
+        "/coem/SolicitarCambioLOT": {
             "put": {
                 "description": "Método a través del cual se modifica el Lugar Operativo de la Carátula. Deben existir COEMs presentadas o autorizadas, caso contrario aún se puede enviar la rectificación de la carátula. No debe existir solicitud de cierre de carga iniciada o aprobada.",
                 "consumes": [
@@ -672,12 +672,12 @@ const docTemplate = `{
                         "required": true
                     },
                     {
-                        "description": "CambioLOTParamsRequest",
+                        "description": "SolicitarCambioLOTRequest",
                         "name": "request",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/afip.CambioLOTParams"
+                            "$ref": "#/definitions/wscoem.SolicitarCambioLOTRequest"
                         }
                     }
                 ],
@@ -685,7 +685,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/dto.MessageResponse"
+                            "$ref": "#/definitions/wscoem.RegistrarEmbarqueRta"
                         }
                     },
                     "400": {
@@ -709,7 +709,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/coem/solicitar-cierre-carga-conto-bulto": {
+        "/coem/SolicitarCierreCargaContoBulto": {
             "post": {
                 "description": "Método a través del cual se solicita el cierre de carga de una Carátula que contiene COMEs cuyos permisos de embarque amparan contenedores o bultos sueltos (no Granel). Todas las COEMs deben estar en estado AUTORIZADA o ANULADA. No se consideran las marcadas como NO ABORDO. No debe existir solicitud de cierre de carga contenedores o bultos sueltos iniciada o aprobada.",
                 "consumes": [
@@ -736,7 +736,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/afip.SolicitarCierreCargaContoBultoParams"
+                            "$ref": "#/definitions/wscoem.SolicitarCierreCargaContoBultoRequest"
                         }
                     }
                 ],
@@ -744,7 +744,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/dto.MessageResponse"
+                            "$ref": "#/definitions/wscoem.RegistrarEmbarqueRta"
                         }
                     },
                     "400": {
@@ -768,7 +768,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/coem/solicitar-cierre-carga-granel": {
+        "/coem/SolicitarCierreCargaGranel": {
             "post": {
                 "description": "Método a través del cual se solicita el cierre de carga de una Carátula que contiene COEMs cuyos permisos de embarque contienen Mercadería a granel. Todas las COEMs deben estar en estado AUTORIZADA o ANULADA. No se consideran las líneas marcadas como NO ABORDO. Requiere detalle de todas las COMEs, Permisos de Embarque e ítems abordo. No debe existir solicitud de cierre de carga granel iniciada o aprobada.",
                 "consumes": [
@@ -790,12 +790,12 @@ const docTemplate = `{
                         "required": true
                     },
                     {
-                        "description": "SolicitarCierreCargaGranel",
+                        "description": "SolicitarCierreCargaGranelRequest",
                         "name": "request",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/afip.SolicitarCierreCargaGranelParams"
+                            "$ref": "#/definitions/wscoem.SolicitarCierreCargaGranelRequest"
                         }
                     }
                 ],
@@ -803,7 +803,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/dto.MessageResponse"
+                            "$ref": "#/definitions/wscoem.RegistrarEmbarqueRta"
                         }
                     },
                     "400": {
@@ -827,7 +827,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/coem/solicitar-no-abordo": {
+        "/coem/SolicitarNoABordo": {
             "post": {
                 "description": "Método a través del cual se solicita no abordar una o varias líneas de mercadería o contenedores asociados a una carátula/COEM. La COEM debe estar en estado PRESENTADA o AUTORIZADA. No debe existir solicitud de cierre de carga iniciada o aprobada.",
                 "consumes": [
@@ -854,7 +854,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/afip.SolicitarNoABordoParams"
+                            "$ref": "#/definitions/wscoem.SolicitarNoABordoRequest"
                         }
                     }
                 ],
@@ -862,7 +862,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/dto.MessageResponse"
+                            "$ref": "#/definitions/wscoem.RegistrarEmbarqueRta"
                         }
                     },
                     "400": {
@@ -886,7 +886,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/coemcons/dummy": {
+        "/coemcons/Dummy": {
             "get": {
                 "description": "Visualizar el estado del servicio web, del servicio de autenticación y de la base de datos de ARCA",
                 "produces": [
@@ -909,7 +909,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/dto.DummyResponse"
+                            "$ref": "#/definitions/wscoemcons.ResultadoEjecucionOfDummyOutput"
                         }
                     },
                     "401": {
@@ -927,7 +927,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/coemcons/obtener-consulta-estados-coem": {
+        "/coemcons/ObtenerConsultaEstadosCOEM": {
             "get": {
                 "description": "Obtiene una lista de comunicaciones de embarque comprendidas en la cabecera informada.",
                 "consumes": [
@@ -951,7 +951,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "Identificador de la caratula",
-                        "name": "identificador",
+                        "name": "identificadorCabecera",
                         "in": "query",
                         "required": true
                     }
@@ -960,10 +960,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/wscoemcons.ConsultaEstadoCOEM"
-                            }
+                            "$ref": "#/definitions/wscoemcons.ResultadoEjecucionOfResultadoEstadoProceso"
                         }
                     },
                     "400": {
@@ -987,7 +984,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/coemcons/obtener-consulta-no-abordo": {
+        "/coemcons/ObtenerConsultaNoAbordo": {
             "get": {
                 "description": "Obtiene una lista de aquellas comunicaciones de embarque relacionadas con la carátula de referencia para las cuales se ha definido el no abordaje parcial o total de su contenido, el cual puede tratarse de bultos sueltos, mercadería a granel, contenedores de carga o cont¢nedores vacíos.",
                 "consumes": [
@@ -1011,7 +1008,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "Identificador de la caratula",
-                        "name": "identificador",
+                        "name": "identificadorCabecera",
                         "in": "query",
                         "required": true
                     }
@@ -1020,10 +1017,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/wscoemcons.ConsultaNoAbordo"
-                            }
+                            "$ref": "#/definitions/wscoemcons.ResultadoEjecucionOfResultadoNoAbordoProceso"
                         }
                     },
                     "400": {
@@ -1047,7 +1041,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/coemcons/obtener-consulta-solicitudes": {
+        "/coemcons/ObtenerConsultaSolicitudes": {
             "get": {
                 "description": "Obtiene la lista de solicitudes de comunicaciones asociadas a la cabecera informada. Número y tipo de solicitud, estado y fecha.",
                 "consumes": [
@@ -1071,7 +1065,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "Identificador de la caratula",
-                        "name": "identificador",
+                        "name": "identificadorCabecera",
                         "in": "query",
                         "required": true
                     }
@@ -1080,10 +1074,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/wscoemcons.ConsultaSolicitudes"
-                            }
+                            "$ref": "#/definitions/wscoemcons.ResultadoEjecucionOfResultadoSolicitudProceso"
                         }
                     },
                     "400": {
@@ -1107,7 +1098,118 @@ const docTemplate = `{
                 }
             }
         },
-        "/fe/CAESolicitar": {
+        "/fe/FECAEARegInformativo": {
+            "post": {
+                "description": "Este método permite informar para cada CAEA otorgado, la totalidad de los comprobantes emitidos y asociados a cada CAEA",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Factura Electrónica"
+                ],
+                "summary": "Informar comprobantes emitidos y asociados a una CAEA",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key de acceso",
+                        "name": "x-api-key",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "FeCAEARegInfReqRequest",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.FeCAEARegInfReqRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/wsfe.FECAEAResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/fe/FECAEASinMovimientoConsultar": {
+            "get": {
+                "description": "Esta operación permite consultar mediante un CAEA, cuáles fueron los puntos de venta que fueron notificados como sin movimiento. El cliente envía el requerimiento, el cual es atendido por el WS, superadas las validaciones de seguridad se informa el CAEA, puntos de venta identificados como sin movimientos y fecha de proceso. En caso de informar el punto de venta, se informan los datos vinculados a ese punto de venta en particular.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Factura Electrónica"
+                ],
+                "summary": "Consulta de Puntos Venta sin movimientos",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key de acceso",
+                        "name": "x-api-key",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "CAEA",
+                        "name": "CAEA",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Punto de Venta",
+                        "name": "PtoVta",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/wsfe.FECotizacionResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/fe/FECAESolicitar": {
             "post": {
                 "description": "Solicitar CAE",
                 "produces": [
@@ -1139,7 +1241,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/dto.DummyResponse"
+                            "$ref": "#/definitions/wsfe.FECAEResponse"
                         }
                     },
                     "400": {
@@ -1163,7 +1265,110 @@ const docTemplate = `{
                 }
             }
         },
-        "/fe/CompUltimoAutorizado": {
+        "/fe/FECompConsultar": {
+            "get": {
+                "description": "Esta operación permite consultar mediante tipo, numero de comprobante y punto de venta los datos de un comprobante ya emitido. Dentro de los datos del comprobante resultante se obtiene el tipo de emisión utilizado para generar el código de autorización.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Factura Electrónica"
+                ],
+                "summary": "Consulta datos de un Comprobante",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key de acceso",
+                        "name": "x-api-key",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Punto de Venta",
+                        "name": "PtoVta",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Tipo de Comprobante",
+                        "name": "CbteTipo",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Número de Comprobante",
+                        "name": "CbteNro",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/wsfe.FECompConsultaResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/fe/FECompTotXRequest": {
+            "get": {
+                "description": "Retorna la cantidad máxima de registros que se podrá incluir en un request al método FECAESolicitar / FECAEARegInformativo.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Factura Electrónica"
+                ],
+                "summary": "Cantidad máxima de registros por request",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key de acceso",
+                        "name": "x-api-key",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/wsfe.FERegXReqResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/fe/FECompUltimoAutorizado": {
             "get": {
                 "description": "Consultar último comprobante autorizado",
                 "produces": [
@@ -1172,7 +1377,7 @@ const docTemplate = `{
                 "tags": [
                     "Factura Electrónica"
                 ],
-                "summary": "Consultar último comprobante autorizado",
+                "summary": "Último comprobante autorizado",
                 "parameters": [
                     {
                         "type": "string",
@@ -1200,7 +1405,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/dto.DummyResponse"
+                            "$ref": "#/definitions/wsfe.FERecuperaLastCbteResponse"
                         }
                     },
                     "401": {
@@ -1218,7 +1423,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/fe/Dummy": {
+        "/fe/FEDummy": {
             "get": {
                 "description": "Visualizar el estado del servicio web, del servicio de autenticación y de la base de datos de ARCA",
                 "produces": [
@@ -1227,7 +1432,7 @@ const docTemplate = `{
                 "tags": [
                     "Factura Electrónica"
                 ],
-                "summary": "Muestra el estado del servicio",
+                "summary": "Estado del servicio",
                 "parameters": [
                     {
                         "type": "string",
@@ -1241,7 +1446,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/dto.DummyResponse"
+                            "$ref": "#/definitions/wsfe.DummyResponse"
                         }
                     },
                     "401": {
@@ -1259,7 +1464,150 @@ const docTemplate = `{
                 }
             }
         },
-        "/fe/GetPtosVenta": {
+        "/fe/FEParamGetActividades": {
+            "get": {
+                "description": "Esta operación permite consultar los códigos de actividades, sus descripciones y el orden (si es actividad primaria, secundaria, etc)",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Factura Electrónica"
+                ],
+                "summary": "Consulta Actividades",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key de acceso",
+                        "name": "x-api-key",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/wsfe.FEActividadesResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/fe/FEParamGetCondicionIvaReceptor": {
+            "get": {
+                "description": "Esta operación permite consultar los identificadores de la condicion frente al IVA del receptor, su descripción y a la clase de comprobante que corresponde.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Factura Electrónica"
+                ],
+                "summary": "Consulta condiciones IVA del receptor",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key de acceso",
+                        "name": "x-api-key",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Clase de Comprobate",
+                        "name": "ClaseCmp",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/wsfe.CondicionIvaReceptorResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/fe/FEParamGetCotizacion": {
+            "get": {
+                "description": "Retorna la última cotización de la base de datos aduanera de la moneda ingresada. Este valor es orientativo.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Factura Electrónica"
+                ],
+                "summary": "Cotización de moneda",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key de acceso",
+                        "name": "x-api-key",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "código de moneda",
+                        "name": "monId",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "fecha de cotización",
+                        "name": "fchCotiz",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/wsfe.FECotizacionResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/fe/FEParamGetPtosVenta": {
             "get": {
                 "description": "Este método permite consultar los puntos de venta para ambos tipos de Código de Autorización (CAE y CAEA) gestionados previamente por la CUIT emisora.",
                 "produces": [
@@ -1268,7 +1616,7 @@ const docTemplate = `{
                 "tags": [
                     "Factura Electrónica"
                 ],
-                "summary": "Listar Puntos de Venta",
+                "summary": "Puntos de Venta",
                 "parameters": [
                     {
                         "type": "string",
@@ -1282,10 +1630,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/wsfe.PtoVenta"
-                            }
+                            "$ref": "#/definitions/wsfe.FEPtoVentaResponse"
                         }
                     },
                     "401": {
@@ -1303,7 +1648,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/fe/GetTiposCbte": {
+        "/fe/FEParamGetTiposCbte": {
             "get": {
                 "description": "Este método permite consultar los tipos de comprobantes habilitados en este WS.",
                 "produces": [
@@ -1312,7 +1657,7 @@ const docTemplate = `{
                 "tags": [
                     "Factura Electrónica"
                 ],
-                "summary": "Listar Tipos de Comprobante",
+                "summary": "Tipos de Comprobante",
                 "parameters": [
                     {
                         "type": "string",
@@ -1326,10 +1671,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/wsfe.CbteTipo"
-                            }
+                            "$ref": "#/definitions/wsfe.CbteTipoResponse"
                         }
                     },
                     "401": {
@@ -1347,7 +1689,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/fe/GetTiposConcepto": {
+        "/fe/FEParamGetTiposConcepto": {
             "get": {
                 "description": "Este método devuelve los tipos de conceptos posibles en este WS.",
                 "produces": [
@@ -1356,7 +1698,7 @@ const docTemplate = `{
                 "tags": [
                     "Factura Electrónica"
                 ],
-                "summary": "Listar Tipos de Concepto",
+                "summary": "Tipos de Concepto",
                 "parameters": [
                     {
                         "type": "string",
@@ -1370,10 +1712,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/wsfe.ConceptoTipo"
-                            }
+                            "$ref": "#/definitions/wsfe.ConceptoTipoResponse"
                         }
                     },
                     "401": {
@@ -1391,7 +1730,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/fe/GetTiposDoc": {
+        "/fe/FEParamGetTiposDoc": {
             "get": {
                 "description": "Este método retorna el universo de tipos de documentos disponibles en el presente WS.",
                 "produces": [
@@ -1400,7 +1739,7 @@ const docTemplate = `{
                 "tags": [
                     "Factura Electrónica"
                 ],
-                "summary": "Listar Tipos de Documento",
+                "summary": "Tipos de Documento",
                 "parameters": [
                     {
                         "type": "string",
@@ -1414,10 +1753,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/wsfe.DocTipo"
-                            }
+                            "$ref": "#/definitions/wsfe.DocTipoResponse"
                         }
                     },
                     "401": {
@@ -1435,7 +1771,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/fe/GetTiposIva": {
+        "/fe/FEParamGetTiposIva": {
             "get": {
                 "description": "Mediante este método se obtiene la totalidad de alícuotas de IVA posibles de uso en el presente WS, detallando código y descripción.",
                 "produces": [
@@ -1444,7 +1780,7 @@ const docTemplate = `{
                 "tags": [
                     "Factura Electrónica"
                 ],
-                "summary": "Listar Tipos de IVA",
+                "summary": "Tipos de IVA",
                 "parameters": [
                     {
                         "type": "string",
@@ -1458,10 +1794,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/wsfe.IvaTipo"
-                            }
+                            "$ref": "#/definitions/wsfe.IvaTipoResponse"
                         }
                     },
                     "401": {
@@ -1479,7 +1812,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/fe/GetTiposMonedas": {
+        "/fe/FEParamGetTiposMonedas": {
             "get": {
                 "description": "Este método retorna el universo de Monedas disponibles en el presente WS, indicando id y descripción de cada una.",
                 "produces": [
@@ -1488,7 +1821,7 @@ const docTemplate = `{
                 "tags": [
                     "Factura Electrónica"
                 ],
-                "summary": "Listar Tipos de Monedas",
+                "summary": "Tipos de Monedas",
                 "parameters": [
                     {
                         "type": "string",
@@ -1502,10 +1835,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/wsfe.Moneda"
-                            }
+                            "$ref": "#/definitions/wsfe.MonedaResponse"
                         }
                     },
                     "401": {
@@ -1523,7 +1853,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/fe/GetTiposOpcional": {
+        "/fe/FEParamGetTiposOpcional": {
             "get": {
                 "description": "Este método permite consultar los códigos y descripciones de los tipos de datos Opcionales que se encuentran habilitados para ser usados en el WS",
                 "produces": [
@@ -1532,7 +1862,7 @@ const docTemplate = `{
                 "tags": [
                     "Factura Electrónica"
                 ],
-                "summary": "Listar Tipos Opcional",
+                "summary": "Tipos Opcional",
                 "parameters": [
                     {
                         "type": "string",
@@ -1546,10 +1876,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/wsfe.OpcionalTipo"
-                            }
+                            "$ref": "#/definitions/wsfe.OpcionalTipoResponse"
                         }
                     },
                     "401": {
@@ -1567,7 +1894,48 @@ const docTemplate = `{
                 }
             }
         },
-        "/fe/GetTiposTributos": {
+        "/fe/FEParamGetTiposPaises": {
+            "get": {
+                "description": "Esta operación permite consultar los códigos de países y descripción de los mismos.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Factura Electrónica"
+                ],
+                "summary": "Tipos de Países",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key de acceso",
+                        "name": "x-api-key",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/wsfe.FEPaisResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/fe/FEParamGetTiposTributos": {
             "get": {
                 "description": "Devuelve los posibles códigos de tributos que puede contener un comprobante y su descripción.",
                 "produces": [
@@ -1576,7 +1944,7 @@ const docTemplate = `{
                 "tags": [
                     "Factura Electrónica"
                 ],
-                "summary": "Listar Tipos Tributos",
+                "summary": "Tipos Tributos",
                 "parameters": [
                     {
                         "type": "string",
@@ -1590,10 +1958,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/wsfe.TributoTipo"
-                            }
+                            "$ref": "#/definitions/wsfe.FETributoResponse"
                         }
                     },
                     "401": {
@@ -1611,7 +1976,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/gestabref/consultar-fecha-ult-act": {
+        "/gestabref/ConsultarFechaUltAct": {
             "get": {
                 "description": "Retorna la fecha de última actualización de la tabla consultada.",
                 "consumes": [
@@ -1634,8 +1999,8 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
-                        "description": "Nombre de la tabla",
-                        "name": "argNombreTabla",
+                        "description": "ID de referencia",
+                        "name": "IdReferencia",
                         "in": "query",
                         "required": true
                     }
@@ -1644,7 +2009,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/dto.FecUltActResponse"
+                            "$ref": "#/definitions/wgestabref.FechaUltAct"
                         }
                     },
                     "400": {
@@ -1668,7 +2033,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/gestabref/dummy": {
+        "/gestabref/Dummy": {
             "get": {
                 "description": "Visualizar el estado del servicio web, del servicio de autenticación y de la base de datos de ARCA",
                 "produces": [
@@ -1691,7 +2056,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/dto.DummyResponse"
+                            "$ref": "#/definitions/wgestabref.WsDummyResponse"
                         }
                     },
                     "401": {
@@ -1709,7 +2074,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/gestabref/lista-arancel": {
+        "/gestabref/ListaArancel": {
             "get": {
                 "description": "Retorna tabla del tipo código / descripción / opción / vigencia.",
                 "consumes": [
@@ -1732,8 +2097,8 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
-                        "description": "Nombre de la tabla",
-                        "name": "argNombreTabla",
+                        "description": "ID de referencia",
+                        "name": "IdReferencia",
                         "in": "query",
                         "required": true
                     }
@@ -1742,10 +2107,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/wgestabref.Opcion"
-                            }
+                            "$ref": "#/definitions/wgestabref.Opciones"
                         }
                     },
                     "400": {
@@ -1769,7 +2131,64 @@ const docTemplate = `{
                 }
             }
         },
-        "/gestabref/lista-descripcion": {
+        "/gestabref/ListaDatoComplementario": {
+            "get": {
+                "description": "Lista Datos Complementarios",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Consulta de Tablas de Referencia"
+                ],
+                "summary": "Lista Datos Complementarios",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key de acceso",
+                        "name": "x-api-key",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "ID de referencia",
+                        "name": "IdReferencia",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/wgestabref.DatosComplementarios"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/gestabref/ListaDescripcion": {
             "get": {
                 "description": "Emite tabla del tipo código / descripción.",
                 "consumes": [
@@ -1792,8 +2211,8 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
-                        "description": "Nombre de la tabla",
-                        "name": "argNombreTabla",
+                        "description": "ID de referencia",
+                        "name": "IdReferencia",
                         "in": "query",
                         "required": true
                     }
@@ -1802,10 +2221,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/wgestabref.Descripcion"
-                            }
+                            "$ref": "#/definitions/wgestabref.Descripciones"
                         }
                     },
                     "400": {
@@ -1829,7 +2245,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/gestabref/lista-descripcion-decodificacion": {
+        "/gestabref/ListaDescripcionDecodificacion": {
             "get": {
                 "description": "Lista Descripción Decodificación",
                 "consumes": [
@@ -1852,8 +2268,8 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
-                        "description": "Nombre de la tabla",
-                        "name": "argNombreTabla",
+                        "description": "ID de referencia",
+                        "name": "IdReferencia",
                         "in": "query",
                         "required": true
                     }
@@ -1862,10 +2278,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/wgestabref.DescripcionCodificacion"
-                            }
+                            "$ref": "#/definitions/wgestabref.DescripcionesCodificaciones"
                         }
                     },
                     "400": {
@@ -1889,7 +2302,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/gestabref/lista-empresas": {
+        "/gestabref/ListaEmpresas": {
             "get": {
                 "description": "Emite tabla del tipo cuit / razón social.",
                 "consumes": [
@@ -1912,8 +2325,8 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
-                        "description": "Nombre de la tabla",
-                        "name": "argNombreTabla",
+                        "description": "ID de referencia",
+                        "name": "IdReferencia",
                         "in": "query",
                         "required": true
                     }
@@ -1922,10 +2335,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/wgestabref.Empresa"
-                            }
+                            "$ref": "#/definitions/wgestabref.Empresas"
                         }
                     },
                     "400": {
@@ -1949,7 +2359,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/gestabref/lista-lugares-operativos": {
+        "/gestabref/ListaLugaresOperativos": {
             "get": {
                 "description": "Emite tabla del tipo código / descripción / vigencia / aduana / lugar operativo.",
                 "consumes": [
@@ -1972,8 +2382,8 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
-                        "description": "Nombre de la tabla",
-                        "name": "argNombreTabla",
+                        "description": "ID de referencia",
+                        "name": "IdReferencia",
                         "in": "query",
                         "required": true
                     }
@@ -1982,10 +2392,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/wgestabref.LugarOperativo"
-                            }
+                            "$ref": "#/definitions/wgestabref.LugaresOperativos"
                         }
                     },
                     "400": {
@@ -2009,7 +2416,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/gestabref/lista-paises-aduanas": {
+        "/gestabref/ListaPaisesAduanas": {
             "get": {
                 "description": "Emite tabla del tipo código / descripción / vigencia /país o aduana.",
                 "consumes": [
@@ -2032,8 +2439,8 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
-                        "description": "Nombre de la tabla",
-                        "name": "argNombreTabla",
+                        "description": "ID de referencia",
+                        "name": "IdReferencia",
                         "in": "query",
                         "required": true
                     }
@@ -2042,10 +2449,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/wgestabref.PaisAduana"
-                            }
+                            "$ref": "#/definitions/wgestabref.PaisesAduanas"
                         }
                     },
                     "400": {
@@ -2069,7 +2473,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/gestabref/lista-tablas-referencia": {
+        "/gestabref/ListaTablasReferencia": {
             "get": {
                 "description": "Emite tabla del tipo: Tabla de Referencia / Descripción Tabla Referencia / WebMethod (que se debe utilizar para obtener los datos de dicha tabla).",
                 "consumes": [
@@ -2095,10 +2499,64 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/wgestabref.TablaReferencia"
-                            }
+                            "$ref": "#/definitions/wgestabref.TablasReferencia"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dto.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/gestabref/ListaVigencias": {
+            "get": {
+                "description": "Emite tabla del tipo código / descripción / vigencia.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Consulta de Tablas de Referencia"
+                ],
+                "summary": "Lista de Vigencias",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API Key de acceso",
+                        "name": "x-api-key",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "ID de referencia",
+                        "name": "IdReferencia",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/wgestabref.Vigencias"
                         }
                     },
                     "400": {
@@ -2159,529 +2617,6 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "afip.CambioBuqueParams": {
-            "type": "object",
-            "required": [
-                "IdentificadorCaratula"
-            ],
-            "properties": {
-                "IdentificadorBuque": {
-                    "type": "string",
-                    "maxLength": 20
-                },
-                "IdentificadorCaratula": {
-                    "type": "string"
-                },
-                "NombreMedioTransporte": {
-                    "type": "string",
-                    "maxLength": 200
-                }
-            }
-        },
-        "afip.CambioFechasParams": {
-            "type": "object",
-            "required": [
-                "CodigoMotivo",
-                "FechaArribo",
-                "FechaZarpada",
-                "IdentificadorCaratula"
-            ],
-            "properties": {
-                "CodigoMotivo": {
-                    "type": "string",
-                    "maxLength": 2
-                },
-                "DescripcionMotivo": {
-                    "type": "string",
-                    "maxLength": 200
-                },
-                "FechaArribo": {
-                    "type": "string"
-                },
-                "FechaZarpada": {
-                    "type": "string"
-                },
-                "IdentificadorCaratula": {
-                    "type": "string"
-                }
-            }
-        },
-        "afip.CambioLOTParams": {
-            "type": "object",
-            "required": [
-                "CodigoLugarOperativo",
-                "IdentificadorCaratula"
-            ],
-            "properties": {
-                "CodigoLugarOperativo": {
-                    "type": "string",
-                    "maxLength": 5
-                },
-                "IdentificadorCaratula": {
-                    "type": "string"
-                }
-            }
-        },
-        "afip.CaratulaParams": {
-            "type": "object",
-            "required": [
-                "CodigoAduana",
-                "CodigoLugarOperativo",
-                "FechaArribo",
-                "FechaZarpada",
-                "NombreMedioTransporte",
-                "Via"
-            ],
-            "properties": {
-                "CodigoAduana": {
-                    "type": "string"
-                },
-                "CodigoLugarOperativo": {
-                    "type": "string"
-                },
-                "FechaArribo": {
-                    "type": "string"
-                },
-                "FechaZarpada": {
-                    "type": "string"
-                },
-                "IdentificadorBuque": {
-                    "type": "string",
-                    "maxLength": 20
-                },
-                "Itinerario": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/afip.PuertoDestinoParams"
-                    }
-                },
-                "NombreMedioTransporte": {
-                    "type": "string",
-                    "maxLength": 200
-                },
-                "NumeroViaje": {
-                    "type": "string",
-                    "maxLength": 16
-                },
-                "PuertoDestino": {
-                    "type": "string"
-                },
-                "Via": {
-                    "type": "string"
-                }
-            }
-        },
-        "afip.ContenedorCarga": {
-            "type": "object",
-            "required": [
-                "IdentificadorContenedor"
-            ],
-            "properties": {
-                "CuitATA": {
-                    "type": "string"
-                },
-                "Declaraciones": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "IdentificadorContenedor": {
-                    "type": "string"
-                },
-                "Peso": {
-                    "type": "number"
-                },
-                "Precintos": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "Tipo": {
-                    "type": "string"
-                }
-            }
-        },
-        "afip.ContenedorNoABordo": {
-            "type": "object",
-            "required": [
-                "IdentificadorContenedor"
-            ],
-            "properties": {
-                "IdentificadorContenedor": {
-                    "type": "string"
-                }
-            }
-        },
-        "afip.ContenedorVacio": {
-            "type": "object",
-            "required": [
-                "IdentificadorContenedor"
-            ],
-            "properties": {
-                "CodigoPais": {
-                    "type": "string"
-                },
-                "CuitATA": {
-                    "type": "string"
-                },
-                "IdentificadorContenedor": {
-                    "type": "string"
-                },
-                "Tipo": {
-                    "type": "string"
-                }
-            }
-        },
-        "afip.DeclaracionCOEMGranel": {
-            "type": "object",
-            "properties": {
-                "DeclaracionesGranel": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/afip.DeclaracionGranel"
-                    }
-                },
-                "IdentificadorCOEM": {
-                    "type": "string"
-                }
-            }
-        },
-        "afip.DeclaracionCont": {
-            "type": "object",
-            "properties": {
-                "FechaEmbarque": {
-                    "type": "string"
-                },
-                "IdentificadorDeclaracion": {
-                    "type": "string"
-                }
-            }
-        },
-        "afip.DeclaracionGranel": {
-            "type": "object",
-            "properties": {
-                "FechaEmbarque": {
-                    "type": "string"
-                },
-                "IdentificadorCierreCumplido": {
-                    "type": "string"
-                },
-                "IdentificadorDeclaracion": {
-                    "type": "string"
-                },
-                "Items": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/afip.ItemGranel"
-                    }
-                }
-            }
-        },
-        "afip.DeclaracionNoABordo": {
-            "type": "object",
-            "properties": {
-                "IdentificadorDeclaracion": {
-                    "type": "string"
-                }
-            }
-        },
-        "afip.Embalaje": {
-            "type": "object",
-            "properties": {
-                "CantidadBultos": {
-                    "type": "integer"
-                },
-                "CodigoEmbalaje": {
-                    "type": "string"
-                },
-                "Peso": {
-                    "type": "number"
-                }
-            }
-        },
-        "afip.IdentificadorCOEMParams": {
-            "type": "object",
-            "required": [
-                "IdentificadorCOEM",
-                "IdentificadorCaratula"
-            ],
-            "properties": {
-                "IdentificadorCOEM": {
-                    "type": "string"
-                },
-                "IdentificadorCaratula": {
-                    "type": "string"
-                }
-            }
-        },
-        "afip.IdentificadorCaraturaParams": {
-            "type": "object",
-            "required": [
-                "IdentificadorCaratula"
-            ],
-            "properties": {
-                "IdentificadorCaratula": {
-                    "type": "string"
-                }
-            }
-        },
-        "afip.ItemGranel": {
-            "type": "object",
-            "properties": {
-                "CantidadReal": {
-                    "type": "number"
-                },
-                "NumeroItem": {
-                    "type": "integer"
-                }
-            }
-        },
-        "afip.MercaderiaSuelta": {
-            "type": "object",
-            "properties": {
-                "CuitATA": {
-                    "type": "string"
-                },
-                "Embalajes": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/afip.Embalaje"
-                    }
-                },
-                "IdentificadorDeclaracion": {
-                    "type": "string"
-                }
-            }
-        },
-        "afip.PuertoDestinoParams": {
-            "type": "object",
-            "properties": {
-                "PuertoDestino": {
-                    "type": "string"
-                }
-            }
-        },
-        "afip.RectificarCOEMParams": {
-            "type": "object",
-            "required": [
-                "IdentificadorCOEM",
-                "IdentificadorCaratula"
-            ],
-            "properties": {
-                "ContenedoresConCarga": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/afip.ContenedorCarga"
-                    }
-                },
-                "ContenedoresVacios": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/afip.ContenedorVacio"
-                    }
-                },
-                "IdentificadorCOEM": {
-                    "type": "string"
-                },
-                "IdentificadorCaratula": {
-                    "type": "string"
-                },
-                "MercaderiasSueltas": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/afip.MercaderiaSuelta"
-                    }
-                }
-            }
-        },
-        "afip.RectificarCaratulaParams": {
-            "type": "object",
-            "required": [
-                "CodigoAduana",
-                "CodigoLugarOperativo",
-                "FechaArribo",
-                "FechaZarpada",
-                "IdentificadorCaratula",
-                "NombreMedioTransporte",
-                "Via"
-            ],
-            "properties": {
-                "CodigoAduana": {
-                    "type": "string"
-                },
-                "CodigoLugarOperativo": {
-                    "type": "string"
-                },
-                "FechaArribo": {
-                    "type": "string"
-                },
-                "FechaZarpada": {
-                    "type": "string"
-                },
-                "IdentificadorBuque": {
-                    "type": "string",
-                    "maxLength": 20
-                },
-                "IdentificadorCaratula": {
-                    "type": "string"
-                },
-                "Itinerario": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/afip.PuertoDestinoParams"
-                    }
-                },
-                "NombreMedioTransporte": {
-                    "type": "string",
-                    "maxLength": 200
-                },
-                "NumeroViaje": {
-                    "type": "string",
-                    "maxLength": 16
-                },
-                "PuertoDestino": {
-                    "type": "string"
-                },
-                "Via": {
-                    "type": "string"
-                }
-            }
-        },
-        "afip.RegistrarCOEMParams": {
-            "type": "object",
-            "required": [
-                "IdentificadorCaratula"
-            ],
-            "properties": {
-                "ContenedoresConCarga": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/afip.ContenedorCarga"
-                    }
-                },
-                "ContenedoresVacios": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/afip.ContenedorVacio"
-                    }
-                },
-                "IdentificadorCaratula": {
-                    "type": "string"
-                },
-                "MercaderiasSueltas": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/afip.MercaderiaSuelta"
-                    }
-                }
-            }
-        },
-        "afip.SolicitarCierreCargaContoBultoParams": {
-            "type": "object",
-            "required": [
-                "FechaZarpada",
-                "IdentificadorCaratula"
-            ],
-            "properties": {
-                "Declaraciones": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/afip.DeclaracionCont"
-                    }
-                },
-                "FechaZarpada": {
-                    "type": "string"
-                },
-                "IdentificadorCaratula": {
-                    "type": "string"
-                },
-                "NumeroViaje": {
-                    "type": "string"
-                }
-            }
-        },
-        "afip.SolicitarCierreCargaGranelParams": {
-            "type": "object",
-            "required": [
-                "FechaZarpada",
-                "IdentificadorCaratula"
-            ],
-            "properties": {
-                "DeclaracionesCOEMGranel": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/afip.DeclaracionCOEMGranel"
-                    }
-                },
-                "FechaZarpada": {
-                    "type": "string"
-                },
-                "IdentificadorCaratula": {
-                    "type": "string"
-                },
-                "NumeroViaje": {
-                    "type": "string"
-                }
-            }
-        },
-        "afip.SolicitarNoABordoParams": {
-            "type": "object",
-            "required": [
-                "CodigoMotivo",
-                "IdentificadorCOEM",
-                "IdentificadorCaratula"
-            ],
-            "properties": {
-                "CodigoMotivo": {
-                    "type": "string",
-                    "maxLength": 2
-                },
-                "ContenedoresCarga": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/afip.ContenedorNoABordo"
-                    }
-                },
-                "ContenedoresVacios": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/afip.ContenedorNoABordo"
-                    }
-                },
-                "DescripcionMotivo": {
-                    "type": "string",
-                    "maxLength": 200
-                },
-                "IdentificadorCOEM": {
-                    "type": "string"
-                },
-                "IdentificadorCaratula": {
-                    "type": "string"
-                },
-                "MercaderiasSueltas": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/afip.DeclaracionNoABordo"
-                    }
-                }
-            }
-        },
-        "dto.DummyResponse": {
-            "type": "object",
-            "properties": {
-                "AppServer": {
-                    "type": "string"
-                },
-                "AuthServer": {
-                    "type": "string"
-                },
-                "DbServer": {
-                    "type": "string"
-                }
-            }
-        },
         "dto.ErrorResponse": {
             "type": "object",
             "properties": {
@@ -2704,11 +2639,17 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.FecUltActResponse": {
+        "dto.FeCAEARegInfReqRequest": {
             "type": "object",
             "properties": {
-                "FechaUltAct": {
-                    "type": "string"
+                "Cabecera": {
+                    "$ref": "#/definitions/wsfe.FECabRequest"
+                },
+                "Detalle": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/wsfe.FECAEADetRequest"
+                    }
                 }
             }
         },
@@ -2728,8 +2669,144 @@ const docTemplate = `{
                 }
             }
         },
-        "soap.XSDDateTime": {
-            "type": "object"
+        "wgestabref.ArrayOfDatoComplementario": {
+            "type": "object",
+            "properties": {
+                "DatoComplementario": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/wgestabref.DatoComplementario"
+                    }
+                }
+            }
+        },
+        "wgestabref.ArrayOfDescripcion": {
+            "type": "object",
+            "properties": {
+                "Descripcion": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/wgestabref.Descripcion"
+                    }
+                }
+            }
+        },
+        "wgestabref.ArrayOfDescripcionCodificacion": {
+            "type": "object",
+            "properties": {
+                "DescripcionCodificacion": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/wgestabref.DescripcionCodificacion"
+                    }
+                }
+            }
+        },
+        "wgestabref.ArrayOfEmpresa": {
+            "type": "object",
+            "properties": {
+                "Empresa": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/wgestabref.Empresa"
+                    }
+                }
+            }
+        },
+        "wgestabref.ArrayOfLugarOperativo": {
+            "type": "object",
+            "properties": {
+                "LugarOperativo": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/wgestabref.LugarOperativo"
+                    }
+                }
+            }
+        },
+        "wgestabref.ArrayOfOpcion": {
+            "type": "object",
+            "properties": {
+                "Opcion": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/wgestabref.Opcion"
+                    }
+                }
+            }
+        },
+        "wgestabref.ArrayOfPaisAduana": {
+            "type": "object",
+            "properties": {
+                "PaisAduana": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/wgestabref.PaisAduana"
+                    }
+                }
+            }
+        },
+        "wgestabref.ArrayOfTablaReferencia": {
+            "type": "object",
+            "properties": {
+                "TablaReferencia": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/wgestabref.TablaReferencia"
+                    }
+                }
+            }
+        },
+        "wgestabref.ArrayOfVigencia": {
+            "type": "object",
+            "properties": {
+                "Vigencia": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/wgestabref.Vigencia"
+                    }
+                }
+            }
+        },
+        "wgestabref.DatoComplementario": {
+            "type": "object",
+            "properties": {
+                "Codigo": {
+                    "type": "string"
+                },
+                "Descripcion": {
+                    "type": "string"
+                },
+                "Formato": {
+                    "type": "string"
+                },
+                "Indicador": {
+                    "type": "string"
+                },
+                "VigenciaDesde": {
+                    "type": "string"
+                },
+                "VigenciaHasta": {
+                    "type": "string"
+                }
+            }
+        },
+        "wgestabref.DatosComplementarios": {
+            "type": "object",
+            "properties": {
+                "CodError": {
+                    "type": "integer"
+                },
+                "DatosComplementarios": {
+                    "$ref": "#/definitions/wgestabref.ArrayOfDatoComplementario"
+                },
+                "IdReferencia": {
+                    "type": "string"
+                },
+                "InfoAdicional": {
+                    "type": "string"
+                }
+            }
         },
         "wgestabref.Descripcion": {
             "type": "object",
@@ -2756,6 +2833,40 @@ const docTemplate = `{
                 }
             }
         },
+        "wgestabref.Descripciones": {
+            "type": "object",
+            "properties": {
+                "CodError": {
+                    "type": "integer"
+                },
+                "Descripciones": {
+                    "$ref": "#/definitions/wgestabref.ArrayOfDescripcion"
+                },
+                "IdReferencia": {
+                    "type": "string"
+                },
+                "InfoAdicional": {
+                    "type": "string"
+                }
+            }
+        },
+        "wgestabref.DescripcionesCodificaciones": {
+            "type": "object",
+            "properties": {
+                "CodError": {
+                    "type": "integer"
+                },
+                "DescripcionesCodificaciones": {
+                    "$ref": "#/definitions/wgestabref.ArrayOfDescripcionCodificacion"
+                },
+                "IdReferencia": {
+                    "type": "string"
+                },
+                "InfoAdicional": {
+                    "type": "string"
+                }
+            }
+        },
         "wgestabref.Empresa": {
             "type": "object",
             "properties": {
@@ -2763,6 +2874,40 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "RazonSocial": {
+                    "type": "string"
+                }
+            }
+        },
+        "wgestabref.Empresas": {
+            "type": "object",
+            "properties": {
+                "CodError": {
+                    "type": "integer"
+                },
+                "Empresas": {
+                    "$ref": "#/definitions/wgestabref.ArrayOfEmpresa"
+                },
+                "IdReferencia": {
+                    "type": "string"
+                },
+                "InfoAdicional": {
+                    "type": "string"
+                }
+            }
+        },
+        "wgestabref.FechaUltAct": {
+            "type": "object",
+            "properties": {
+                "CodError": {
+                    "type": "integer"
+                },
+                "Fecha": {
+                    "type": "string"
+                },
+                "IdReferencia": {
+                    "type": "string"
+                },
+                "InfoAdicional": {
                     "type": "string"
                 }
             }
@@ -2790,6 +2935,23 @@ const docTemplate = `{
                 }
             }
         },
+        "wgestabref.LugaresOperativos": {
+            "type": "object",
+            "properties": {
+                "CodError": {
+                    "type": "integer"
+                },
+                "IdReferencia": {
+                    "type": "string"
+                },
+                "InfoAdicional": {
+                    "type": "string"
+                },
+                "LugaresOperativos": {
+                    "$ref": "#/definitions/wgestabref.ArrayOfLugarOperativo"
+                }
+            }
+        },
         "wgestabref.Opcion": {
             "type": "object",
             "properties": {
@@ -2807,6 +2969,23 @@ const docTemplate = `{
                 },
                 "VigenciaHasta": {
                     "type": "string"
+                }
+            }
+        },
+        "wgestabref.Opciones": {
+            "type": "object",
+            "properties": {
+                "CodError": {
+                    "type": "integer"
+                },
+                "IdReferencia": {
+                    "type": "string"
+                },
+                "InfoAdicional": {
+                    "type": "string"
+                },
+                "Opciones": {
+                    "$ref": "#/definitions/wgestabref.ArrayOfOpcion"
                 }
             }
         },
@@ -2833,6 +3012,23 @@ const docTemplate = `{
                 }
             }
         },
+        "wgestabref.PaisesAduanas": {
+            "type": "object",
+            "properties": {
+                "CodError": {
+                    "type": "integer"
+                },
+                "IdReferencia": {
+                    "type": "string"
+                },
+                "InfoAdicional": {
+                    "type": "string"
+                },
+                "PaisesAduanas": {
+                    "$ref": "#/definitions/wgestabref.ArrayOfPaisAduana"
+                }
+            }
+        },
         "wgestabref.TablaReferencia": {
             "type": "object",
             "properties": {
@@ -2844,6 +3040,714 @@ const docTemplate = `{
                 },
                 "WebMethod": {
                     "type": "string"
+                }
+            }
+        },
+        "wgestabref.TablasReferencia": {
+            "type": "object",
+            "properties": {
+                "CodError": {
+                    "type": "integer"
+                },
+                "InfoAdicional": {
+                    "type": "string"
+                },
+                "TablasReferencia": {
+                    "$ref": "#/definitions/wgestabref.ArrayOfTablaReferencia"
+                }
+            }
+        },
+        "wgestabref.Vigencia": {
+            "type": "object",
+            "properties": {
+                "Codigo": {
+                    "type": "string"
+                },
+                "Descripcion": {
+                    "type": "string"
+                },
+                "VigenciaDesde": {
+                    "type": "string"
+                },
+                "VigenciaHasta": {
+                    "type": "string"
+                }
+            }
+        },
+        "wgestabref.Vigencias": {
+            "type": "object",
+            "properties": {
+                "CodError": {
+                    "type": "integer"
+                },
+                "IdReferencia": {
+                    "type": "string"
+                },
+                "InfoAdicional": {
+                    "type": "string"
+                },
+                "Vigencias": {
+                    "$ref": "#/definitions/wgestabref.ArrayOfVigencia"
+                }
+            }
+        },
+        "wgestabref.WsDummyResponse": {
+            "type": "object",
+            "properties": {
+                "appserver": {
+                    "type": "string"
+                },
+                "authserver": {
+                    "type": "string"
+                },
+                "dbserver": {
+                    "type": "string"
+                }
+            }
+        },
+        "wscoem.AnularCOEMRequest": {
+            "type": "object",
+            "properties": {
+                "IdentificadorCOEM": {
+                    "type": "string"
+                },
+                "IdentificadorCaratula": {
+                    "type": "string"
+                }
+            }
+        },
+        "wscoem.AnularCaratulaRequest": {
+            "type": "object",
+            "properties": {
+                "IdentificadorCaratula": {
+                    "type": "string"
+                }
+            }
+        },
+        "wscoem.AnularEmbarqueRta": {
+            "type": "object",
+            "properties": {
+                "ListaErrores": {
+                    "$ref": "#/definitions/wscoem.ArrayOfDgaMensajeSistemaReducido"
+                },
+                "Server": {
+                    "type": "string"
+                },
+                "TimeStamp": {
+                    "type": "string"
+                }
+            }
+        },
+        "wscoem.ArrayOfCoemGranel": {
+            "type": "object",
+            "properties": {
+                "CoemGranel": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/wscoem.CoemGranel"
+                    }
+                }
+            }
+        },
+        "wscoem.ArrayOfContenedor": {
+            "type": "object",
+            "properties": {
+                "Contenedor": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/wscoem.Contenedor"
+                    }
+                }
+            }
+        },
+        "wscoem.ArrayOfContenedorCarga": {
+            "type": "object",
+            "properties": {
+                "ContenedorCarga": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/wscoem.ContenedorCarga"
+                    }
+                }
+            }
+        },
+        "wscoem.ArrayOfContenedorVacio": {
+            "type": "object",
+            "properties": {
+                "ContenedorVacio": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/wscoem.ContenedorVacio"
+                    }
+                }
+            }
+        },
+        "wscoem.ArrayOfDeclaracion": {
+            "type": "object",
+            "properties": {
+                "Declaracion": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/wscoem.Declaracion"
+                    }
+                }
+            }
+        },
+        "wscoem.ArrayOfDeclaracionCont": {
+            "type": "object",
+            "properties": {
+                "DeclaracionCont": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/wscoem.DeclaracionCont"
+                    }
+                }
+            }
+        },
+        "wscoem.ArrayOfDeclaracionGranel": {
+            "type": "object",
+            "properties": {
+                "DeclaracionGranel": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/wscoem.DeclaracionGranel"
+                    }
+                }
+            }
+        },
+        "wscoem.ArrayOfDgaMensajeSistemaReducido": {
+            "type": "object",
+            "properties": {
+                "DetalleError": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/wscoem.DgaMensajeSistemaReducido"
+                    }
+                }
+            }
+        },
+        "wscoem.ArrayOfEmbalaje": {
+            "type": "object",
+            "properties": {
+                "Embalaje": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/wscoem.Embalaje"
+                    }
+                }
+            }
+        },
+        "wscoem.ArrayOfItem": {
+            "type": "object",
+            "properties": {
+                "Item": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/wscoem.Item"
+                    }
+                }
+            }
+        },
+        "wscoem.ArrayOfMercaderiaSuelta": {
+            "type": "object",
+            "properties": {
+                "MercaderiaSuelta": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/wscoem.MercaderiaSuelta"
+                    }
+                }
+            }
+        },
+        "wscoem.ArrayOfPrecinto": {
+            "type": "object",
+            "properties": {
+                "Precinto": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/wscoem.Precinto"
+                    }
+                }
+            }
+        },
+        "wscoem.ArrayOfPuerto": {
+            "type": "object",
+            "properties": {
+                "Puerto": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/wscoem.Puerto"
+                    }
+                }
+            }
+        },
+        "wscoem.Caratula": {
+            "type": "object",
+            "properties": {
+                "CodigoAduana": {
+                    "type": "string"
+                },
+                "CodigoLugarOperativo": {
+                    "type": "string"
+                },
+                "FechaArribo": {
+                    "type": "string"
+                },
+                "FechaZarpada": {
+                    "type": "string"
+                },
+                "IdentificadorBuque": {
+                    "type": "string"
+                },
+                "Itinerario": {
+                    "$ref": "#/definitions/wscoem.ArrayOfPuerto"
+                },
+                "NombreMedioTransporte": {
+                    "type": "string"
+                },
+                "NumeroViaje": {
+                    "type": "string"
+                },
+                "PuertoDestino": {
+                    "type": "string"
+                },
+                "Via": {
+                    "type": "string"
+                }
+            }
+        },
+        "wscoem.CerrarCOEMRequest": {
+            "type": "object",
+            "properties": {
+                "IdentificadorCOEM": {
+                    "type": "string"
+                },
+                "IdentificadorCaratula": {
+                    "type": "string"
+                }
+            }
+        },
+        "wscoem.Coem": {
+            "type": "object",
+            "properties": {
+                "ContenedoresConCarga": {
+                    "$ref": "#/definitions/wscoem.ArrayOfContenedorCarga"
+                },
+                "ContenedoresVacios": {
+                    "$ref": "#/definitions/wscoem.ArrayOfContenedorVacio"
+                },
+                "MercaderiasSueltas": {
+                    "$ref": "#/definitions/wscoem.ArrayOfMercaderiaSuelta"
+                }
+            }
+        },
+        "wscoem.CoemGranel": {
+            "type": "object",
+            "properties": {
+                "Declaraciones": {
+                    "$ref": "#/definitions/wscoem.ArrayOfDeclaracionGranel"
+                },
+                "IdentificadorCoem": {
+                    "type": "string"
+                }
+            }
+        },
+        "wscoem.Contenedor": {
+            "type": "object",
+            "properties": {
+                "IdentificadorContenedor": {
+                    "type": "string"
+                }
+            }
+        },
+        "wscoem.ContenedorCarga": {
+            "type": "object",
+            "properties": {
+                "CuitATA": {
+                    "type": "string"
+                },
+                "Declaraciones": {
+                    "$ref": "#/definitions/wscoem.ArrayOfDeclaracion"
+                },
+                "IdentificadorContenedor": {
+                    "type": "string"
+                },
+                "Peso": {
+                    "type": "number"
+                },
+                "Precintos": {
+                    "$ref": "#/definitions/wscoem.ArrayOfPrecinto"
+                },
+                "Tipo": {
+                    "type": "string"
+                }
+            }
+        },
+        "wscoem.ContenedorVacio": {
+            "type": "object",
+            "properties": {
+                "CodigoPais": {
+                    "type": "string"
+                },
+                "CuitATA": {
+                    "type": "string"
+                },
+                "IdentificadorContenedor": {
+                    "type": "string"
+                },
+                "Tipo": {
+                    "type": "string"
+                }
+            }
+        },
+        "wscoem.Declaracion": {
+            "type": "object",
+            "properties": {
+                "IdentificadorDeclaracion": {
+                    "type": "string"
+                }
+            }
+        },
+        "wscoem.DeclaracionCont": {
+            "type": "object",
+            "properties": {
+                "FechaEmbarque": {
+                    "type": "string"
+                },
+                "IdentificadorDeclaracion": {
+                    "type": "string"
+                }
+            }
+        },
+        "wscoem.DeclaracionGranel": {
+            "type": "object",
+            "properties": {
+                "FechaEmbarque": {
+                    "type": "string"
+                },
+                "IdentificadorCierreCumplido": {
+                    "type": "string"
+                },
+                "IdentificadorDeclaracion": {
+                    "type": "string"
+                },
+                "Items": {
+                    "$ref": "#/definitions/wscoem.ArrayOfItem"
+                }
+            }
+        },
+        "wscoem.DgaMensajeSistemaReducido": {
+            "type": "object",
+            "properties": {
+                "Codigo": {
+                    "type": "integer"
+                },
+                "Descripcion": {
+                    "type": "string"
+                },
+                "DescripcionAdicional": {
+                    "type": "string"
+                }
+            }
+        },
+        "wscoem.Embalaje": {
+            "type": "object",
+            "properties": {
+                "CantidadBultos": {
+                    "type": "integer"
+                },
+                "CodigoEmbalaje": {
+                    "type": "string"
+                },
+                "Peso": {
+                    "type": "number"
+                }
+            }
+        },
+        "wscoem.Item": {
+            "type": "object",
+            "properties": {
+                "cantidadReal": {
+                    "type": "number"
+                },
+                "numeroItem": {
+                    "type": "integer"
+                }
+            }
+        },
+        "wscoem.MercaderiaSuelta": {
+            "type": "object",
+            "properties": {
+                "CuitATA": {
+                    "type": "string"
+                },
+                "Embalajes": {
+                    "$ref": "#/definitions/wscoem.ArrayOfEmbalaje"
+                },
+                "IdentificadorDeclaracion": {
+                    "type": "string"
+                }
+            }
+        },
+        "wscoem.Precinto": {
+            "type": "object",
+            "properties": {
+                "IdentificadorPrecinto": {
+                    "type": "string"
+                }
+            }
+        },
+        "wscoem.Puerto": {
+            "type": "object",
+            "properties": {
+                "CodigoPuerto": {
+                    "type": "string"
+                }
+            }
+        },
+        "wscoem.RectificarCOEMRequest": {
+            "type": "object",
+            "properties": {
+                "Coem": {
+                    "$ref": "#/definitions/wscoem.Coem"
+                },
+                "IdentificadorCOEM": {
+                    "type": "string"
+                },
+                "IdentificadorCaratula": {
+                    "type": "string"
+                }
+            }
+        },
+        "wscoem.RectificarCaratulaRequest": {
+            "type": "object",
+            "properties": {
+                "Caratula": {
+                    "$ref": "#/definitions/wscoem.Caratula"
+                },
+                "IdentificadorCaratula": {
+                    "type": "string"
+                }
+            }
+        },
+        "wscoem.RectificarEmbarqueRta": {
+            "type": "object",
+            "properties": {
+                "ListaErrores": {
+                    "$ref": "#/definitions/wscoem.ArrayOfDgaMensajeSistemaReducido"
+                },
+                "Server": {
+                    "type": "string"
+                },
+                "TimeStamp": {
+                    "type": "string"
+                }
+            }
+        },
+        "wscoem.RegistrarCOEMRequest": {
+            "type": "object",
+            "properties": {
+                "Coem": {
+                    "$ref": "#/definitions/wscoem.Coem"
+                },
+                "IdentificadorCaratula": {
+                    "type": "string"
+                }
+            }
+        },
+        "wscoem.RegistrarCaratulaRequest": {
+            "type": "object",
+            "properties": {
+                "Caratula": {
+                    "$ref": "#/definitions/wscoem.Caratula"
+                }
+            }
+        },
+        "wscoem.RegistrarEmbarqueRta": {
+            "type": "object",
+            "properties": {
+                "ListaErrores": {
+                    "$ref": "#/definitions/wscoem.ArrayOfDgaMensajeSistemaReducido"
+                },
+                "Server": {
+                    "type": "string"
+                },
+                "TimeStamp": {
+                    "type": "string"
+                }
+            }
+        },
+        "wscoem.ResultadoEjecucionDummy": {
+            "type": "object",
+            "properties": {
+                "AppServer": {
+                    "type": "string"
+                },
+                "AuthServer": {
+                    "type": "string"
+                },
+                "DbServer": {
+                    "type": "string"
+                }
+            }
+        },
+        "wscoem.SolicitarAnulacionCOEMRequest": {
+            "type": "object",
+            "properties": {
+                "IdentificadorCOEM": {
+                    "type": "string"
+                },
+                "IdentificadorCaratula": {
+                    "type": "string"
+                }
+            }
+        },
+        "wscoem.SolicitarCambioBuqueRequest": {
+            "type": "object",
+            "properties": {
+                "IdentificadorBuque": {
+                    "type": "string"
+                },
+                "IdentificadorCaratula": {
+                    "type": "string"
+                },
+                "NombreMedioTransporte": {
+                    "type": "string"
+                }
+            }
+        },
+        "wscoem.SolicitarCambioFechasRequest": {
+            "type": "object",
+            "properties": {
+                "CodigoMotivo": {
+                    "type": "string"
+                },
+                "DescripcionMotivo": {
+                    "type": "string"
+                },
+                "FechaArribo": {
+                    "type": "string"
+                },
+                "FechaZarpada": {
+                    "type": "string"
+                },
+                "IdentificadorCaratula": {
+                    "type": "string"
+                }
+            }
+        },
+        "wscoem.SolicitarCambioLOTRequest": {
+            "type": "object",
+            "properties": {
+                "CodigoLugarOperativo": {
+                    "type": "string"
+                },
+                "IdentificadorCaratula": {
+                    "type": "string"
+                }
+            }
+        },
+        "wscoem.SolicitarCierreCargaContoBultoRequest": {
+            "type": "object",
+            "properties": {
+                "Declaraciones": {
+                    "$ref": "#/definitions/wscoem.ArrayOfDeclaracionCont"
+                },
+                "FechaZarpada": {
+                    "type": "string"
+                },
+                "IdentificadorCaratula": {
+                    "type": "string"
+                },
+                "numeroViaje": {
+                    "type": "string"
+                }
+            }
+        },
+        "wscoem.SolicitarCierreCargaGranelRequest": {
+            "type": "object",
+            "properties": {
+                "Coems": {
+                    "$ref": "#/definitions/wscoem.ArrayOfCoemGranel"
+                },
+                "FechaZarpada": {
+                    "type": "string"
+                },
+                "IdentificadorCaratula": {
+                    "type": "string"
+                },
+                "numeroViaje": {
+                    "type": "string"
+                }
+            }
+        },
+        "wscoem.SolicitarNoABordoRequest": {
+            "type": "object",
+            "properties": {
+                "CodigoMotivo": {
+                    "type": "string"
+                },
+                "DescripcionMotivo": {
+                    "type": "string"
+                },
+                "IdentificadorCOEM": {
+                    "type": "string"
+                },
+                "IdentificadorCaratula": {
+                    "type": "string"
+                },
+                "IdentificadoresContenedorCarga": {
+                    "$ref": "#/definitions/wscoem.ArrayOfContenedor"
+                },
+                "IdentificadoresContenedoresVacios": {
+                    "$ref": "#/definitions/wscoem.ArrayOfContenedor"
+                },
+                "IdentificadoresDeclaracionesMercaderiaSuelta": {
+                    "$ref": "#/definitions/wscoem.ArrayOfDeclaracion"
+                }
+            }
+        },
+        "wscoemcons.ArrayOfConsultaEstadoCOEM": {
+            "type": "object",
+            "properties": {
+                "ConsultaEstadoCOEM": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/wscoemcons.ConsultaEstadoCOEM"
+                    }
+                }
+            }
+        },
+        "wscoemcons.ArrayOfConsultaNoAbordo": {
+            "type": "object",
+            "properties": {
+                "ConsultaNoAbordo": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/wscoemcons.ConsultaNoAbordo"
+                    }
+                }
+            }
+        },
+        "wscoemcons.ArrayOfConsultaSolicitudes": {
+            "type": "object",
+            "properties": {
+                "ConsultaSolicitudes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/wscoemcons.ConsultaSolicitudes"
+                    }
+                }
+            }
+        },
+        "wscoemcons.ArrayOfErrorEjecucion": {
+            "type": "object",
+            "properties": {
+                "ErrorEjecucion": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/wscoemcons.ErrorEjecucion"
+                    }
                 }
             }
         },
@@ -2860,7 +3764,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "FechaEstado": {
-                    "$ref": "#/definitions/soap.XSDDateTime"
+                    "type": "string"
                 },
                 "IdentificadorCOEM": {
                     "type": "string"
@@ -2886,7 +3790,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "FechaNoAbordo": {
-                    "$ref": "#/definitions/soap.XSDDateTime"
+                    "type": "string"
                 },
                 "IdentificadorCACE": {
                     "type": "string"
@@ -2912,7 +3816,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "FechaEstado": {
-                    "$ref": "#/definitions/soap.XSDDateTime"
+                    "type": "string"
                 },
                 "IdentificadorCACE": {
                     "type": "string"
@@ -2928,10 +3832,150 @@ const docTemplate = `{
                 }
             }
         },
+        "wscoemcons.DummyOutput": {
+            "type": "object",
+            "properties": {
+                "AppServer": {
+                    "type": "string"
+                },
+                "AuthServer": {
+                    "type": "string"
+                },
+                "DbServer": {
+                    "type": "string"
+                }
+            }
+        },
+        "wscoemcons.ErrorEjecucion": {
+            "type": "object",
+            "properties": {
+                "Codigo": {
+                    "type": "string"
+                },
+                "Descripcion": {
+                    "type": "string"
+                }
+            }
+        },
+        "wscoemcons.ResultadoEjecucionOfDummyOutput": {
+            "type": "object",
+            "properties": {
+                "Errores": {
+                    "$ref": "#/definitions/wscoemcons.ArrayOfErrorEjecucion"
+                },
+                "Resultado": {
+                    "$ref": "#/definitions/wscoemcons.DummyOutput"
+                },
+                "Server": {
+                    "type": "string"
+                },
+                "TimeStamp": {
+                    "type": "string"
+                }
+            }
+        },
+        "wscoemcons.ResultadoEjecucionOfResultadoEstadoProceso": {
+            "type": "object",
+            "properties": {
+                "Errores": {
+                    "$ref": "#/definitions/wscoemcons.ArrayOfErrorEjecucion"
+                },
+                "Resultado": {
+                    "$ref": "#/definitions/wscoemcons.ResultadoEstadoProceso"
+                },
+                "Server": {
+                    "type": "string"
+                },
+                "TimeStamp": {
+                    "type": "string"
+                }
+            }
+        },
+        "wscoemcons.ResultadoEjecucionOfResultadoNoAbordoProceso": {
+            "type": "object",
+            "properties": {
+                "Errores": {
+                    "$ref": "#/definitions/wscoemcons.ArrayOfErrorEjecucion"
+                },
+                "Resultado": {
+                    "$ref": "#/definitions/wscoemcons.ResultadoNoAbordoProceso"
+                },
+                "Server": {
+                    "type": "string"
+                },
+                "TimeStamp": {
+                    "type": "string"
+                }
+            }
+        },
+        "wscoemcons.ResultadoEjecucionOfResultadoSolicitudProceso": {
+            "type": "object",
+            "properties": {
+                "Errores": {
+                    "$ref": "#/definitions/wscoemcons.ArrayOfErrorEjecucion"
+                },
+                "Resultado": {
+                    "$ref": "#/definitions/wscoemcons.ResultadoSolicitudProceso"
+                },
+                "Server": {
+                    "type": "string"
+                },
+                "TimeStamp": {
+                    "type": "string"
+                }
+            }
+        },
+        "wscoemcons.ResultadoEstadoProceso": {
+            "type": "object",
+            "properties": {
+                "InformacionAdicional": {
+                    "type": "string"
+                },
+                "Listado": {
+                    "$ref": "#/definitions/wscoemcons.ArrayOfConsultaEstadoCOEM"
+                }
+            }
+        },
+        "wscoemcons.ResultadoNoAbordoProceso": {
+            "type": "object",
+            "properties": {
+                "InformacionAdicional": {
+                    "type": "string"
+                },
+                "Listado": {
+                    "$ref": "#/definitions/wscoemcons.ArrayOfConsultaNoAbordo"
+                }
+            }
+        },
+        "wscoemcons.ResultadoSolicitudProceso": {
+            "type": "object",
+            "properties": {
+                "InformacionAdicional": {
+                    "type": "string"
+                },
+                "Listado": {
+                    "$ref": "#/definitions/wscoemcons.ArrayOfConsultaSolicitudes"
+                }
+            }
+        },
         "wsfe.Actividad": {
             "type": "object",
             "properties": {
                 "Id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "wsfe.ActividadesTipo": {
+            "type": "object",
+            "properties": {
+                "Desc": {
+                    "type": "string"
+                },
+                "Id": {
+                    "type": "integer"
+                },
+                "Orden": {
                     "type": "integer"
                 }
             }
@@ -2961,6 +4005,17 @@ const docTemplate = `{
                 }
             }
         },
+        "wsfe.ArrayOfActividadesTipo": {
+            "type": "object",
+            "properties": {
+                "ActividadesTipo": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/wsfe.ActividadesTipo"
+                    }
+                }
+            }
+        },
         "wsfe.ArrayOfAlicIva": {
             "type": "object",
             "properties": {
@@ -2983,6 +4038,17 @@ const docTemplate = `{
                 }
             }
         },
+        "wsfe.ArrayOfCbteTipo": {
+            "type": "object",
+            "properties": {
+                "CbteTipo": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/wsfe.CbteTipo"
+                    }
+                }
+            }
+        },
         "wsfe.ArrayOfComprador": {
             "type": "object",
             "properties": {
@@ -2990,6 +4056,116 @@ const docTemplate = `{
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/wsfe.Comprador"
+                    }
+                }
+            }
+        },
+        "wsfe.ArrayOfConceptoTipo": {
+            "type": "object",
+            "properties": {
+                "ConceptoTipo": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/wsfe.ConceptoTipo"
+                    }
+                }
+            }
+        },
+        "wsfe.ArrayOfCondicionIvaReceptor": {
+            "type": "object",
+            "properties": {
+                "CondicionIvaReceptor": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/wsfe.CondicionIvaReceptor"
+                    }
+                }
+            }
+        },
+        "wsfe.ArrayOfDocTipo": {
+            "type": "object",
+            "properties": {
+                "DocTipo": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/wsfe.DocTipo"
+                    }
+                }
+            }
+        },
+        "wsfe.ArrayOfErr": {
+            "type": "object",
+            "properties": {
+                "Err": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/wsfe.Err"
+                    }
+                }
+            }
+        },
+        "wsfe.ArrayOfEvt": {
+            "type": "object",
+            "properties": {
+                "Evt": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/wsfe.Evt"
+                    }
+                }
+            }
+        },
+        "wsfe.ArrayOfFECAEADetResponse": {
+            "type": "object",
+            "properties": {
+                "FECAEADetResponse": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/wsfe.FECAEADetResponse"
+                    }
+                }
+            }
+        },
+        "wsfe.ArrayOfFECAEDetResponse": {
+            "type": "object",
+            "properties": {
+                "FECAEDetResponse": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/wsfe.FECAEDetResponse"
+                    }
+                }
+            }
+        },
+        "wsfe.ArrayOfIvaTipo": {
+            "type": "object",
+            "properties": {
+                "IvaTipo": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/wsfe.IvaTipo"
+                    }
+                }
+            }
+        },
+        "wsfe.ArrayOfMoneda": {
+            "type": "object",
+            "properties": {
+                "Moneda": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/wsfe.Moneda"
+                    }
+                }
+            }
+        },
+        "wsfe.ArrayOfObs": {
+            "type": "object",
+            "properties": {
+                "Obs": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/wsfe.Obs"
                     }
                 }
             }
@@ -3005,6 +4181,39 @@ const docTemplate = `{
                 }
             }
         },
+        "wsfe.ArrayOfOpcionalTipo": {
+            "type": "object",
+            "properties": {
+                "OpcionalTipo": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/wsfe.OpcionalTipo"
+                    }
+                }
+            }
+        },
+        "wsfe.ArrayOfPaisTipo": {
+            "type": "object",
+            "properties": {
+                "PaisTipo": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/wsfe.PaisTipo"
+                    }
+                }
+            }
+        },
+        "wsfe.ArrayOfPtoVenta": {
+            "type": "object",
+            "properties": {
+                "PtoVenta": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/wsfe.PtoVenta"
+                    }
+                }
+            }
+        },
         "wsfe.ArrayOfTributo": {
             "type": "object",
             "properties": {
@@ -3012,6 +4221,17 @@ const docTemplate = `{
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/wsfe.Tributo"
+                    }
+                }
+            }
+        },
+        "wsfe.ArrayOfTributoTipo": {
+            "type": "object",
+            "properties": {
+                "TributoTipo": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/wsfe.TributoTipo"
                     }
                 }
             }
@@ -3053,6 +4273,20 @@ const docTemplate = `{
                 }
             }
         },
+        "wsfe.CbteTipoResponse": {
+            "type": "object",
+            "properties": {
+                "Errors": {
+                    "$ref": "#/definitions/wsfe.ArrayOfErr"
+                },
+                "Events": {
+                    "$ref": "#/definitions/wsfe.ArrayOfEvt"
+                },
+                "ResultGet": {
+                    "$ref": "#/definitions/wsfe.ArrayOfCbteTipo"
+                }
+            }
+        },
         "wsfe.Comprador": {
             "type": "object",
             "properties": {
@@ -3084,6 +4318,62 @@ const docTemplate = `{
                 }
             }
         },
+        "wsfe.ConceptoTipoResponse": {
+            "type": "object",
+            "properties": {
+                "Errors": {
+                    "$ref": "#/definitions/wsfe.ArrayOfErr"
+                },
+                "Events": {
+                    "$ref": "#/definitions/wsfe.ArrayOfEvt"
+                },
+                "ResultGet": {
+                    "$ref": "#/definitions/wsfe.ArrayOfConceptoTipo"
+                }
+            }
+        },
+        "wsfe.CondicionIvaReceptor": {
+            "type": "object",
+            "properties": {
+                "Cmp_Clase": {
+                    "type": "string"
+                },
+                "Desc": {
+                    "type": "string"
+                },
+                "Id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "wsfe.CondicionIvaReceptorResponse": {
+            "type": "object",
+            "properties": {
+                "Errors": {
+                    "$ref": "#/definitions/wsfe.ArrayOfErr"
+                },
+                "Events": {
+                    "$ref": "#/definitions/wsfe.ArrayOfEvt"
+                },
+                "ResultGet": {
+                    "$ref": "#/definitions/wsfe.ArrayOfCondicionIvaReceptor"
+                }
+            }
+        },
+        "wsfe.Cotizacion": {
+            "type": "object",
+            "properties": {
+                "FchCotiz": {
+                    "type": "string"
+                },
+                "MonCotiz": {
+                    "type": "number"
+                },
+                "MonId": {
+                    "type": "string"
+                }
+            }
+        },
         "wsfe.DocTipo": {
             "type": "object",
             "properties": {
@@ -3098,6 +4388,260 @@ const docTemplate = `{
                 },
                 "Id": {
                     "type": "integer"
+                }
+            }
+        },
+        "wsfe.DocTipoResponse": {
+            "type": "object",
+            "properties": {
+                "Errors": {
+                    "$ref": "#/definitions/wsfe.ArrayOfErr"
+                },
+                "Events": {
+                    "$ref": "#/definitions/wsfe.ArrayOfEvt"
+                },
+                "ResultGet": {
+                    "$ref": "#/definitions/wsfe.ArrayOfDocTipo"
+                }
+            }
+        },
+        "wsfe.DummyResponse": {
+            "type": "object",
+            "properties": {
+                "AppServer": {
+                    "type": "string"
+                },
+                "AuthServer": {
+                    "type": "string"
+                },
+                "DbServer": {
+                    "type": "string"
+                }
+            }
+        },
+        "wsfe.Err": {
+            "type": "object",
+            "properties": {
+                "Code": {
+                    "type": "integer"
+                },
+                "Msg": {
+                    "type": "string"
+                }
+            }
+        },
+        "wsfe.Evt": {
+            "type": "object",
+            "properties": {
+                "Code": {
+                    "type": "integer"
+                },
+                "Msg": {
+                    "type": "string"
+                }
+            }
+        },
+        "wsfe.FEActividadesResponse": {
+            "type": "object",
+            "properties": {
+                "Errors": {
+                    "$ref": "#/definitions/wsfe.ArrayOfErr"
+                },
+                "Events": {
+                    "$ref": "#/definitions/wsfe.ArrayOfEvt"
+                },
+                "ResultGet": {
+                    "$ref": "#/definitions/wsfe.ArrayOfActividadesTipo"
+                }
+            }
+        },
+        "wsfe.FECAEACabResponse": {
+            "type": "object",
+            "properties": {
+                "CantReg": {
+                    "type": "integer"
+                },
+                "CbteTipo": {
+                    "type": "integer"
+                },
+                "Cuit": {
+                    "type": "integer"
+                },
+                "FchProceso": {
+                    "type": "string"
+                },
+                "PtoVta": {
+                    "type": "integer"
+                },
+                "Reproceso": {
+                    "type": "string"
+                },
+                "Resultado": {
+                    "type": "string"
+                }
+            }
+        },
+        "wsfe.FECAEADetRequest": {
+            "type": "object",
+            "properties": {
+                "Actividades": {
+                    "$ref": "#/definitions/wsfe.ArrayOfActividad"
+                },
+                "CAEA": {
+                    "type": "string"
+                },
+                "CanMisMonExt": {
+                    "type": "string"
+                },
+                "CbteDesde": {
+                    "type": "integer"
+                },
+                "CbteFch": {
+                    "type": "string"
+                },
+                "CbteFchHsGen": {
+                    "type": "string"
+                },
+                "CbteHasta": {
+                    "type": "integer"
+                },
+                "CbtesAsoc": {
+                    "$ref": "#/definitions/wsfe.ArrayOfCbteAsoc"
+                },
+                "Compradores": {
+                    "$ref": "#/definitions/wsfe.ArrayOfComprador"
+                },
+                "Concepto": {
+                    "type": "integer"
+                },
+                "CondicionIVAReceptorId": {
+                    "type": "integer"
+                },
+                "DocNro": {
+                    "type": "integer"
+                },
+                "DocTipo": {
+                    "type": "integer"
+                },
+                "FchServDesde": {
+                    "type": "string"
+                },
+                "FchServHasta": {
+                    "type": "string"
+                },
+                "FchVtoPago": {
+                    "type": "string"
+                },
+                "ImpIVA": {
+                    "type": "number"
+                },
+                "ImpNeto": {
+                    "type": "number"
+                },
+                "ImpOpEx": {
+                    "type": "number"
+                },
+                "ImpTotConc": {
+                    "type": "number"
+                },
+                "ImpTotal": {
+                    "type": "number"
+                },
+                "ImpTrib": {
+                    "type": "number"
+                },
+                "Iva": {
+                    "$ref": "#/definitions/wsfe.ArrayOfAlicIva"
+                },
+                "MonCotiz": {
+                    "type": "number"
+                },
+                "MonId": {
+                    "type": "string"
+                },
+                "Opcionales": {
+                    "$ref": "#/definitions/wsfe.ArrayOfOpcional"
+                },
+                "PeriodoAsoc": {
+                    "$ref": "#/definitions/wsfe.Periodo"
+                },
+                "Tributos": {
+                    "$ref": "#/definitions/wsfe.ArrayOfTributo"
+                }
+            }
+        },
+        "wsfe.FECAEADetResponse": {
+            "type": "object",
+            "properties": {
+                "CAEA": {
+                    "type": "string"
+                },
+                "CbteDesde": {
+                    "type": "integer"
+                },
+                "CbteFch": {
+                    "type": "string"
+                },
+                "CbteHasta": {
+                    "type": "integer"
+                },
+                "Concepto": {
+                    "type": "integer"
+                },
+                "DocNro": {
+                    "type": "integer"
+                },
+                "DocTipo": {
+                    "type": "integer"
+                },
+                "Observaciones": {
+                    "$ref": "#/definitions/wsfe.ArrayOfObs"
+                },
+                "Resultado": {
+                    "type": "string"
+                }
+            }
+        },
+        "wsfe.FECAEAResponse": {
+            "type": "object",
+            "properties": {
+                "Errors": {
+                    "$ref": "#/definitions/wsfe.ArrayOfErr"
+                },
+                "Events": {
+                    "$ref": "#/definitions/wsfe.ArrayOfEvt"
+                },
+                "FeCabResp": {
+                    "$ref": "#/definitions/wsfe.FECAEACabResponse"
+                },
+                "FeDetResp": {
+                    "$ref": "#/definitions/wsfe.ArrayOfFECAEADetResponse"
+                }
+            }
+        },
+        "wsfe.FECAECabResponse": {
+            "type": "object",
+            "properties": {
+                "CantReg": {
+                    "type": "integer"
+                },
+                "CbteTipo": {
+                    "type": "integer"
+                },
+                "Cuit": {
+                    "type": "integer"
+                },
+                "FchProceso": {
+                    "type": "string"
+                },
+                "PtoVta": {
+                    "type": "integer"
+                },
+                "Reproceso": {
+                    "type": "string"
+                },
+                "Resultado": {
+                    "type": "string"
                 }
             }
         },
@@ -3184,6 +4728,58 @@ const docTemplate = `{
                 }
             }
         },
+        "wsfe.FECAEDetResponse": {
+            "type": "object",
+            "properties": {
+                "CAE": {
+                    "type": "string"
+                },
+                "CAEFchVto": {
+                    "type": "string"
+                },
+                "CbteDesde": {
+                    "type": "integer"
+                },
+                "CbteFch": {
+                    "type": "string"
+                },
+                "CbteHasta": {
+                    "type": "integer"
+                },
+                "Concepto": {
+                    "type": "integer"
+                },
+                "DocNro": {
+                    "type": "integer"
+                },
+                "DocTipo": {
+                    "type": "integer"
+                },
+                "Observaciones": {
+                    "$ref": "#/definitions/wsfe.ArrayOfObs"
+                },
+                "Resultado": {
+                    "type": "string"
+                }
+            }
+        },
+        "wsfe.FECAEResponse": {
+            "type": "object",
+            "properties": {
+                "Errors": {
+                    "$ref": "#/definitions/wsfe.ArrayOfErr"
+                },
+                "Events": {
+                    "$ref": "#/definitions/wsfe.ArrayOfEvt"
+                },
+                "FeCabResp": {
+                    "$ref": "#/definitions/wsfe.FECAECabResponse"
+                },
+                "FeDetResp": {
+                    "$ref": "#/definitions/wsfe.ArrayOfFECAEDetResponse"
+                }
+            }
+        },
         "wsfe.FECabRequest": {
             "type": "object",
             "properties": {
@@ -3195,6 +4791,217 @@ const docTemplate = `{
                 },
                 "PtoVta": {
                     "type": "integer"
+                }
+            }
+        },
+        "wsfe.FECompConsResponse": {
+            "type": "object",
+            "properties": {
+                "Actividades": {
+                    "$ref": "#/definitions/wsfe.ArrayOfActividad"
+                },
+                "CanMisMonExt": {
+                    "type": "string"
+                },
+                "CbteDesde": {
+                    "type": "integer"
+                },
+                "CbteFch": {
+                    "type": "string"
+                },
+                "CbteHasta": {
+                    "type": "integer"
+                },
+                "CbteTipo": {
+                    "type": "integer"
+                },
+                "CbtesAsoc": {
+                    "$ref": "#/definitions/wsfe.ArrayOfCbteAsoc"
+                },
+                "CodAutorizacion": {
+                    "type": "string"
+                },
+                "Compradores": {
+                    "$ref": "#/definitions/wsfe.ArrayOfComprador"
+                },
+                "Concepto": {
+                    "type": "integer"
+                },
+                "CondicionIVAReceptorId": {
+                    "type": "integer"
+                },
+                "DocNro": {
+                    "type": "integer"
+                },
+                "DocTipo": {
+                    "type": "integer"
+                },
+                "EmisionTipo": {
+                    "type": "string"
+                },
+                "FchProceso": {
+                    "type": "string"
+                },
+                "FchServDesde": {
+                    "type": "string"
+                },
+                "FchServHasta": {
+                    "type": "string"
+                },
+                "FchVto": {
+                    "type": "string"
+                },
+                "FchVtoPago": {
+                    "type": "string"
+                },
+                "ImpIVA": {
+                    "type": "number"
+                },
+                "ImpNeto": {
+                    "type": "number"
+                },
+                "ImpOpEx": {
+                    "type": "number"
+                },
+                "ImpTotConc": {
+                    "type": "number"
+                },
+                "ImpTotal": {
+                    "type": "number"
+                },
+                "ImpTrib": {
+                    "type": "number"
+                },
+                "Iva": {
+                    "$ref": "#/definitions/wsfe.ArrayOfAlicIva"
+                },
+                "MonCotiz": {
+                    "type": "number"
+                },
+                "MonId": {
+                    "type": "string"
+                },
+                "Observaciones": {
+                    "$ref": "#/definitions/wsfe.ArrayOfObs"
+                },
+                "Opcionales": {
+                    "$ref": "#/definitions/wsfe.ArrayOfOpcional"
+                },
+                "PeriodoAsoc": {
+                    "$ref": "#/definitions/wsfe.Periodo"
+                },
+                "PtoVta": {
+                    "type": "integer"
+                },
+                "Resultado": {
+                    "type": "string"
+                },
+                "Tributos": {
+                    "$ref": "#/definitions/wsfe.ArrayOfTributo"
+                }
+            }
+        },
+        "wsfe.FECompConsultaResponse": {
+            "type": "object",
+            "properties": {
+                "Errors": {
+                    "$ref": "#/definitions/wsfe.ArrayOfErr"
+                },
+                "Events": {
+                    "$ref": "#/definitions/wsfe.ArrayOfEvt"
+                },
+                "ResultGet": {
+                    "$ref": "#/definitions/wsfe.FECompConsResponse"
+                }
+            }
+        },
+        "wsfe.FECotizacionResponse": {
+            "type": "object",
+            "properties": {
+                "Errors": {
+                    "$ref": "#/definitions/wsfe.ArrayOfErr"
+                },
+                "Events": {
+                    "$ref": "#/definitions/wsfe.ArrayOfEvt"
+                },
+                "ResultGet": {
+                    "$ref": "#/definitions/wsfe.Cotizacion"
+                }
+            }
+        },
+        "wsfe.FEPaisResponse": {
+            "type": "object",
+            "properties": {
+                "Errors": {
+                    "$ref": "#/definitions/wsfe.ArrayOfErr"
+                },
+                "Events": {
+                    "$ref": "#/definitions/wsfe.ArrayOfEvt"
+                },
+                "ResultGet": {
+                    "$ref": "#/definitions/wsfe.ArrayOfPaisTipo"
+                }
+            }
+        },
+        "wsfe.FEPtoVentaResponse": {
+            "type": "object",
+            "properties": {
+                "Errors": {
+                    "$ref": "#/definitions/wsfe.ArrayOfErr"
+                },
+                "Events": {
+                    "$ref": "#/definitions/wsfe.ArrayOfEvt"
+                },
+                "ResultGet": {
+                    "$ref": "#/definitions/wsfe.ArrayOfPtoVenta"
+                }
+            }
+        },
+        "wsfe.FERecuperaLastCbteResponse": {
+            "type": "object",
+            "properties": {
+                "CbteNro": {
+                    "type": "integer"
+                },
+                "CbteTipo": {
+                    "type": "integer"
+                },
+                "Errors": {
+                    "$ref": "#/definitions/wsfe.ArrayOfErr"
+                },
+                "Events": {
+                    "$ref": "#/definitions/wsfe.ArrayOfEvt"
+                },
+                "PtoVta": {
+                    "type": "integer"
+                }
+            }
+        },
+        "wsfe.FERegXReqResponse": {
+            "type": "object",
+            "properties": {
+                "Errors": {
+                    "$ref": "#/definitions/wsfe.ArrayOfErr"
+                },
+                "Events": {
+                    "$ref": "#/definitions/wsfe.ArrayOfEvt"
+                },
+                "RegXReq": {
+                    "type": "integer"
+                }
+            }
+        },
+        "wsfe.FETributoResponse": {
+            "type": "object",
+            "properties": {
+                "Errors": {
+                    "$ref": "#/definitions/wsfe.ArrayOfErr"
+                },
+                "Events": {
+                    "$ref": "#/definitions/wsfe.ArrayOfEvt"
+                },
+                "ResultGet": {
+                    "$ref": "#/definitions/wsfe.ArrayOfTributoTipo"
                 }
             }
         },
@@ -3215,6 +5022,20 @@ const docTemplate = `{
                 }
             }
         },
+        "wsfe.IvaTipoResponse": {
+            "type": "object",
+            "properties": {
+                "Errors": {
+                    "$ref": "#/definitions/wsfe.ArrayOfErr"
+                },
+                "Events": {
+                    "$ref": "#/definitions/wsfe.ArrayOfEvt"
+                },
+                "ResultGet": {
+                    "$ref": "#/definitions/wsfe.ArrayOfIvaTipo"
+                }
+            }
+        },
         "wsfe.Moneda": {
             "type": "object",
             "properties": {
@@ -3228,6 +5049,31 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "Id": {
+                    "type": "string"
+                }
+            }
+        },
+        "wsfe.MonedaResponse": {
+            "type": "object",
+            "properties": {
+                "Errors": {
+                    "$ref": "#/definitions/wsfe.ArrayOfErr"
+                },
+                "Events": {
+                    "$ref": "#/definitions/wsfe.ArrayOfEvt"
+                },
+                "ResultGet": {
+                    "$ref": "#/definitions/wsfe.ArrayOfMoneda"
+                }
+            }
+        },
+        "wsfe.Obs": {
+            "type": "object",
+            "properties": {
+                "Code": {
+                    "type": "integer"
+                },
+                "Msg": {
                     "type": "string"
                 }
             }
@@ -3257,6 +5103,31 @@ const docTemplate = `{
                 },
                 "Id": {
                     "type": "string"
+                }
+            }
+        },
+        "wsfe.OpcionalTipoResponse": {
+            "type": "object",
+            "properties": {
+                "Errors": {
+                    "$ref": "#/definitions/wsfe.ArrayOfErr"
+                },
+                "Events": {
+                    "$ref": "#/definitions/wsfe.ArrayOfEvt"
+                },
+                "ResultGet": {
+                    "$ref": "#/definitions/wsfe.ArrayOfOpcionalTipo"
+                }
+            }
+        },
+        "wsfe.PaisTipo": {
+            "type": "object",
+            "properties": {
+                "Desc": {
+                    "type": "string"
+                },
+                "Id": {
+                    "type": "integer"
                 }
             }
         },

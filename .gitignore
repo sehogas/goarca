@@ -23,3 +23,5 @@
 *.TA
 .apiKeys
 *.key
+
+xml/*

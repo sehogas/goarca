@@ -15,21 +15,17 @@ import (
 //	@Tags			Consultas de Comunicación de Embarque
 //	@Produce		json
 //	@Param			x-api-key	header		string	true	"API Key de acceso"
-//	@Success		200			{object}	dto.DummyResponse
+//	@Success		200			{object}	wscoemcons.ResultadoEjecucionOfDummyOutput
 //	@Failure		401			{object}	dto.ErrorResponse
 //	@Failure		500			{object}	dto.ErrorResponse
-//	@Router			/coemcons/dummy [get]
+//	@Router			/coemcons/Dummy [get]
 func DummyCoemconsHandler(w http.ResponseWriter, r *http.Request) {
-	appServer, authServer, dbServer, err := Wscoemcons.Dummy()
+	resultado, err := Wscoemcons.Dummy()
 	if err != nil {
 		util.HttpResponseJSON(w, http.StatusInternalServerError, &dto.ErrorResponse{Error: err.Error()}, err)
 		return
 	}
-	util.HttpResponseJSON(w, http.StatusOK, &dto.DummyResponse{
-		AppServer:  appServer,
-		AuthServer: authServer,
-		DbServer:   dbServer,
-	}, nil)
+	util.HttpResponseJSON(w, http.StatusOK, resultado, nil)
 }
 
 // ObtenerConsultaEstadosCOEMHandler godoc
@@ -39,28 +35,28 @@ func DummyCoemconsHandler(w http.ResponseWriter, r *http.Request) {
 //	@Tags			Consultas de Comunicación de Embarque
 //	@Accept			json
 //	@Produce		json
-//	@Param			x-api-key		header		string	true	"API Key de acceso"
-//	@Param			identificador	query		string	true	"Identificador de la caratula"
-//	@Success		200				{array}		wscoemcons.ConsultaEstadoCOEM
-//	@Failure		400				{object}	dto.ErrorResponse
-//	@Failure		401				{object}	dto.ErrorResponse
-//	@Failure		500				{object}	dto.ErrorResponse
-//	@Router			/coemcons/obtener-consulta-estados-coem [get]
+//	@Param			x-api-key				header		string	true	"API Key de acceso"
+//	@Param			identificadorCabecera	query		string	true	"Identificador de la caratula"
+//	@Success		200						{object}	wscoemcons.ResultadoEjecucionOfResultadoEstadoProceso
+//	@Failure		400						{object}	dto.ErrorResponse
+//	@Failure		401						{object}	dto.ErrorResponse
+//	@Failure		500						{object}	dto.ErrorResponse
+//	@Router			/coemcons/ObtenerConsultaEstadosCOEM [get]
 func ObtenerConsultaEstadosCOEMHandler(w http.ResponseWriter, r *http.Request) {
-	identificadorCaratula := r.URL.Query().Get("identificador")
-	if len(identificadorCaratula) != 16 {
-		err := errors.New("error leyendo parámetros de la solicitud")
+	identificadorCaratula := r.URL.Query().Get("identificadorCabecera")
+	if len(identificadorCaratula) <= 0 {
+		err := errors.New("error leyendo parámetro identificadorCabecera")
 		util.HttpResponseJSON(w, http.StatusBadRequest, &dto.ErrorResponse{Error: err.Error()}, err)
 		return
 	}
 
-	data, err := Wscoemcons.ObtenerConsultaEstadosCOEM(identificadorCaratula)
+	resultado, err := Wscoemcons.ObtenerConsultaEstadosCOEM(identificadorCaratula)
 	if err != nil {
 		util.HttpResponseJSON(w, http.StatusInternalServerError, &dto.ErrorResponse{Error: err.Error()}, err)
 		return
 	}
 
-	util.HttpResponseJSON(w, http.StatusOK, data, nil)
+	util.HttpResponseJSON(w, http.StatusOK, resultado, nil)
 }
 
 // ObtenerConsultaNoAbordoHandler godoc
@@ -70,28 +66,28 @@ func ObtenerConsultaEstadosCOEMHandler(w http.ResponseWriter, r *http.Request) {
 //	@Tags			Consultas de Comunicación de Embarque
 //	@Accept			json
 //	@Produce		json
-//	@Param			x-api-key		header		string	true	"API Key de acceso"
-//	@Param			identificador	query		string	true	"Identificador de la caratula"
-//	@Success		200				{array}		wscoemcons.ConsultaNoAbordo
-//	@Failure		400				{object}	dto.ErrorResponse
-//	@Failure		401				{object}	dto.ErrorResponse
-//	@Failure		500				{object}	dto.ErrorResponse
-//	@Router			/coemcons/obtener-consulta-no-abordo [get]
+//	@Param			x-api-key				header		string	true	"API Key de acceso"
+//	@Param			identificadorCabecera	query		string	true	"Identificador de la caratula"
+//	@Success		200						{object}	wscoemcons.ResultadoEjecucionOfResultadoNoAbordoProceso
+//	@Failure		400						{object}	dto.ErrorResponse
+//	@Failure		401						{object}	dto.ErrorResponse
+//	@Failure		500						{object}	dto.ErrorResponse
+//	@Router			/coemcons/ObtenerConsultaNoAbordo [get]
 func ObtenerConsultaNoAbordoHandler(w http.ResponseWriter, r *http.Request) {
-	identificadorCaratula := r.URL.Query().Get("identificador")
-	if len(identificadorCaratula) != 16 {
-		err := errors.New("error leyendo parámetros de la solicitud")
+	identificadorCaratula := r.URL.Query().Get("identificadorCabecera")
+	if len(identificadorCaratula) <= 0 {
+		err := errors.New("error leyendo parámetro identificadorCabecera")
 		util.HttpResponseJSON(w, http.StatusBadRequest, &dto.ErrorResponse{Error: err.Error()}, err)
 		return
 	}
 
-	data, err := Wscoemcons.ObtenerConsultaNoAbordo(identificadorCaratula)
+	resultado, err := Wscoemcons.ObtenerConsultaNoAbordo(identificadorCaratula)
 	if err != nil {
 		util.HttpResponseJSON(w, http.StatusInternalServerError, &dto.ErrorResponse{Error: err.Error()}, err)
 		return
 	}
 
-	util.HttpResponseJSON(w, http.StatusOK, data, nil)
+	util.HttpResponseJSON(w, http.StatusOK, resultado, nil)
 }
 
 // ObtenerConsultaSolicitudesHandler godoc
@@ -101,26 +97,26 @@ func ObtenerConsultaNoAbordoHandler(w http.ResponseWriter, r *http.Request) {
 //	@Tags			Consultas de Comunicación de Embarque
 //	@Accept			json
 //	@Produce		json
-//	@Param			x-api-key		header		string	true	"API Key de acceso"
-//	@Param			identificador	query		string	true	"Identificador de la caratula"
-//	@Success		200				{array}		wscoemcons.ConsultaSolicitudes
-//	@Failure		400				{object}	dto.ErrorResponse
-//	@Failure		401				{object}	dto.ErrorResponse
-//	@Failure		500				{object}	dto.ErrorResponse
-//	@Router			/coemcons/obtener-consulta-solicitudes [get]
+//	@Param			x-api-key				header		string	true	"API Key de acceso"
+//	@Param			identificadorCabecera	query		string	true	"Identificador de la caratula"
+//	@Success		200						{object}	wscoemcons.ResultadoEjecucionOfResultadoSolicitudProceso
+//	@Failure		400						{object}	dto.ErrorResponse
+//	@Failure		401						{object}	dto.ErrorResponse
+//	@Failure		500						{object}	dto.ErrorResponse
+//	@Router			/coemcons/ObtenerConsultaSolicitudes [get]
 func ObtenerConsultaSolicitudesHandler(w http.ResponseWriter, r *http.Request) {
-	identificadorCaratula := r.URL.Query().Get("identificador")
-	if len(identificadorCaratula) != 16 {
-		err := errors.New("error leyendo parámetros de la solicitud")
+	identificadorCaratula := r.URL.Query().Get("identificadorCabecera")
+	if len(identificadorCaratula) <= 0 {
+		err := errors.New("error leyendo parámetro identificadorCabecera")
 		util.HttpResponseJSON(w, http.StatusBadRequest, &dto.ErrorResponse{Error: err.Error()}, err)
 		return
 	}
 
-	data, err := Wscoemcons.ObtenerConsultaSolicitudes(identificadorCaratula)
+	resultado, err := Wscoemcons.ObtenerConsultaSolicitudes(identificadorCaratula)
 	if err != nil {
 		util.HttpResponseJSON(w, http.StatusInternalServerError, &dto.ErrorResponse{Error: err.Error()}, err)
 		return
 	}
 
-	util.HttpResponseJSON(w, http.StatusOK, data, nil)
+	util.HttpResponseJSON(w, http.StatusOK, resultado, nil)
 }

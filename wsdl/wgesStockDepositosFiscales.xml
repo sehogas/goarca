@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="Ar.Gob.Afip.Dga.wgesStockDepositosFiscales" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" targetNamespace="Ar.Gob.Afip.Dga.wgesStockDepositosFiscales">
+<wsdl:types>
+<s:schema elementFormDefault="qualified" targetNamespace="Ar.Gob.Afip.Dga.wgesStockDepositosFiscales">
+<s:element name="RegistrarStock">
+<s:complexType>
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="1" name="argWSAutenticacion" type="tns:WSAutenticacionEmpresa"/>
+<s:element minOccurs="0" maxOccurs="1" name="stock" type="tns:RegistrarStockParams"/>
+</s:sequence>
+</s:complexType>
+</s:element>
+<s:complexType name="WSAutenticacionEmpresa">
+<s:complexContent mixed="false">
+<s:extension base="tns:WSAutenticacion">
+<s:sequence>
+<s:element minOccurs="1" maxOccurs="1" name="CuitEmpresaConectada" type="s:long"/>
+<s:element minOccurs="0" maxOccurs="1" name="TipoAgente" type="s:string"/>
+<s:element minOccurs="0" maxOccurs="1" name="Rol" type="s:string"/>
+</s:sequence>
+</s:extension>
+</s:complexContent>
+</s:complexType>
+<s:complexType name="WSAutenticacion">
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="1" name="Token" type="s:string"/>
+<s:element minOccurs="0" maxOccurs="1" name="Sign" type="s:string"/>
+</s:sequence>
+</s:complexType>
+<s:complexType name="RegistrarStockParams">
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="1" name="IdTransaccion" type="s:string"/>
+<s:element minOccurs="0" maxOccurs="1" name="CodigoAduana" type="s:string"/>
+<s:element minOccurs="0" maxOccurs="1" name="CodigoLugarOperativo" type="s:string"/>
+<s:element minOccurs="1" maxOccurs="1" name="FechaStock" type="s:dateTime"/>
+<s:element minOccurs="0" maxOccurs="1" name="StockExportacion" type="tns:ArrayOfPermisoEmbarqueType"/>
+<s:element minOccurs="0" maxOccurs="1" name="StockImportacion" type="tns:ArrayOfDocumentoTransporteType"/>
+<s:element minOccurs="0" maxOccurs="1" name="ContenedoresVacios" type="tns:ArrayOfContenedorVacioType"/>
+</s:sequence>
+</s:complexType>
+<s:complexType name="ArrayOfPermisoEmbarqueType">
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="unbounded" name="PermisoEmbarqueType" nillable="true" type="tns:PermisoEmbarqueType"/>
+</s:sequence>
+</s:complexType>
+<s:complexType name="PermisoEmbarqueType">
+<s:complexContent mixed="false">
+<s:extension base="tns:TituloType">
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="1" name="IdentificadorPermiso" type="s:string"/>
+<s:element minOccurs="0" maxOccurs="1" name="IdentificadorRemito" type="s:string"/>
+<s:element minOccurs="1" maxOccurs="1" name="Exportador" type="s:long"/>
+<s:element minOccurs="0" maxOccurs="1" name="DestinoMercaderia" type="s:string"/>
+<s:element minOccurs="0" maxOccurs="1" name="DestinatarioExterior" type="s:string"/>
+</s:sequence>
+</s:extension>
+</s:complexContent>
+</s:complexType>
+<s:complexType name="TituloType">
+<s:sequence>
+<s:element minOccurs="1" maxOccurs="1" name="FechaIngresoDeposito" type="s:dateTime"/>
+<s:element minOccurs="1" maxOccurs="1" name="CondicionMercaderia" type="tns:TipoCondicionMercaderia"/>
+<s:element minOccurs="0" maxOccurs="1" name="UbicacionPartida" type="s:string"/>
+<s:element minOccurs="1" maxOccurs="1" name="CondicionImo" type="s:boolean"/>
+<s:element minOccurs="0" maxOccurs="1" name="NumeroImo" type="s:string"/>
+<s:element minOccurs="1" maxOccurs="1" name="ImpedimentoLegalAduanero" type="s:boolean"/>
+<s:element minOccurs="0" maxOccurs="1" name="TipoImpedimentoLegalAduanero" type="s:string"/>
+<s:element minOccurs="0" maxOccurs="1" name="DescripcionImpedimentoLegalAduanero" type="s:string"/>
+<s:element minOccurs="0" maxOccurs="1" name="Observaciones" type="s:string"/>
+<s:element minOccurs="0" maxOccurs="1" name="LineasMercaderia" type="tns:ArrayOfLineaMercaderiaType"/>
+<s:element minOccurs="0" maxOccurs="1" name="Contenedores" type="tns:ArrayOfContenedorAsociadoType"/>
+</s:sequence>
+</s:complexType>
+<s:simpleType name="TipoCondicionMercaderia">
+<s:restriction base="s:string">
+<s:enumeration value="Buena"/>
+<s:enumeration value="Mala"/>
+</s:restriction>
+</s:simpleType>
+<s:complexType name="ArrayOfLineaMercaderiaType">
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="unbounded" name="LineaMercaderiaType" nillable="true" type="tns:LineaMercaderiaType"/>
+</s:sequence>
+</s:complexType>
+<s:complexType name="LineaMercaderiaType">
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="1" name="TipoEmbalaje" type="s:string"/>
+<s:element minOccurs="1" maxOccurs="1" name="Cantidad" type="s:unsignedLong"/>
+<s:element minOccurs="1" maxOccurs="1" name="PesoBruto" type="s:decimal"/>
+</s:sequence>
+</s:complexType>
+<s:complexType name="ArrayOfContenedorAsociadoType">
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="unbounded" name="ContenedorAsociadoType" nillable="true" type="tns:ContenedorAsociadoType"/>
+</s:sequence>
+</s:complexType>
+<s:complexType name="ContenedorAsociadoType">
+<s:complexContent mixed="false">
+<s:extension base="tns:ContenedorType">
+<s:sequence>
+<s:element minOccurs="1" maxOccurs="1" name="Tipo" type="tns:TipoContenedor"/>
+<s:element minOccurs="1" maxOccurs="1" name="CantidadBultos" type="s:long"/>
+</s:sequence>
+</s:extension>
+</s:complexContent>
+</s:complexType>
+<s:complexType name="ContenedorType">
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="1" name="NumeroContenedor" type="s:string"/>
+<s:element minOccurs="0" maxOccurs="1" name="LongitudContenedor" type="s:string"/>
+</s:sequence>
+</s:complexType>
+<s:complexType name="ContenedorVacioType">
+<s:complexContent mixed="false">
+<s:extension base="tns:ContenedorType">
+<s:sequence>
+<s:element minOccurs="1" maxOccurs="1" name="FechaIngresoDeposito" type="s:dateTime"/>
+</s:sequence>
+</s:extension>
+</s:complexContent>
+</s:complexType>
+<s:simpleType name="TipoContenedor">
+<s:restriction base="s:string">
+<s:enumeration value="House"/>
+<s:enumeration value="Pier"/>
+<s:enumeration value="Correo"/>
+</s:restriction>
+</s:simpleType>
+<s:complexType name="DocumentoTransporteType">
+<s:complexContent mixed="false">
+<s:extension base="tns:TituloType">
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="1" name="IdentificadorManifiesto" type="s:string"/>
+<s:element minOccurs="0" maxOccurs="1" name="IdentificadorDocumentoTransporte" type="s:string"/>
+<s:element minOccurs="1" maxOccurs="1" name="Consignatario" type="s:long"/>
+<s:element minOccurs="0" maxOccurs="1" name="ProcedenciaMercaderia" type="s:string"/>
+</s:sequence>
+</s:extension>
+</s:complexContent>
+</s:complexType>
+<s:complexType name="ArrayOfDocumentoTransporteType">
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="unbounded" name="DocumentoTransporteType" nillable="true" type="tns:DocumentoTransporteType"/>
+</s:sequence>
+</s:complexType>
+<s:complexType name="ArrayOfContenedorVacioType">
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="unbounded" name="ContenedorVacioType" nillable="true" type="tns:ContenedorVacioType"/>
+</s:sequence>
+</s:complexType>
+<s:element name="RegistrarStockResponse">
+<s:complexType>
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="1" name="RegistrarStockResult" type="tns:RegistrarStockRta"/>
+</s:sequence>
+</s:complexType>
+</s:element>
+<s:complexType name="RegistrarStockRta">
+<s:complexContent mixed="false">
+<s:extension base="tns:ResultadoEjecucionSerializable">
+<s:sequence>
+<s:element minOccurs="1" maxOccurs="1" name="MensajeAceptado" type="s:boolean"/>
+</s:sequence>
+</s:extension>
+</s:complexContent>
+</s:complexType>
+<s:complexType name="ResultadoEjecucionSerializable">
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="1" name="ListaErrores" type="tns:ArrayOfMensaje"/>
+<s:element minOccurs="0" maxOccurs="1" name="Server" type="s:string"/>
+<s:element minOccurs="1" maxOccurs="1" name="TimeStamp" type="s:dateTime"/>
+</s:sequence>
+</s:complexType>
+<s:complexType name="ArrayOfMensaje">
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="unbounded" name="DetalleError" nillable="true" type="tns:Mensaje"/>
+</s:sequence>
+</s:complexType>
+<s:complexType name="Mensaje">
+<s:complexContent mixed="false">
+<s:extension base="tns:AbstractEntidadOfInt32">
+<s:sequence>
+<s:element minOccurs="1" maxOccurs="1" name="Codigo" nillable="true" type="s:int"/>
+<s:element minOccurs="0" maxOccurs="1" name="Descripcion" type="s:string"/>
+<s:element minOccurs="0" maxOccurs="1" name="DescripcionDetallada" type="s:string"/>
+<s:element minOccurs="0" maxOccurs="1" name="TextoAclaratorio" type="s:string"/>
+<s:element minOccurs="0" maxOccurs="1" name="DescripcionAdicional" type="s:string"/>
+<s:element minOccurs="0" maxOccurs="1" name="Parametros" type="tns:ArrayOfString"/>
+</s:sequence>
+</s:extension>
+</s:complexContent>
+</s:complexType>
+<s:complexType name="AbstractEntidadOfInt32" abstract="true">
+<s:complexContent mixed="false">
+<s:extension base="tns:AbstractEntidadGenerica"/>
+</s:complexContent>
+</s:complexType>
+<s:complexType name="AbstractEntidadGenerica" abstract="true"/>
+<s:complexType name="ArrayOfString">
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string"/>
+</s:sequence>
+</s:complexType>
+<s:element name="Dummy">
+<s:complexType/>
+</s:element>
+<s:element name="DummyResponse">
+<s:complexType>
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="1" name="DummyResult" type="tns:ResultadoEjecucionDummy"/>
+</s:sequence>
+</s:complexType>
+</s:element>
+<s:complexType name="ResultadoEjecucionDummy">
+<s:sequence>
+<s:element minOccurs="0" maxOccurs="1" name="AppServer" type="s:string"/>
+<s:element minOccurs="0" maxOccurs="1" name="DbServer" type="s:string"/>
+<s:element minOccurs="0" maxOccurs="1" name="AuthServer" type="s:string"/>
+</s:sequence>
+</s:complexType>
+</s:schema>
+</wsdl:types>
+<wsdl:message name="RegistrarStockSoapIn">
+<wsdl:part name="parameters" element="tns:RegistrarStock"/>
+</wsdl:message>
+<wsdl:message name="RegistrarStockSoapOut">
+<wsdl:part name="parameters" element="tns:RegistrarStockResponse"/>
+</wsdl:message>
+<wsdl:message name="DummySoapIn">
+<wsdl:part name="parameters" element="tns:Dummy"/>
+</wsdl:message>
+<wsdl:message name="DummySoapOut">
+<wsdl:part name="parameters" element="tns:DummyResponse"/>
+</wsdl:message>
+<wsdl:portType name="wgesStockDepositosFiscalesSoap">
+<wsdl:operation name="RegistrarStock">
+<wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Registro de Stock</wsdl:documentation>
+<wsdl:input message="tns:RegistrarStockSoapIn"/>
+<wsdl:output message="tns:RegistrarStockSoapOut"/>
+</wsdl:operation>
+<wsdl:operation name="Dummy">
+<wsdl:input message="tns:DummySoapIn"/>
+<wsdl:output message="tns:DummySoapOut"/>
+</wsdl:operation>
+</wsdl:portType>
+<wsdl:binding name="wgesStockDepositosFiscalesSoap" type="tns:wgesStockDepositosFiscalesSoap">
+<soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+<wsdl:operation name="RegistrarStock">
+<soap:operation soapAction="Ar.Gob.Afip.Dga.wgesStockDepositosFiscales/RegistrarStock" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="Dummy">
+<soap:operation soapAction="Ar.Gob.Afip.Dga.wgesStockDepositosFiscales/Dummy" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+</wsdl:binding>
+<wsdl:binding name="wgesStockDepositosFiscalesSoap12" type="tns:wgesStockDepositosFiscalesSoap">
+<soap12:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+<wsdl:operation name="RegistrarStock">
+<soap12:operation soapAction="Ar.Gob.Afip.Dga.wgesStockDepositosFiscales/RegistrarStock" style="document"/>
+<wsdl:input>
+<soap12:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap12:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="Dummy">
+<soap12:operation soapAction="Ar.Gob.Afip.Dga.wgesStockDepositosFiscales/Dummy" style="document"/>
+<wsdl:input>
+<soap12:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap12:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+</wsdl:binding>
+<wsdl:service name="wgesStockDepositosFiscales">
+<wsdl:port name="wgesStockDepositosFiscalesSoap" binding="tns:wgesStockDepositosFiscalesSoap">
+<soap:address location="https://webservicesadu.afip.gob.ar/diav2/wgesStockDepositosFiscales/wgesStockDepositosFiscales.asmx"/>
+</wsdl:port>
+<wsdl:port name="wgesStockDepositosFiscalesSoap12" binding="tns:wgesStockDepositosFiscalesSoap12">
+<soap12:address location="https://webservicesadu.afip.gob.ar/diav2/wgesStockDepositosFiscales/wgesStockDepositosFiscales.asmx"/>
+</wsdl:port>
+</wsdl:service>
+</wsdl:definitions>

@@ -4,18 +4,18 @@ import (
 	"crypto/tls"
 	"fmt"
 	"log"
+	"log/slog"
 	"net/http"
 	"os"
 	"strconv"
 	"strings"
 	"time"
 
-	"github.com/go-playground/validator/v10"
 	"github.com/joho/godotenv"
 	"github.com/rs/cors"
-	"github.com/sehogas/goarca/afip"
 	"github.com/sehogas/goarca/cmd/api/docs"
 	"github.com/sehogas/goarca/internal/middleware"
+	"github.com/sehogas/goarca/internal/services"
 	"github.com/sehogas/goarca/internal/util"
 	httpSwagger "github.com/swaggo/http-swagger/v2"
 )
@@ -23,12 +23,10 @@ import (
 var (
 	Version string = "development"
 
-	Wscoem      *afip.Wscoem
-	Wscoemcons  *afip.Wscoemcons
-	Wsgestabref *afip.Wsgestabref
-	Wsfe        *afip.Wsfe
-
-	validate *validator.Validate
+	Wscoem      *services.Wscoem
+	Wscoemcons  *services.Wscoemcons
+	Wsgestabref *services.Wsgestabref
+	Wsfe        *services.Wsfe
 )
 
 //	@title			API proxy a los webservices de ARCA
@@ -39,76 +37,91 @@ var (
 // @contact.name	Sebastian Hogas
 // @contact.email	sehogas@gmail.com
 func main() {
+	logger := slog.New(slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{
+		Level: util.GetLogLevelFromEnv(),
+	}))
+
+	// Create a log.Logger that uses the SlogWriter
+	errorLogWriter := util.NewSlogWriter(logger, slog.LevelError)
+	serverErrorLogger := log.New(errorLogWriter, "", 0)
+
+	slog.SetDefault(logger)
+
 	godotenv.Load()
 
-	environment := afip.TESTING
+	environment := services.TESTING
 	if strings.ToLower(strings.TrimSpace(os.Getenv("PROD"))) == "true" {
-		environment = afip.PRODUCTION
+		environment = services.PRODUCTION
 	}
+
+	printXML, err := strconv.ParseBool(os.Getenv("PRINT_XML"))
+	if err != nil {
+		printXML = (environment == services.TESTING)
+	}
+
+	saveXML, err := strconv.ParseBool(os.Getenv("SAVE_XML"))
+	if err != nil {
+		saveXML = (environment == services.TESTING)
+	}
+
+	logger.Debug("Mode", "PRODUCTION", (environment == services.PRODUCTION), "Log XML", printXML, "Save XML", saveXML)
 
 	cuit, err := strconv.ParseInt(os.Getenv("CUIT"), 10, 64)
 	if err != nil {
-		log.Fatalln("variable de entorno CUIT faltante o no numérica")
+		logger.Error("missing or invalid environment variable CUIT")
+		os.Exit(1)
 	}
+	logger.Debug("", "CUIT", cuit)
 
 	if os.Getenv("PRIVATE_KEY_FILE") == "" {
-		log.Fatalln("variable de entorno PRIVATE_KEY_FILE faltante")
+		logger.Error("missing environment variable PRIVATE_KEY_FILE")
+		os.Exit(1)
 	}
 
 	if os.Getenv("CERTIFICATE_FILE") == "" {
-		log.Fatalln("falta variable de entorno CERTIFICATE_FILE")
-	}
-
-	if len(os.Getenv("WSCOEM_TIPO_AGENTE")) != 4 {
-		log.Fatalln("falta variable de entorno WSCOEM_TIPO_AGENTE")
-	}
-
-	if len(os.Getenv("WSCOEM_ROL")) != 4 {
-		log.Fatalln("variable de entorno WSCOEM_ROL faltante o inválida")
-	}
-
-	if len(os.Getenv("WGESTABREF_TIPO_AGENTE")) != 4 {
-		log.Fatalln("falta variable de entorno WGESTABREF_TIPO_AGENTE")
-	}
-
-	if len(os.Getenv("WGESTABREF_ROL")) != 4 {
-		log.Fatalln("variable de entorno WGESTABREF_ROL faltante o inválida")
+		logger.Error("missing environment variable CERTIFICATE_FILE")
+		os.Exit(1)
 	}
 
 	if len(os.Getenv("KEYS_FILE")) == 0 {
-		log.Fatalln("Falta variable de entorno KEYS_FILE")
+		logger.Error("missing environment variable KEYS_FILE")
+		os.Exit(1)
 	}
 
 	port := 4433
 	if os.Getenv("PORT") != "" {
 		port, err = strconv.Atoi(os.Getenv("PORT"))
 		if err != nil {
-			log.Fatalln("variable de entorno PORT no numérica. ", err)
+			logger.Error("environment variable PORT no numeric.")
+			os.Exit(1)
 		}
 	}
 
-	Wscoem, err = afip.NewWscoem(environment, cuit, os.Getenv("WSCOEM_TIPO_AGENTE"), os.Getenv("WSCOEM_ROL"))
+	Wscoem, err = services.NewWscoem(logger, environment, cuit, printXML, saveXML)
 	if err != nil {
-		log.Fatalln(err)
+		logger.Error("NewWscoem()", "err", err.Error())
+		os.Exit(1)
 	}
 
-	Wscoemcons, err = afip.NewWscoemcons(environment, cuit, os.Getenv("WSCOEM_TIPO_AGENTE"), os.Getenv("WSCOEM_ROL"))
+	Wscoemcons, err = services.NewWscoemcons(logger, environment, cuit, printXML, saveXML)
 	if err != nil {
-		log.Fatalln(err)
+		logger.Error("NewWscoemcons()", "err", err.Error())
+		os.Exit(1)
 	}
 
-	Wsgestabref, err = afip.Newgestabref(environment, cuit, os.Getenv("WGESTABREF_TIPO_AGENTE"), os.Getenv("WGESTABREF_ROL"))
+	Wsgestabref, err = services.Newgestabref(logger, environment, cuit, printXML, saveXML)
 	if err != nil {
-		log.Fatalln(err)
+		logger.Error("Newgestabref()", "err", err.Error())
+		os.Exit(1)
 	}
 
-	Wsfe, err = afip.NewWsfe(environment, cuit)
+	Wsfe, err = services.NewWsfe(logger, environment, cuit, printXML, saveXML)
 	if err != nil {
-		log.Fatalln(err)
+		logger.Error("NewWsfe()", "err", err.Error())
+		os.Exit(1)
 	}
 
 	/* API Rest */
-	validate = validator.New(validator.WithRequiredStructEnabled())
 
 	middlewareCors := cors.New(cors.Options{
 		AllowedOrigins:   []string{"*"},
@@ -120,7 +133,7 @@ func main() {
 
 	middlewareApiKey, err := middleware.NewApiKeyMiddleware(os.Getenv("KEYS_FILE"))
 	if err != nil {
-		log.Fatalln(err)
+		logger.Error("NewApiKeyMiddleware()", "err", err.Error())
 	}
 
 	router := http.NewServeMux()
@@ -137,51 +150,61 @@ func main() {
 	))
 
 	coem := http.NewServeMux()
-	coem.HandleFunc("/dummy", DummyCoemHandler)
-	coem.HandleFunc("POST /registrar-caratula", RegistrarCaratulaHandler)
-	coem.HandleFunc("PUT /rectificar-caratula", RectificarCaratulaHandler)
-	coem.HandleFunc("DELETE /anular-caratula", AnularCaratulaHandler)
-	coem.HandleFunc("PUT /solicitar-cambio-buque", SolicitarCambioBuqueHandler)
-	coem.HandleFunc("PUT /solicitar-cambio-fechas", SolicitarCambioFechasHandler)
-	coem.HandleFunc("PUT /solicitar-cambio-lot", SolicitarCambioLOTHandler)
-	coem.HandleFunc("POST /registrar-coem", RegistrarCOEMHandler)
-	coem.HandleFunc("PUT /rectificar-coem", RectificarCOEMHandler)
-	coem.HandleFunc("POST /cerrar-coem", CerrarCOEMHandler)
-	coem.HandleFunc("DELETE /anular-coem", AnularCOEMHandler)
-	coem.HandleFunc("POST /solicitar-anulacion-coem", SolicitarAnulacionCOEMHandler)
-	coem.HandleFunc("POST /solicitar-no-abordo", SolicitarNoABordoHandler)
-	coem.HandleFunc("POST /solicitar-cierre-carga-conto-bulto", SolicitarCierreCargaContoBultoHandler)
-	coem.HandleFunc("POST /solicitar-cierre-carga-granel", SolicitarCierreCargaGranelHandler)
+	coem.HandleFunc("/Dummy", DummyCoemHandler)
+	coem.HandleFunc("POST /RegistrarCaratula", RegistrarCaratulaHandler)
+	coem.HandleFunc("DELETE /AnularCaratula", AnularCaratulaHandler)
+	coem.HandleFunc("PUT /RectificarCaratula", RectificarCaratulaHandler)
+	coem.HandleFunc("POST /RegistrarCOEM", RegistrarCOEMHandler)
+	coem.HandleFunc("PUT /SolicitarCambioBuque", SolicitarCambioBuqueHandler)
+	coem.HandleFunc("PUT /SolicitarCambioFechas", SolicitarCambioFechasHandler)
+	coem.HandleFunc("PUT /SolicitarCambioLOT", SolicitarCambioLOTHandler)
+	coem.HandleFunc("PUT /RectificarCOEM", RectificarCOEMHandler)
+	coem.HandleFunc("POST /CerrarCOEM", CerrarCOEMHandler)
+	coem.HandleFunc("DELETE /AnularCOEM", AnularCOEMHandler)
+	coem.HandleFunc("POST /SolicitarAnulacionCOEM", SolicitarAnulacionCOEMHandler)
+	coem.HandleFunc("POST /SolicitarNoABordo", SolicitarNoABordoHandler)
+	coem.HandleFunc("POST /SolicitarCierreCargaContoBulto", SolicitarCierreCargaContoBultoHandler)
+	coem.HandleFunc("POST /SolicitarCierreCargaGranel", SolicitarCierreCargaGranelHandler)
 
 	coemcons := http.NewServeMux()
-	coemcons.HandleFunc("/dummy", DummyCoemconsHandler)
-	coemcons.HandleFunc("/obtener-consulta-estados-coem", ObtenerConsultaEstadosCOEMHandler)
-	coemcons.HandleFunc("/obtener-consulta-no-abordo", ObtenerConsultaNoAbordoHandler)
-	coemcons.HandleFunc("/obtener-consulta-solicitudes", ObtenerConsultaSolicitudesHandler)
+	coemcons.HandleFunc("/Dummy", DummyCoemconsHandler)
+	coemcons.HandleFunc("/ObtenerConsultaEstadosCOEM", ObtenerConsultaEstadosCOEMHandler)
+	coemcons.HandleFunc("/ObtenerConsultaNoAbordo", ObtenerConsultaNoAbordoHandler)
+	coemcons.HandleFunc("/ObtenerConsultaSolicitudes", ObtenerConsultaSolicitudesHandler)
 
 	gestabref := http.NewServeMux()
-	gestabref.HandleFunc("/dummy", DummyGesTabRefHandler)
-	gestabref.HandleFunc("/consultar-fecha-ult-act", ConsultarFechaUltActHandler)
-	gestabref.HandleFunc("/lista-arancel", ListaArancelHandler)
-	gestabref.HandleFunc("/lista-descripcion", ListaDescripcionHandler)
-	gestabref.HandleFunc("/lista-descripcion-decodificacion", ListaDescripcionDecodificacionHandler)
-	gestabref.HandleFunc("/lista-empresas", ListaEmpresasHandler)
-	gestabref.HandleFunc("/lista-lugares-operativos", ListaLugaresOperativosHandler)
-	gestabref.HandleFunc("/lista-paises-aduanas", ListaPaisesAduanasHandler)
-	gestabref.HandleFunc("/lista-tablas-referencia", ListaTablasReferenciaHandler)
+	gestabref.HandleFunc("/Dummy", DummyGesTabRefHandler)
+	gestabref.HandleFunc("/ConsultarFechaUltAct", ConsultarFechaUltActHandler)
+	gestabref.HandleFunc("/ListaArancel", ListaArancelHandler)
+	gestabref.HandleFunc("/ListaDescripcion", ListaDescripcionHandler)
+	gestabref.HandleFunc("/ListaDescripcionDecodificacion", ListaDescripcionDecodificacionHandler)
+	gestabref.HandleFunc("/ListaEmpresas", ListaEmpresasHandler)
+	gestabref.HandleFunc("/ListaLugaresOperativos", ListaLugaresOperativosHandler)
+	gestabref.HandleFunc("/ListaPaisesAduanas", ListaPaisesAduanasHandler)
+	gestabref.HandleFunc("/ListaVigencias", ListaVigenciasHandler)
+	gestabref.HandleFunc("/ListaTablasReferencia", ListaTablasReferenciaHandler)
+	gestabref.HandleFunc("/ListaDatoComplementario", ListaDatoComplementarioHandler)
 
 	fe := http.NewServeMux()
-	fe.HandleFunc("/Dummy", FEDummyHandler)
-	fe.HandleFunc("/CompUltimoAutorizado", FECompUltimoAutorizadoHandler)
-	fe.HandleFunc("/GetTiposCbte", FEParamGetTiposCbteHandler)
-	fe.HandleFunc("/GetTiposConcepto", FEParamGetTiposConceptoHandler)
-	fe.HandleFunc("/GetTiposDoc", FEParamGetTiposDocHandler)
-	fe.HandleFunc("/GetTiposIva", FEParamGetTiposIvaHandler)
-	fe.HandleFunc("/GetTiposMonedas", FEParamGetTiposMonedasHandler)
-	fe.HandleFunc("/GetTiposOpcional", FEParamGetTiposOpcionalHandler)
-	fe.HandleFunc("/GetTiposTributos", FEParamGetTiposTributosHandler)
-	fe.HandleFunc("POST /GetPtosVenta", FEParamGetPtosVentaHandler)
-	fe.HandleFunc("POST /CAESolicitar", FECAESolicitarHandler)
+	fe.HandleFunc("/FEDummy", FEDummyHandler)
+	fe.HandleFunc("/FECompUltimoAutorizado", FECompUltimoAutorizadoHandler)
+	fe.HandleFunc("/FEParamGetTiposCbte", FEParamGetTiposCbteHandler)
+	fe.HandleFunc("/FEParamGetTiposConcepto", FEParamGetTiposConceptoHandler)
+	fe.HandleFunc("/FEParamGetTiposDoc", FEParamGetTiposDocHandler)
+	fe.HandleFunc("/FEParamGetTiposIva", FEParamGetTiposIvaHandler)
+	fe.HandleFunc("/FEParamGetTiposMonedas", FEParamGetTiposMonedasHandler)
+	fe.HandleFunc("/FEParamGetTiposOpcional", FEParamGetTiposOpcionalHandler)
+	fe.HandleFunc("/FEParamGetTiposTributos", FEParamGetTiposTributosHandler)
+	fe.HandleFunc("/FEParamGetPtosVenta", FEParamGetPtosVentaHandler)
+	fe.HandleFunc("/FEParamGetCotizacion", FEParamGetCotizacionHandler)
+	fe.HandleFunc("/FECompTotXRequest", FECompTotXRequestHandler)
+	fe.HandleFunc("/FECAEASinMovimientoConsultar", FECAEASinMovimientoConsultarHandler)
+	fe.HandleFunc("/FECompConsultar", FECompConsultarHandler)
+	fe.HandleFunc("/FEParamGetTiposPaises", FEParamGetTiposPaisesHandler)
+	fe.HandleFunc("/FEParamGetActividades", FEParamGetActividadesHandler)
+	fe.HandleFunc("/FEParamGetCondicionIvaReceptor", FEParamGetCondicionIvaReceptorHandler)
+	fe.HandleFunc("POST /FECAESolicitar", FECAESolicitarHandler)
+	fe.HandleFunc("POST /FECAEARegInformativo", FECAEARegInformativoHandler)
 
 	v1 := http.NewServeMux()
 	v1.HandleFunc("/info", InfoHandler)
@@ -218,13 +241,14 @@ func main() {
 		WriteTimeout: 30 * time.Second,
 		TLSConfig:    cfg,
 		TLSNextProto: make(map[string]func(*http.Server, *tls.Conn, http.Handler), 0),
+		ErrorLog:     serverErrorLogger,
 	}
 
 	go util.GracefulShutdown(server)
 
-	log.Printf("Starting server on port %v", server.Addr)
+	logger.Info("Starting server", "PORT", server.Addr)
 	err = server.ListenAndServeTLS("keys/server.crt", "keys/server.key")
 	if err != nil && err != http.ErrServerClosed {
-		log.Fatalf("http server error: %s", err)
+		logger.Error("http server error", "err", err.Error())
 	}
 }

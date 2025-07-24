@@ -2,463 +2,464 @@
 
 package wscoemcons
 
-import (
-	"context"
-	"encoding/xml"
-	"github.com/hooklift/gowsdl/soap"
-	"time"
-)
+// import (
+// 	"context"
+// 	"encoding/xml"
+// 	"time"
 
-// against "unused imports"
-var _ time.Time
-var _ xml.Name
+// 	"github.com/hooklift/gowsdl/soap"
+// )
 
-type AnyType struct {
-	InnerXML string `xml:",innerxml"`
-}
+// // against "unused imports"
+// var _ time.Time
+// var _ xml.Name
 
-type AnyURI string
+// type AnyType struct {
+// 	InnerXML string `xml:",innerxml"`
+// }
 
-type NCName string
+// type AnyURI string
 
-type ObtenerConsultaEstadosCOEM struct {
-	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wconscomunicacionembarque ObtenerConsultaEstadosCOEM"`
+// type NCName string
 
-	ArgWSAutenticacionEmpresa *WSAutenticacionEmpresa `xml:"argWSAutenticacionEmpresa,omitempty" json:"argWSAutenticacionEmpresa,omitempty"`
+// type ObtenerConsultaEstadosCOEM struct {
+// 	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wconscomunicacionembarque ObtenerConsultaEstadosCOEM"`
 
-	IdentificadorCabecera string `xml:"identificadorCabecera,omitempty" json:"identificadorCabecera,omitempty"`
-}
+// 	ArgWSAutenticacionEmpresa *WSAutenticacionEmpresa `xml:"argWSAutenticacionEmpresa,omitempty" json:"argWSAutenticacionEmpresa,omitempty"`
 
-type ObtenerConsultaEstadosCOEMResponse struct {
-	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wconscomunicacionembarque ObtenerConsultaEstadosCOEMResponse"`
+// 	IdentificadorCabecera string `xml:"identificadorCabecera,omitempty" json:"identificadorCabecera,omitempty"`
+// }
 
-	ObtenerConsultaEstadosCOEMResult *ResultadoEjecucionOfResultadoEstadoProceso `xml:"ObtenerConsultaEstadosCOEMResult,omitempty" json:"ObtenerConsultaEstadosCOEMResult,omitempty"`
-}
+// type ObtenerConsultaEstadosCOEMResponse struct {
+// 	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wconscomunicacionembarque ObtenerConsultaEstadosCOEMResponse"`
 
-type ObtenerConsultaNoAbordo struct {
-	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wconscomunicacionembarque ObtenerConsultaNoAbordo"`
+// 	ObtenerConsultaEstadosCOEMResult *ResultadoEjecucionOfResultadoEstadoProceso `xml:"ObtenerConsultaEstadosCOEMResult,omitempty" json:"ObtenerConsultaEstadosCOEMResult,omitempty"`
+// }
 
-	ArgWSAutenticacionEmpresa *WSAutenticacionEmpresa `xml:"argWSAutenticacionEmpresa,omitempty" json:"argWSAutenticacionEmpresa,omitempty"`
+// type ObtenerConsultaNoAbordo struct {
+// 	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wconscomunicacionembarque ObtenerConsultaNoAbordo"`
 
-	IdentificadorCabecera string `xml:"identificadorCabecera,omitempty" json:"identificadorCabecera,omitempty"`
-}
+// 	ArgWSAutenticacionEmpresa *WSAutenticacionEmpresa `xml:"argWSAutenticacionEmpresa,omitempty" json:"argWSAutenticacionEmpresa,omitempty"`
 
-type ObtenerConsultaNoAbordoResponse struct {
-	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wconscomunicacionembarque ObtenerConsultaNoAbordoResponse"`
+// 	IdentificadorCabecera string `xml:"identificadorCabecera,omitempty" json:"identificadorCabecera,omitempty"`
+// }
 
-	ObtenerConsultaNoAbordoResult *ResultadoEjecucionOfResultadoNoAbordoProceso `xml:"ObtenerConsultaNoAbordoResult,omitempty" json:"ObtenerConsultaNoAbordoResult,omitempty"`
-}
+// type ObtenerConsultaNoAbordoResponse struct {
+// 	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wconscomunicacionembarque ObtenerConsultaNoAbordoResponse"`
 
-type ObtenerConsultaSolicitudes struct {
-	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wconscomunicacionembarque ObtenerConsultaSolicitudes"`
+// 	ObtenerConsultaNoAbordoResult *ResultadoEjecucionOfResultadoNoAbordoProceso `xml:"ObtenerConsultaNoAbordoResult,omitempty" json:"ObtenerConsultaNoAbordoResult,omitempty"`
+// }
 
-	ArgWSAutenticacionEmpresa *WSAutenticacionEmpresa `xml:"argWSAutenticacionEmpresa,omitempty" json:"argWSAutenticacionEmpresa,omitempty"`
+// type ObtenerConsultaSolicitudes struct {
+// 	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wconscomunicacionembarque ObtenerConsultaSolicitudes"`
 
-	IdentificadorCabecera string `xml:"identificadorCabecera,omitempty" json:"identificadorCabecera,omitempty"`
-}
+// 	ArgWSAutenticacionEmpresa *WSAutenticacionEmpresa `xml:"argWSAutenticacionEmpresa,omitempty" json:"argWSAutenticacionEmpresa,omitempty"`
 
-type ObtenerConsultaSolicitudesResponse struct {
-	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wconscomunicacionembarque ObtenerConsultaSolicitudesResponse"`
+// 	IdentificadorCabecera string `xml:"identificadorCabecera,omitempty" json:"identificadorCabecera,omitempty"`
+// }
 
-	ObtenerConsultaSolicitudesResult *ResultadoEjecucionOfResultadoSolicitudProceso `xml:"ObtenerConsultaSolicitudesResult,omitempty" json:"ObtenerConsultaSolicitudesResult,omitempty"`
-}
+// type ObtenerConsultaSolicitudesResponse struct {
+// 	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wconscomunicacionembarque ObtenerConsultaSolicitudesResponse"`
 
-type DummyTestConnection struct {
-	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wconscomunicacionembarque DummyTestConnection"`
+// 	ObtenerConsultaSolicitudesResult *ResultadoEjecucionOfResultadoSolicitudProceso `xml:"ObtenerConsultaSolicitudesResult,omitempty" json:"ObtenerConsultaSolicitudesResult,omitempty"`
+// }
 
-	WsAutenticacion *WSAutenticacionEmpresa `xml:"wsAutenticacion,omitempty" json:"wsAutenticacion,omitempty"`
+// type DummyTestConnection struct {
+// 	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wconscomunicacionembarque DummyTestConnection"`
 
-	DummyTestConnectionInput *DummyTestConnectionInput `xml:"dummyTestConnectionInput,omitempty" json:"dummyTestConnectionInput,omitempty"`
-}
+// 	WsAutenticacion *WSAutenticacionEmpresa `xml:"wsAutenticacion,omitempty" json:"wsAutenticacion,omitempty"`
 
-type DummyTestConnectionResponse struct {
-	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wconscomunicacionembarque DummyTestConnectionResponse"`
+// 	DummyTestConnectionInput *DummyTestConnectionInput `xml:"dummyTestConnectionInput,omitempty" json:"dummyTestConnectionInput,omitempty"`
+// }
 
-	DummyTestConnectionResult *ResultadoEjecucionOfDummyTestConnectionOutput `xml:"DummyTestConnectionResult,omitempty" json:"DummyTestConnectionResult,omitempty"`
-}
+// type DummyTestConnectionResponse struct {
+// 	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wconscomunicacionembarque DummyTestConnectionResponse"`
 
-type DummyTestConnectionOrg struct {
-	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wconscomunicacionembarque DummyTestConnectionOrg"`
+// 	DummyTestConnectionResult *ResultadoEjecucionOfDummyTestConnectionOutput `xml:"DummyTestConnectionResult,omitempty" json:"DummyTestConnectionResult,omitempty"`
+// }
 
-	WsAutenticacion *WSAutenticacionOrganismo `xml:"wsAutenticacion,omitempty" json:"wsAutenticacion,omitempty"`
+// type DummyTestConnectionOrg struct {
+// 	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wconscomunicacionembarque DummyTestConnectionOrg"`
 
-	DummyTestConnectionInput *DummyTestConnectionInput `xml:"dummyTestConnectionInput,omitempty" json:"dummyTestConnectionInput,omitempty"`
-}
+// 	WsAutenticacion *WSAutenticacionOrganismo `xml:"wsAutenticacion,omitempty" json:"wsAutenticacion,omitempty"`
 
-type DummyTestConnectionOrgResponse struct {
-	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wconscomunicacionembarque DummyTestConnectionOrgResponse"`
+// 	DummyTestConnectionInput *DummyTestConnectionInput `xml:"dummyTestConnectionInput,omitempty" json:"dummyTestConnectionInput,omitempty"`
+// }
 
-	DummyTestConnectionOrgResult *ResultadoEjecucionOfDummyTestConnectionOutput `xml:"DummyTestConnectionOrgResult,omitempty" json:"DummyTestConnectionOrgResult,omitempty"`
-}
+// type DummyTestConnectionOrgResponse struct {
+// 	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wconscomunicacionembarque DummyTestConnectionOrgResponse"`
 
-type Dummy struct {
-	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wconscomunicacionembarque Dummy"`
-}
+// 	DummyTestConnectionOrgResult *ResultadoEjecucionOfDummyTestConnectionOutput `xml:"DummyTestConnectionOrgResult,omitempty" json:"DummyTestConnectionOrgResult,omitempty"`
+// }
 
-type DummyResponse struct {
-	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wconscomunicacionembarque DummyResponse"`
+// type Dummy struct {
+// 	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wconscomunicacionembarque Dummy"`
+// }
 
-	DummyResult *ResultadoEjecucionOfDummyOutput `xml:"DummyResult,omitempty" json:"DummyResult,omitempty"`
-}
+// type DummyResponse struct {
+// 	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wconscomunicacionembarque DummyResponse"`
 
-type WSAutenticacionEmpresa struct {
-	*WSAutenticacion
+// 	DummyResult *ResultadoEjecucionOfDummyOutput `xml:"DummyResult,omitempty" json:"DummyResult,omitempty"`
+// }
 
-	CuitEmpresaConectada int64 `xml:"CuitEmpresaConectada,omitempty" json:"CuitEmpresaConectada,omitempty"`
+// type WSAutenticacionEmpresa struct {
+// 	*WSAutenticacion
 
-	TipoAgente string `xml:"TipoAgente,omitempty" json:"TipoAgente,omitempty"`
+// 	CuitEmpresaConectada int64 `xml:"CuitEmpresaConectada,omitempty" json:"CuitEmpresaConectada,omitempty"`
 
-	Rol string `xml:"Rol,omitempty" json:"Rol,omitempty"`
-}
+// 	TipoAgente string `xml:"TipoAgente,omitempty" json:"TipoAgente,omitempty"`
 
-type WSAutenticacion struct {
-	Token string `xml:"Token,omitempty" json:"Token,omitempty"`
+// 	Rol string `xml:"Rol,omitempty" json:"Rol,omitempty"`
+// }
 
-	Sign string `xml:"Sign,omitempty" json:"Sign,omitempty"`
-}
+// type WSAutenticacion struct {
+// 	Token string `xml:"Token,omitempty" json:"Token,omitempty"`
 
-type ResultadoEjecucionOfResultadoEstadoProceso struct {
-	Server string `xml:"Server,omitempty" json:"Server,omitempty"`
+// 	Sign string `xml:"Sign,omitempty" json:"Sign,omitempty"`
+// }
 
-	TimeStamp soap.XSDDateTime `xml:"TimeStamp,omitempty" json:"TimeStamp,omitempty"`
+// type ResultadoEjecucionOfResultadoEstadoProceso struct {
+// 	Server string `xml:"Server,omitempty" json:"Server,omitempty"`
 
-	Resultado *ResultadoEstadoProceso `xml:"Resultado,omitempty" json:"Resultado,omitempty"`
+// 	TimeStamp soap.XSDDateTime `xml:"TimeStamp,omitempty" json:"TimeStamp,omitempty"`
 
-	Errores *ArrayOfErrorEjecucion `xml:"Errores,omitempty" json:"Errores,omitempty"`
-}
+// 	Resultado *ResultadoEstadoProceso `xml:"Resultado,omitempty" json:"Resultado,omitempty"`
 
-type ResultadoEstadoProceso struct {
-	*AbstractEntidadOfString
+// 	Errores *ArrayOfErrorEjecucion `xml:"Errores,omitempty" json:"Errores,omitempty"`
+// }
 
-	Listado *ArrayOfConsultaEstadoCOEM `xml:"Listado,omitempty" json:"Listado,omitempty"`
+// type ResultadoEstadoProceso struct {
+// 	*AbstractEntidadOfString
 
-	InformacionAdicional string `xml:"InformacionAdicional,omitempty" json:"InformacionAdicional,omitempty"`
-}
+// 	Listado *ArrayOfConsultaEstadoCOEM `xml:"Listado,omitempty" json:"Listado,omitempty"`
 
-type AbstractEntidadOfString struct {
-	*AbstractEntidadGenerica
-}
+// 	InformacionAdicional string `xml:"InformacionAdicional,omitempty" json:"InformacionAdicional,omitempty"`
+// }
 
-type AbstractEntidadGenerica struct {
-}
+// type AbstractEntidadOfString struct {
+// 	*AbstractEntidadGenerica
+// }
 
-type ConsultaEstadoCOEM struct {
-	*AbstractEntidadOfString
+// type AbstractEntidadGenerica struct {
+// }
 
-	IdentificadorCOEM string `xml:"IdentificadorCOEM,omitempty" json:"IdentificadorCOEM,omitempty"`
+// type ConsultaEstadoCOEM struct {
+// 	*AbstractEntidadOfString
 
-	CuitAlta string `xml:"CuitAlta,omitempty" json:"CuitAlta,omitempty"`
+// 	IdentificadorCOEM string `xml:"IdentificadorCOEM,omitempty" json:"IdentificadorCOEM,omitempty"`
 
-	Motivo string `xml:"Motivo,omitempty" json:"Motivo,omitempty"`
+// 	CuitAlta string `xml:"CuitAlta,omitempty" json:"CuitAlta,omitempty"`
 
-	FechaEstado *soap.XSDDateTime `xml:"FechaEstado,omitempty" json:"FechaEstado,omitempty"`
+// 	Motivo string `xml:"Motivo,omitempty" json:"Motivo,omitempty"`
 
-	Estado string `xml:"Estado,omitempty" json:"Estado,omitempty"`
+// 	FechaEstado *soap.XSDDateTime `xml:"FechaEstado,omitempty" json:"FechaEstado,omitempty"`
 
-	CODE string `xml:"CODE,omitempty" json:"CODE,omitempty"`
-}
+// 	Estado string `xml:"Estado,omitempty" json:"Estado,omitempty"`
 
-type ArrayOfConsultaEstadoCOEM struct {
-	ConsultaEstadoCOEM []*ConsultaEstadoCOEM `xml:"ConsultaEstadoCOEM,omitempty" json:"ConsultaEstadoCOEM,omitempty"`
-}
+// 	CODE string `xml:"CODE,omitempty" json:"CODE,omitempty"`
+// }
 
-type ArrayOfErrorEjecucion struct {
-	ErrorEjecucion []*ErrorEjecucion `xml:"ErrorEjecucion,omitempty" json:"ErrorEjecucion,omitempty"`
-}
+// type ArrayOfConsultaEstadoCOEM struct {
+// 	ConsultaEstadoCOEM []*ConsultaEstadoCOEM `xml:"ConsultaEstadoCOEM,omitempty" json:"ConsultaEstadoCOEM,omitempty"`
+// }
 
-type ErrorEjecucion struct {
-	Codigo string `xml:"Codigo,omitempty" json:"Codigo,omitempty"`
+// type ArrayOfErrorEjecucion struct {
+// 	ErrorEjecucion []*ErrorEjecucion `xml:"ErrorEjecucion,omitempty" json:"ErrorEjecucion,omitempty"`
+// }
 
-	Descripcion string `xml:"Descripcion,omitempty" json:"Descripcion,omitempty"`
-}
+// type ErrorEjecucion struct {
+// 	Codigo string `xml:"Codigo,omitempty" json:"Codigo,omitempty"`
 
-type ResultadoEjecucionOfResultadoNoAbordoProceso struct {
-	Server string `xml:"Server,omitempty" json:"Server,omitempty"`
+// 	Descripcion string `xml:"Descripcion,omitempty" json:"Descripcion,omitempty"`
+// }
 
-	TimeStamp soap.XSDDateTime `xml:"TimeStamp,omitempty" json:"TimeStamp,omitempty"`
+// type ResultadoEjecucionOfResultadoNoAbordoProceso struct {
+// 	Server string `xml:"Server,omitempty" json:"Server,omitempty"`
 
-	Resultado *ResultadoNoAbordoProceso `xml:"Resultado,omitempty" json:"Resultado,omitempty"`
+// 	TimeStamp soap.XSDDateTime `xml:"TimeStamp,omitempty" json:"TimeStamp,omitempty"`
 
-	Errores *ArrayOfErrorEjecucion `xml:"Errores,omitempty" json:"Errores,omitempty"`
-}
+// 	Resultado *ResultadoNoAbordoProceso `xml:"Resultado,omitempty" json:"Resultado,omitempty"`
 
-type ResultadoNoAbordoProceso struct {
-	*AbstractEntidadOfString
+// 	Errores *ArrayOfErrorEjecucion `xml:"Errores,omitempty" json:"Errores,omitempty"`
+// }
 
-	Listado *ArrayOfConsultaNoAbordo `xml:"Listado,omitempty" json:"Listado,omitempty"`
+// type ResultadoNoAbordoProceso struct {
+// 	*AbstractEntidadOfString
 
-	InformacionAdicional string `xml:"InformacionAdicional,omitempty" json:"InformacionAdicional,omitempty"`
-}
+// 	Listado *ArrayOfConsultaNoAbordo `xml:"Listado,omitempty" json:"Listado,omitempty"`
 
-type ArrayOfConsultaNoAbordo struct {
-	ConsultaNoAbordo []*ConsultaNoAbordo `xml:"ConsultaNoAbordo,omitempty" json:"ConsultaNoAbordo,omitempty"`
-}
+// 	InformacionAdicional string `xml:"InformacionAdicional,omitempty" json:"InformacionAdicional,omitempty"`
+// }
 
-type ConsultaNoAbordo struct {
-	*AbstractEntidadOfString
+// type ArrayOfConsultaNoAbordo struct {
+// 	ConsultaNoAbordo []*ConsultaNoAbordo `xml:"ConsultaNoAbordo,omitempty" json:"ConsultaNoAbordo,omitempty"`
+// }
 
-	IdentificadorCACE string `xml:"IdentificadorCACE,omitempty" json:"IdentificadorCACE,omitempty"`
+// type ConsultaNoAbordo struct {
+// 	*AbstractEntidadOfString
 
-	IdentificadorCOEM string `xml:"IdentificadorCOEM,omitempty" json:"IdentificadorCOEM,omitempty"`
+// 	IdentificadorCACE string `xml:"IdentificadorCACE,omitempty" json:"IdentificadorCACE,omitempty"`
 
-	Tipo string `xml:"Tipo,omitempty" json:"Tipo,omitempty"`
+// 	IdentificadorCOEM string `xml:"IdentificadorCOEM,omitempty" json:"IdentificadorCOEM,omitempty"`
 
-	Contenedor string `xml:"Contenedor,omitempty" json:"Contenedor,omitempty"`
+// 	Tipo string `xml:"Tipo,omitempty" json:"Tipo,omitempty"`
 
-	Destinacion string `xml:"Destinacion,omitempty" json:"Destinacion,omitempty"`
+// 	Contenedor string `xml:"Contenedor,omitempty" json:"Contenedor,omitempty"`
 
-	Cuit string `xml:"Cuit,omitempty" json:"Cuit,omitempty"`
+// 	Destinacion string `xml:"Destinacion,omitempty" json:"Destinacion,omitempty"`
 
-	FechaNoAbordo *soap.XSDDateTime `xml:"FechaNoAbordo,omitempty" json:"FechaNoAbordo,omitempty"`
+// 	Cuit string `xml:"Cuit,omitempty" json:"Cuit,omitempty"`
 
-	TipoNoAbordo string `xml:"TipoNoAbordo,omitempty" json:"TipoNoAbordo,omitempty"`
+// 	FechaNoAbordo *soap.XSDDateTime `xml:"FechaNoAbordo,omitempty" json:"FechaNoAbordo,omitempty"`
 
-	MotivoNoAbordo string `xml:"MotivoNoAbordo,omitempty" json:"MotivoNoAbordo,omitempty"`
+// 	TipoNoAbordo string `xml:"TipoNoAbordo,omitempty" json:"TipoNoAbordo,omitempty"`
 
-	DescripcionMotivo string `xml:"DescripcionMotivo,omitempty" json:"DescripcionMotivo,omitempty"`
-}
+// 	MotivoNoAbordo string `xml:"MotivoNoAbordo,omitempty" json:"MotivoNoAbordo,omitempty"`
 
-type ResultadoEjecucionOfResultadoSolicitudProceso struct {
-	Server string `xml:"Server,omitempty" json:"Server,omitempty"`
+// 	DescripcionMotivo string `xml:"DescripcionMotivo,omitempty" json:"DescripcionMotivo,omitempty"`
+// }
 
-	TimeStamp soap.XSDDateTime `xml:"TimeStamp,omitempty" json:"TimeStamp,omitempty"`
+// type ResultadoEjecucionOfResultadoSolicitudProceso struct {
+// 	Server string `xml:"Server,omitempty" json:"Server,omitempty"`
 
-	Resultado *ResultadoSolicitudProceso `xml:"Resultado,omitempty" json:"Resultado,omitempty"`
+// 	TimeStamp soap.XSDDateTime `xml:"TimeStamp,omitempty" json:"TimeStamp,omitempty"`
 
-	Errores *ArrayOfErrorEjecucion `xml:"Errores,omitempty" json:"Errores,omitempty"`
-}
+// 	Resultado *ResultadoSolicitudProceso `xml:"Resultado,omitempty" json:"Resultado,omitempty"`
 
-type ResultadoSolicitudProceso struct {
-	*AbstractEntidadOfString
+// 	Errores *ArrayOfErrorEjecucion `xml:"Errores,omitempty" json:"Errores,omitempty"`
+// }
 
-	Listado *ArrayOfConsultaSolicitudes `xml:"Listado,omitempty" json:"Listado,omitempty"`
+// type ResultadoSolicitudProceso struct {
+// 	*AbstractEntidadOfString
 
-	InformacionAdicional string `xml:"InformacionAdicional,omitempty" json:"InformacionAdicional,omitempty"`
-}
+// 	Listado *ArrayOfConsultaSolicitudes `xml:"Listado,omitempty" json:"Listado,omitempty"`
 
-type ArrayOfConsultaSolicitudes struct {
-	ConsultaSolicitudes []*ConsultaSolicitudes `xml:"ConsultaSolicitudes,omitempty" json:"ConsultaSolicitudes,omitempty"`
-}
+// 	InformacionAdicional string `xml:"InformacionAdicional,omitempty" json:"InformacionAdicional,omitempty"`
+// }
 
-type ConsultaSolicitudes struct {
-	*AbstractEntidadOfString
+// type ArrayOfConsultaSolicitudes struct {
+// 	ConsultaSolicitudes []*ConsultaSolicitudes `xml:"ConsultaSolicitudes,omitempty" json:"ConsultaSolicitudes,omitempty"`
+// }
 
-	IdentificadorCACE string `xml:"IdentificadorCACE,omitempty" json:"IdentificadorCACE,omitempty"`
+// type ConsultaSolicitudes struct {
+// 	*AbstractEntidadOfString
 
-	NumeroSolicitud string `xml:"NumeroSolicitud,omitempty" json:"NumeroSolicitud,omitempty"`
+// 	IdentificadorCACE string `xml:"IdentificadorCACE,omitempty" json:"IdentificadorCACE,omitempty"`
 
-	IdentificadorCOEM string `xml:"IdentificadorCOEM,omitempty" json:"IdentificadorCOEM,omitempty"`
+// 	NumeroSolicitud string `xml:"NumeroSolicitud,omitempty" json:"NumeroSolicitud,omitempty"`
 
-	Estado string `xml:"Estado,omitempty" json:"Estado,omitempty"`
+// 	IdentificadorCOEM string `xml:"IdentificadorCOEM,omitempty" json:"IdentificadorCOEM,omitempty"`
 
-	FechaEstado *soap.XSDDateTime `xml:"FechaEstado,omitempty" json:"FechaEstado,omitempty"`
+// 	Estado string `xml:"Estado,omitempty" json:"Estado,omitempty"`
 
-	TipoSolicitud string `xml:"TipoSolicitud,omitempty" json:"TipoSolicitud,omitempty"`
-}
+// 	FechaEstado *soap.XSDDateTime `xml:"FechaEstado,omitempty" json:"FechaEstado,omitempty"`
 
-type DummyTestConnectionInput struct {
-	SimularRespuestaConErrores bool `xml:"SimularRespuestaConErrores,omitempty" json:"SimularRespuestaConErrores,omitempty"`
-}
+// 	TipoSolicitud string `xml:"TipoSolicitud,omitempty" json:"TipoSolicitud,omitempty"`
+// }
 
-type ResultadoEjecucionOfDummyTestConnectionOutput struct {
-	Server string `xml:"Server,omitempty" json:"Server,omitempty"`
+// type DummyTestConnectionInput struct {
+// 	SimularRespuestaConErrores bool `xml:"SimularRespuestaConErrores,omitempty" json:"SimularRespuestaConErrores,omitempty"`
+// }
 
-	TimeStamp soap.XSDDateTime `xml:"TimeStamp,omitempty" json:"TimeStamp,omitempty"`
+// type ResultadoEjecucionOfDummyTestConnectionOutput struct {
+// 	Server string `xml:"Server,omitempty" json:"Server,omitempty"`
 
-	Resultado *DummyTestConnectionOutput `xml:"Resultado,omitempty" json:"Resultado,omitempty"`
+// 	TimeStamp soap.XSDDateTime `xml:"TimeStamp,omitempty" json:"TimeStamp,omitempty"`
 
-	Errores *ArrayOfErrorEjecucion `xml:"Errores,omitempty" json:"Errores,omitempty"`
-}
+// 	Resultado *DummyTestConnectionOutput `xml:"Resultado,omitempty" json:"Resultado,omitempty"`
 
-type DummyTestConnectionOutput struct {
-	*AbstractEntidadOfInt32
+// 	Errores *ArrayOfErrorEjecucion `xml:"Errores,omitempty" json:"Errores,omitempty"`
+// }
 
-	NumericoEntero int32 `xml:"NumericoEntero,omitempty" json:"NumericoEntero,omitempty"`
+// type DummyTestConnectionOutput struct {
+// 	*AbstractEntidadOfInt32
 
-	NumericoDecimal float64 `xml:"NumericoDecimal,omitempty" json:"NumericoDecimal,omitempty"`
+// 	NumericoEntero int32 `xml:"NumericoEntero,omitempty" json:"NumericoEntero,omitempty"`
 
-	Caracteres string `xml:"Caracteres,omitempty" json:"Caracteres,omitempty"`
+// 	NumericoDecimal float64 `xml:"NumericoDecimal,omitempty" json:"NumericoDecimal,omitempty"`
 
-	Fecha soap.XSDDateTime `xml:"Fecha,omitempty" json:"Fecha,omitempty"`
-}
+// 	Caracteres string `xml:"Caracteres,omitempty" json:"Caracteres,omitempty"`
 
-type AbstractEntidadOfInt32 struct {
-	*AbstractEntidadGenerica
-}
+// 	Fecha soap.XSDDateTime `xml:"Fecha,omitempty" json:"Fecha,omitempty"`
+// }
 
-type WSAutenticacionOrganismo struct {
-	*WSAutenticacion
+// type AbstractEntidadOfInt32 struct {
+// 	*AbstractEntidadGenerica
+// }
 
-	CuitOrganismo int64 `xml:"CuitOrganismo,omitempty" json:"CuitOrganismo,omitempty"`
+// type WSAutenticacionOrganismo struct {
+// 	*WSAutenticacion
 
-	CuitUsuarioConectado int64 `xml:"CuitUsuarioConectado,omitempty" json:"CuitUsuarioConectado,omitempty"`
+// 	CuitOrganismo int64 `xml:"CuitOrganismo,omitempty" json:"CuitOrganismo,omitempty"`
 
-	CuitEmpresaConectada int64 `xml:"CuitEmpresaConectada,omitempty" json:"CuitEmpresaConectada,omitempty"`
+// 	CuitUsuarioConectado int64 `xml:"CuitUsuarioConectado,omitempty" json:"CuitUsuarioConectado,omitempty"`
 
-	TipoAgente string `xml:"TipoAgente,omitempty" json:"TipoAgente,omitempty"`
+// 	CuitEmpresaConectada int64 `xml:"CuitEmpresaConectada,omitempty" json:"CuitEmpresaConectada,omitempty"`
 
-	Rol string `xml:"Rol,omitempty" json:"Rol,omitempty"`
-}
+// 	TipoAgente string `xml:"TipoAgente,omitempty" json:"TipoAgente,omitempty"`
 
-type ResultadoEjecucionOfDummyOutput struct {
-	Server string `xml:"Server,omitempty" json:"Server,omitempty"`
+// 	Rol string `xml:"Rol,omitempty" json:"Rol,omitempty"`
+// }
 
-	TimeStamp soap.XSDDateTime `xml:"TimeStamp,omitempty" json:"TimeStamp,omitempty"`
+// type ResultadoEjecucionOfDummyOutput struct {
+// 	Server string `xml:"Server,omitempty" json:"Server,omitempty"`
 
-	Resultado *DummyOutput `xml:"Resultado,omitempty" json:"Resultado,omitempty"`
+// 	TimeStamp soap.XSDDateTime `xml:"TimeStamp,omitempty" json:"TimeStamp,omitempty"`
 
-	Errores *ArrayOfErrorEjecucion `xml:"Errores,omitempty" json:"Errores,omitempty"`
-}
+// 	Resultado *DummyOutput `xml:"Resultado,omitempty" json:"Resultado,omitempty"`
 
-type DummyOutput struct {
-	AppServer string `xml:"AppServer,omitempty" json:"AppServer,omitempty"`
+// 	Errores *ArrayOfErrorEjecucion `xml:"Errores,omitempty" json:"Errores,omitempty"`
+// }
 
-	DbServer string `xml:"DbServer,omitempty" json:"DbServer,omitempty"`
+// type DummyOutput struct {
+// 	AppServer string `xml:"AppServer,omitempty" json:"AppServer,omitempty"`
 
-	AuthServer string `xml:"AuthServer,omitempty" json:"AuthServer,omitempty"`
-}
+// 	DbServer string `xml:"DbServer,omitempty" json:"DbServer,omitempty"`
 
-type WconscomunicacionembarqueSoap interface {
+// 	AuthServer string `xml:"AuthServer,omitempty" json:"AuthServer,omitempty"`
+// }
 
-	/* Obtiene el listado de coems con sus estados */
-	ObtenerConsultaEstadosCOEM(request *ObtenerConsultaEstadosCOEM) (*ObtenerConsultaEstadosCOEMResponse, error)
+// type WconscomunicacionembarqueSoap interface {
 
-	ObtenerConsultaEstadosCOEMContext(ctx context.Context, request *ObtenerConsultaEstadosCOEM) (*ObtenerConsultaEstadosCOEMResponse, error)
+// 	/* Obtiene el listado de coems con sus estados */
+// 	ObtenerConsultaEstadosCOEM(request *ObtenerConsultaEstadosCOEM) (*ObtenerConsultaEstadosCOEMResponse, error)
 
-	/* Obtiene el listado de COEMS No Abordo */
-	ObtenerConsultaNoAbordo(request *ObtenerConsultaNoAbordo) (*ObtenerConsultaNoAbordoResponse, error)
+// 	ObtenerConsultaEstadosCOEMContext(ctx context.Context, request *ObtenerConsultaEstadosCOEM) (*ObtenerConsultaEstadosCOEMResponse, error)
 
-	ObtenerConsultaNoAbordoContext(ctx context.Context, request *ObtenerConsultaNoAbordo) (*ObtenerConsultaNoAbordoResponse, error)
+// 	/* Obtiene el listado de COEMS No Abordo */
+// 	ObtenerConsultaNoAbordo(request *ObtenerConsultaNoAbordo) (*ObtenerConsultaNoAbordoResponse, error)
 
-	/* Obtiene el listado de coems con sus estados */
-	ObtenerConsultaSolicitudes(request *ObtenerConsultaSolicitudes) (*ObtenerConsultaSolicitudesResponse, error)
+// 	ObtenerConsultaNoAbordoContext(ctx context.Context, request *ObtenerConsultaNoAbordo) (*ObtenerConsultaNoAbordoResponse, error)
 
-	ObtenerConsultaSolicitudesContext(ctx context.Context, request *ObtenerConsultaSolicitudes) (*ObtenerConsultaSolicitudesResponse, error)
+// 	/* Obtiene el listado de coems con sus estados */
+// 	ObtenerConsultaSolicitudes(request *ObtenerConsultaSolicitudes) (*ObtenerConsultaSolicitudesResponse, error)
 
-	/* Web Method de testeo de los parametros de conexion para Empresas con salida ok o con errores segun bool en parametro de entrada. */
-	DummyTestConnection(request *DummyTestConnection) (*DummyTestConnectionResponse, error)
+// 	ObtenerConsultaSolicitudesContext(ctx context.Context, request *ObtenerConsultaSolicitudes) (*ObtenerConsultaSolicitudesResponse, error)
 
-	DummyTestConnectionContext(ctx context.Context, request *DummyTestConnection) (*DummyTestConnectionResponse, error)
+// 	/* Web Method de testeo de los parametros de conexion para Empresas con salida ok o con errores segun bool en parametro de entrada. */
+// 	DummyTestConnection(request *DummyTestConnection) (*DummyTestConnectionResponse, error)
 
-	/* Web Method de testeo de los parametros de conexion para Organismos con salida ok o con errores segun bool en parametro de entrada. */
-	DummyTestConnectionOrg(request *DummyTestConnectionOrg) (*DummyTestConnectionOrgResponse, error)
+// 	DummyTestConnectionContext(ctx context.Context, request *DummyTestConnection) (*DummyTestConnectionResponse, error)
 
-	DummyTestConnectionOrgContext(ctx context.Context, request *DummyTestConnectionOrg) (*DummyTestConnectionOrgResponse, error)
+// 	/* Web Method de testeo de los parametros de conexion para Organismos con salida ok o con errores segun bool en parametro de entrada. */
+// 	DummyTestConnectionOrg(request *DummyTestConnectionOrg) (*DummyTestConnectionOrgResponse, error)
 
-	/* Web Method para testeo del correcto funcionamiento del Web Service. */
-	Dummy(request *Dummy) (*DummyResponse, error)
+// 	DummyTestConnectionOrgContext(ctx context.Context, request *DummyTestConnectionOrg) (*DummyTestConnectionOrgResponse, error)
 
-	DummyContext(ctx context.Context, request *Dummy) (*DummyResponse, error)
-}
+// 	/* Web Method para testeo del correcto funcionamiento del Web Service. */
+// 	Dummy(request *Dummy) (*DummyResponse, error)
 
-type wconscomunicacionembarqueSoap struct {
-	client *soap.Client
-}
+// 	DummyContext(ctx context.Context, request *Dummy) (*DummyResponse, error)
+// }
 
-func NewWconscomunicacionembarqueSoap(client *soap.Client) WconscomunicacionembarqueSoap {
-	return &wconscomunicacionembarqueSoap{
-		client: client,
-	}
-}
+// type wconscomunicacionembarqueSoap struct {
+// 	client *soap.Client
+// }
 
-func (service *wconscomunicacionembarqueSoap) ObtenerConsultaEstadosCOEMContext(ctx context.Context, request *ObtenerConsultaEstadosCOEM) (*ObtenerConsultaEstadosCOEMResponse, error) {
-	response := new(ObtenerConsultaEstadosCOEMResponse)
-	err := service.client.CallContext(ctx, "Ar.Gob.Afip.Dga.wconscomunicacionembarque/ObtenerConsultaEstadosCOEM", request, response)
-	if err != nil {
-		return nil, err
-	}
+// func NewWconscomunicacionembarqueSoap(client *soap.Client) WconscomunicacionembarqueSoap {
+// 	return &wconscomunicacionembarqueSoap{
+// 		client: client,
+// 	}
+// }
 
-	return response, nil
-}
+// func (service *wconscomunicacionembarqueSoap) ObtenerConsultaEstadosCOEMContext(ctx context.Context, request *ObtenerConsultaEstadosCOEM) (*ObtenerConsultaEstadosCOEMResponse, error) {
+// 	response := new(ObtenerConsultaEstadosCOEMResponse)
+// 	err := service.client.CallContext(ctx, "Ar.Gob.Afip.Dga.wconscomunicacionembarque/ObtenerConsultaEstadosCOEM", request, response)
+// 	if err != nil {
+// 		return nil, err
+// 	}
 
-func (service *wconscomunicacionembarqueSoap) ObtenerConsultaEstadosCOEM(request *ObtenerConsultaEstadosCOEM) (*ObtenerConsultaEstadosCOEMResponse, error) {
-	return service.ObtenerConsultaEstadosCOEMContext(
-		context.Background(),
-		request,
-	)
-}
+// 	return response, nil
+// }
 
-func (service *wconscomunicacionembarqueSoap) ObtenerConsultaNoAbordoContext(ctx context.Context, request *ObtenerConsultaNoAbordo) (*ObtenerConsultaNoAbordoResponse, error) {
-	response := new(ObtenerConsultaNoAbordoResponse)
-	err := service.client.CallContext(ctx, "Ar.Gob.Afip.Dga.wconscomunicacionembarque/ObtenerConsultaNoAbordo", request, response)
-	if err != nil {
-		return nil, err
-	}
+// func (service *wconscomunicacionembarqueSoap) ObtenerConsultaEstadosCOEM(request *ObtenerConsultaEstadosCOEM) (*ObtenerConsultaEstadosCOEMResponse, error) {
+// 	return service.ObtenerConsultaEstadosCOEMContext(
+// 		context.Background(),
+// 		request,
+// 	)
+// }
 
-	return response, nil
-}
+// func (service *wconscomunicacionembarqueSoap) ObtenerConsultaNoAbordoContext(ctx context.Context, request *ObtenerConsultaNoAbordo) (*ObtenerConsultaNoAbordoResponse, error) {
+// 	response := new(ObtenerConsultaNoAbordoResponse)
+// 	err := service.client.CallContext(ctx, "Ar.Gob.Afip.Dga.wconscomunicacionembarque/ObtenerConsultaNoAbordo", request, response)
+// 	if err != nil {
+// 		return nil, err
+// 	}
 
-func (service *wconscomunicacionembarqueSoap) ObtenerConsultaNoAbordo(request *ObtenerConsultaNoAbordo) (*ObtenerConsultaNoAbordoResponse, error) {
-	return service.ObtenerConsultaNoAbordoContext(
-		context.Background(),
-		request,
-	)
-}
+// 	return response, nil
+// }
 
-func (service *wconscomunicacionembarqueSoap) ObtenerConsultaSolicitudesContext(ctx context.Context, request *ObtenerConsultaSolicitudes) (*ObtenerConsultaSolicitudesResponse, error) {
-	response := new(ObtenerConsultaSolicitudesResponse)
-	err := service.client.CallContext(ctx, "Ar.Gob.Afip.Dga.wconscomunicacionembarque/ObtenerConsultaSolicitudes", request, response)
-	if err != nil {
-		return nil, err
-	}
+// func (service *wconscomunicacionembarqueSoap) ObtenerConsultaNoAbordo(request *ObtenerConsultaNoAbordo) (*ObtenerConsultaNoAbordoResponse, error) {
+// 	return service.ObtenerConsultaNoAbordoContext(
+// 		context.Background(),
+// 		request,
+// 	)
+// }
 
-	return response, nil
-}
+// func (service *wconscomunicacionembarqueSoap) ObtenerConsultaSolicitudesContext(ctx context.Context, request *ObtenerConsultaSolicitudes) (*ObtenerConsultaSolicitudesResponse, error) {
+// 	response := new(ObtenerConsultaSolicitudesResponse)
+// 	err := service.client.CallContext(ctx, "Ar.Gob.Afip.Dga.wconscomunicacionembarque/ObtenerConsultaSolicitudes", request, response)
+// 	if err != nil {
+// 		return nil, err
+// 	}
 
-func (service *wconscomunicacionembarqueSoap) ObtenerConsultaSolicitudes(request *ObtenerConsultaSolicitudes) (*ObtenerConsultaSolicitudesResponse, error) {
-	return service.ObtenerConsultaSolicitudesContext(
-		context.Background(),
-		request,
-	)
-}
+// 	return response, nil
+// }
 
-func (service *wconscomunicacionembarqueSoap) DummyTestConnectionContext(ctx context.Context, request *DummyTestConnection) (*DummyTestConnectionResponse, error) {
-	response := new(DummyTestConnectionResponse)
-	err := service.client.CallContext(ctx, "Ar.Gob.Afip.Dga.wconscomunicacionembarque/DummyTestConnection", request, response)
-	if err != nil {
-		return nil, err
-	}
+// func (service *wconscomunicacionembarqueSoap) ObtenerConsultaSolicitudes(request *ObtenerConsultaSolicitudes) (*ObtenerConsultaSolicitudesResponse, error) {
+// 	return service.ObtenerConsultaSolicitudesContext(
+// 		context.Background(),
+// 		request,
+// 	)
+// }
 
-	return response, nil
-}
+// func (service *wconscomunicacionembarqueSoap) DummyTestConnectionContext(ctx context.Context, request *DummyTestConnection) (*DummyTestConnectionResponse, error) {
+// 	response := new(DummyTestConnectionResponse)
+// 	err := service.client.CallContext(ctx, "Ar.Gob.Afip.Dga.wconscomunicacionembarque/DummyTestConnection", request, response)
+// 	if err != nil {
+// 		return nil, err
+// 	}
 
-func (service *wconscomunicacionembarqueSoap) DummyTestConnection(request *DummyTestConnection) (*DummyTestConnectionResponse, error) {
-	return service.DummyTestConnectionContext(
-		context.Background(),
-		request,
-	)
-}
+// 	return response, nil
+// }
 
-func (service *wconscomunicacionembarqueSoap) DummyTestConnectionOrgContext(ctx context.Context, request *DummyTestConnectionOrg) (*DummyTestConnectionOrgResponse, error) {
-	response := new(DummyTestConnectionOrgResponse)
-	err := service.client.CallContext(ctx, "Ar.Gob.Afip.Dga.wconscomunicacionembarque/DummyTestConnectionOrg", request, response)
-	if err != nil {
-		return nil, err
-	}
+// func (service *wconscomunicacionembarqueSoap) DummyTestConnection(request *DummyTestConnection) (*DummyTestConnectionResponse, error) {
+// 	return service.DummyTestConnectionContext(
+// 		context.Background(),
+// 		request,
+// 	)
+// }
 
-	return response, nil
-}
+// func (service *wconscomunicacionembarqueSoap) DummyTestConnectionOrgContext(ctx context.Context, request *DummyTestConnectionOrg) (*DummyTestConnectionOrgResponse, error) {
+// 	response := new(DummyTestConnectionOrgResponse)
+// 	err := service.client.CallContext(ctx, "Ar.Gob.Afip.Dga.wconscomunicacionembarque/DummyTestConnectionOrg", request, response)
+// 	if err != nil {
+// 		return nil, err
+// 	}
 
-func (service *wconscomunicacionembarqueSoap) DummyTestConnectionOrg(request *DummyTestConnectionOrg) (*DummyTestConnectionOrgResponse, error) {
-	return service.DummyTestConnectionOrgContext(
-		context.Background(),
-		request,
-	)
-}
+// 	return response, nil
+// }
 
-func (service *wconscomunicacionembarqueSoap) DummyContext(ctx context.Context, request *Dummy) (*DummyResponse, error) {
-	response := new(DummyResponse)
-	err := service.client.CallContext(ctx, "Ar.Gob.Afip.Dga.wconscomunicacionembarque/Dummy", request, response)
-	if err != nil {
-		return nil, err
-	}
+// func (service *wconscomunicacionembarqueSoap) DummyTestConnectionOrg(request *DummyTestConnectionOrg) (*DummyTestConnectionOrgResponse, error) {
+// 	return service.DummyTestConnectionOrgContext(
+// 		context.Background(),
+// 		request,
+// 	)
+// }
 
-	return response, nil
-}
+// func (service *wconscomunicacionembarqueSoap) DummyContext(ctx context.Context, request *Dummy) (*DummyResponse, error) {
+// 	response := new(DummyResponse)
+// 	err := service.client.CallContext(ctx, "Ar.Gob.Afip.Dga.wconscomunicacionembarque/Dummy", request, response)
+// 	if err != nil {
+// 		return nil, err
+// 	}
 
-func (service *wconscomunicacionembarqueSoap) Dummy(request *Dummy) (*DummyResponse, error) {
-	return service.DummyContext(
-		context.Background(),
-		request,
-	)
-}
+// 	return response, nil
+// }
+
+// func (service *wconscomunicacionembarqueSoap) Dummy(request *Dummy) (*DummyResponse, error) {
+// 	return service.DummyContext(
+// 		context.Background(),
+// 		request,
+// 	)
+// }

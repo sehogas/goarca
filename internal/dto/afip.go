@@ -24,3 +24,8 @@ type FECAESolicitarRequest struct {
 	Cab *wsfe.FECabRequest      `json:"Cabecera"`
 	Det []*wsfe.FECAEDetRequest `json:"Detalle"`
 }
+
+type FeCAEARegInfReqRequest struct {
+	Cab *wsfe.FECabRequest       `json:"Cabecera"`
+	Det []*wsfe.FECAEADetRequest `json:"Detalle"`
+}

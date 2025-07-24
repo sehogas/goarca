@@ -1,356 +1,4 @@
 definitions:
-  afip.CambioBuqueParams:
-    properties:
-      IdentificadorBuque:
-        maxLength: 20
-        type: string
-      IdentificadorCaratula:
-        type: string
-      NombreMedioTransporte:
-        maxLength: 200
-        type: string
-    required:
-    - IdentificadorCaratula
-    type: object
-  afip.CambioFechasParams:
-    properties:
-      CodigoMotivo:
-        maxLength: 2
-        type: string
-      DescripcionMotivo:
-        maxLength: 200
-        type: string
-      FechaArribo:
-        type: string
-      FechaZarpada:
-        type: string
-      IdentificadorCaratula:
-        type: string
-    required:
-    - CodigoMotivo
-    - FechaArribo
-    - FechaZarpada
-    - IdentificadorCaratula
-    type: object
-  afip.CambioLOTParams:
-    properties:
-      CodigoLugarOperativo:
-        maxLength: 5
-        type: string
-      IdentificadorCaratula:
-        type: string
-    required:
-    - CodigoLugarOperativo
-    - IdentificadorCaratula
-    type: object
-  afip.CaratulaParams:
-    properties:
-      CodigoAduana:
-        type: string
-      CodigoLugarOperativo:
-        type: string
-      FechaArribo:
-        type: string
-      FechaZarpada:
-        type: string
-      IdentificadorBuque:
-        maxLength: 20
-        type: string
-      Itinerario:
-        items:
-          $ref: '#/definitions/afip.PuertoDestinoParams'
-        type: array
-      NombreMedioTransporte:
-        maxLength: 200
-        type: string
-      NumeroViaje:
-        maxLength: 16
-        type: string
-      PuertoDestino:
-        type: string
-      Via:
-        type: string
-    required:
-    - CodigoAduana
-    - CodigoLugarOperativo
-    - FechaArribo
-    - FechaZarpada
-    - NombreMedioTransporte
-    - Via
-    type: object
-  afip.ContenedorCarga:
-    properties:
-      CuitATA:
-        type: string
-      Declaraciones:
-        items:
-          type: string
-        type: array
-      IdentificadorContenedor:
-        type: string
-      Peso:
-        type: number
-      Precintos:
-        items:
-          type: string
-        type: array
-      Tipo:
-        type: string
-    required:
-    - IdentificadorContenedor
-    type: object
-  afip.ContenedorNoABordo:
-    properties:
-      IdentificadorContenedor:
-        type: string
-    required:
-    - IdentificadorContenedor
-    type: object
-  afip.ContenedorVacio:
-    properties:
-      CodigoPais:
-        type: string
-      CuitATA:
-        type: string
-      IdentificadorContenedor:
-        type: string
-      Tipo:
-        type: string
-    required:
-    - IdentificadorContenedor
-    type: object
-  afip.DeclaracionCOEMGranel:
-    properties:
-      DeclaracionesGranel:
-        items:
-          $ref: '#/definitions/afip.DeclaracionGranel'
-        type: array
-      IdentificadorCOEM:
-        type: string
-    type: object
-  afip.DeclaracionCont:
-    properties:
-      FechaEmbarque:
-        type: string
-      IdentificadorDeclaracion:
-        type: string
-    type: object
-  afip.DeclaracionGranel:
-    properties:
-      FechaEmbarque:
-        type: string
-      IdentificadorCierreCumplido:
-        type: string
-      IdentificadorDeclaracion:
-        type: string
-      Items:
-        items:
-          $ref: '#/definitions/afip.ItemGranel'
-        type: array
-    type: object
-  afip.DeclaracionNoABordo:
-    properties:
-      IdentificadorDeclaracion:
-        type: string
-    type: object
-  afip.Embalaje:
-    properties:
-      CantidadBultos:
-        type: integer
-      CodigoEmbalaje:
-        type: string
-      Peso:
-        type: number
-    type: object
-  afip.IdentificadorCOEMParams:
-    properties:
-      IdentificadorCOEM:
-        type: string
-      IdentificadorCaratula:
-        type: string
-    required:
-    - IdentificadorCOEM
-    - IdentificadorCaratula
-    type: object
-  afip.IdentificadorCaraturaParams:
-    properties:
-      IdentificadorCaratula:
-        type: string
-    required:
-    - IdentificadorCaratula
-    type: object
-  afip.ItemGranel:
-    properties:
-      CantidadReal:
-        type: number
-      NumeroItem:
-        type: integer
-    type: object
-  afip.MercaderiaSuelta:
-    properties:
-      CuitATA:
-        type: string
-      Embalajes:
-        items:
-          $ref: '#/definitions/afip.Embalaje'
-        type: array
-      IdentificadorDeclaracion:
-        type: string
-    type: object
-  afip.PuertoDestinoParams:
-    properties:
-      PuertoDestino:
-        type: string
-    type: object
-  afip.RectificarCOEMParams:
-    properties:
-      ContenedoresConCarga:
-        items:
-          $ref: '#/definitions/afip.ContenedorCarga'
-        type: array
-      ContenedoresVacios:
-        items:
-          $ref: '#/definitions/afip.ContenedorVacio'
-        type: array
-      IdentificadorCOEM:
-        type: string
-      IdentificadorCaratula:
-        type: string
-      MercaderiasSueltas:
-        items:
-          $ref: '#/definitions/afip.MercaderiaSuelta'
-        type: array
-    required:
-    - IdentificadorCOEM
-    - IdentificadorCaratula
-    type: object
-  afip.RectificarCaratulaParams:
-    properties:
-      CodigoAduana:
-        type: string
-      CodigoLugarOperativo:
-        type: string
-      FechaArribo:
-        type: string
-      FechaZarpada:
-        type: string
-      IdentificadorBuque:
-        maxLength: 20
-        type: string
-      IdentificadorCaratula:
-        type: string
-      Itinerario:
-        items:
-          $ref: '#/definitions/afip.PuertoDestinoParams'
-        type: array
-      NombreMedioTransporte:
-        maxLength: 200
-        type: string
-      NumeroViaje:
-        maxLength: 16
-        type: string
-      PuertoDestino:
-        type: string
-      Via:
-        type: string
-    required:
-    - CodigoAduana
-    - CodigoLugarOperativo
-    - FechaArribo
-    - FechaZarpada
-    - IdentificadorCaratula
-    - NombreMedioTransporte
-    - Via
-    type: object
-  afip.RegistrarCOEMParams:
-    properties:
-      ContenedoresConCarga:
-        items:
-          $ref: '#/definitions/afip.ContenedorCarga'
-        type: array
-      ContenedoresVacios:
-        items:
-          $ref: '#/definitions/afip.ContenedorVacio'
-        type: array
-      IdentificadorCaratula:
-        type: string
-      MercaderiasSueltas:
-        items:
-          $ref: '#/definitions/afip.MercaderiaSuelta'
-        type: array
-    required:
-    - IdentificadorCaratula
-    type: object
-  afip.SolicitarCierreCargaContoBultoParams:
-    properties:
-      Declaraciones:
-        items:
-          $ref: '#/definitions/afip.DeclaracionCont'
-        type: array
-      FechaZarpada:
-        type: string
-      IdentificadorCaratula:
-        type: string
-      NumeroViaje:
-        type: string
-    required:
-    - FechaZarpada
-    - IdentificadorCaratula
-    type: object
-  afip.SolicitarCierreCargaGranelParams:
-    properties:
-      DeclaracionesCOEMGranel:
-        items:
-          $ref: '#/definitions/afip.DeclaracionCOEMGranel'
-        type: array
-      FechaZarpada:
-        type: string
-      IdentificadorCaratula:
-        type: string
-      NumeroViaje:
-        type: string
-    required:
-    - FechaZarpada
-    - IdentificadorCaratula
-    type: object
-  afip.SolicitarNoABordoParams:
-    properties:
-      CodigoMotivo:
-        maxLength: 2
-        type: string
-      ContenedoresCarga:
-        items:
-          $ref: '#/definitions/afip.ContenedorNoABordo'
-        type: array
-      ContenedoresVacios:
-        items:
-          $ref: '#/definitions/afip.ContenedorNoABordo'
-        type: array
-      DescripcionMotivo:
-        maxLength: 200
-        type: string
-      IdentificadorCOEM:
-        type: string
-      IdentificadorCaratula:
-        type: string
-      MercaderiasSueltas:
-        items:
-          $ref: '#/definitions/afip.DeclaracionNoABordo'
-        type: array
-    required:
-    - CodigoMotivo
-    - IdentificadorCOEM
-    - IdentificadorCaratula
-    type: object
-  dto.DummyResponse:
-    properties:
-      AppServer:
-        type: string
-      AuthServer:
-        type: string
-      DbServer:
-        type: string
-    type: object
   dto.ErrorResponse:
     properties:
       error:
@@ -365,10 +13,14 @@ definitions:
           $ref: '#/definitions/wsfe.FECAEDetRequest'
         type: array
     type: object
-  dto.FecUltActResponse:
+  dto.FeCAEARegInfReqRequest:
     properties:
-      FechaUltAct:
-        type: string
+      Cabecera:
+        $ref: '#/definitions/wsfe.FECabRequest'
+      Detalle:
+        items:
+          $ref: '#/definitions/wsfe.FECAEADetRequest'
+        type: array
     type: object
   dto.InfoResponse:
     properties:
@@ -380,7 +32,94 @@ definitions:
       message:
         type: string
     type: object
-  soap.XSDDateTime:
+  wgestabref.ArrayOfDatoComplementario:
+    properties:
+      DatoComplementario:
+        items:
+          $ref: '#/definitions/wgestabref.DatoComplementario'
+        type: array
+    type: object
+  wgestabref.ArrayOfDescripcion:
+    properties:
+      Descripcion:
+        items:
+          $ref: '#/definitions/wgestabref.Descripcion'
+        type: array
+    type: object
+  wgestabref.ArrayOfDescripcionCodificacion:
+    properties:
+      DescripcionCodificacion:
+        items:
+          $ref: '#/definitions/wgestabref.DescripcionCodificacion'
+        type: array
+    type: object
+  wgestabref.ArrayOfEmpresa:
+    properties:
+      Empresa:
+        items:
+          $ref: '#/definitions/wgestabref.Empresa'
+        type: array
+    type: object
+  wgestabref.ArrayOfLugarOperativo:
+    properties:
+      LugarOperativo:
+        items:
+          $ref: '#/definitions/wgestabref.LugarOperativo'
+        type: array
+    type: object
+  wgestabref.ArrayOfOpcion:
+    properties:
+      Opcion:
+        items:
+          $ref: '#/definitions/wgestabref.Opcion'
+        type: array
+    type: object
+  wgestabref.ArrayOfPaisAduana:
+    properties:
+      PaisAduana:
+        items:
+          $ref: '#/definitions/wgestabref.PaisAduana'
+        type: array
+    type: object
+  wgestabref.ArrayOfTablaReferencia:
+    properties:
+      TablaReferencia:
+        items:
+          $ref: '#/definitions/wgestabref.TablaReferencia'
+        type: array
+    type: object
+  wgestabref.ArrayOfVigencia:
+    properties:
+      Vigencia:
+        items:
+          $ref: '#/definitions/wgestabref.Vigencia'
+        type: array
+    type: object
+  wgestabref.DatoComplementario:
+    properties:
+      Codigo:
+        type: string
+      Descripcion:
+        type: string
+      Formato:
+        type: string
+      Indicador:
+        type: string
+      VigenciaDesde:
+        type: string
+      VigenciaHasta:
+        type: string
+    type: object
+  wgestabref.DatosComplementarios:
+    properties:
+      CodError:
+        type: integer
+      DatosComplementarios:
+        $ref: '#/definitions/wgestabref.ArrayOfDatoComplementario'
+      IdReferencia:
+        type: string
+      InfoAdicional:
+        type: string
     type: object
   wgestabref.Descripcion:
     properties:
@@ -398,11 +137,55 @@ definitions:
       Descripcion:
         type: string
     type: object
+  wgestabref.Descripciones:
+    properties:
+      CodError:
+        type: integer
+      Descripciones:
+        $ref: '#/definitions/wgestabref.ArrayOfDescripcion'
+      IdReferencia:
+        type: string
+      InfoAdicional:
+        type: string
+    type: object
+  wgestabref.DescripcionesCodificaciones:
+    properties:
+      CodError:
+        type: integer
+      DescripcionesCodificaciones:
+        $ref: '#/definitions/wgestabref.ArrayOfDescripcionCodificacion'
+      IdReferencia:
+        type: string
+      InfoAdicional:
+        type: string
+    type: object
   wgestabref.Empresa:
     properties:
       Cuit:
         type: string
       RazonSocial:
+        type: string
+    type: object
+  wgestabref.Empresas:
+    properties:
+      CodError:
+        type: integer
+      Empresas:
+        $ref: '#/definitions/wgestabref.ArrayOfEmpresa'
+      IdReferencia:
+        type: string
+      InfoAdicional:
+        type: string
+    type: object
+  wgestabref.FechaUltAct:
+    properties:
+      CodError:
+        type: integer
+      Fecha:
+        type: string
+      IdReferencia:
+        type: string
+      InfoAdicional:
         type: string
     type: object
   wgestabref.LugarOperativo:
@@ -420,6 +203,17 @@ definitions:
       VigenciaHasta:
         type: string
     type: object
+  wgestabref.LugaresOperativos:
+    properties:
+      CodError:
+        type: integer
+      IdReferencia:
+        type: string
+      InfoAdicional:
+        type: string
+      LugaresOperativos:
+        $ref: '#/definitions/wgestabref.ArrayOfLugarOperativo'
+    type: object
   wgestabref.Opcion:
     properties:
       Codigo:
@@ -432,6 +226,17 @@ definitions:
         type: string
       VigenciaHasta:
         type: string
+    type: object
+  wgestabref.Opciones:
+    properties:
+      CodError:
+        type: integer
+      IdReferencia:
+        type: string
+      InfoAdicional:
+        type: string
+      Opciones:
+        $ref: '#/definitions/wgestabref.ArrayOfOpcion'
     type: object
   wgestabref.PaisAduana:
     properties:
@@ -448,6 +253,17 @@ definitions:
       VigenciaHasta:
         type: string
     type: object
+  wgestabref.PaisesAduanas:
+    properties:
+      CodError:
+        type: integer
+      IdReferencia:
+        type: string
+      InfoAdicional:
+        type: string
+      PaisesAduanas:
+        $ref: '#/definitions/wgestabref.ArrayOfPaisAduana'
+    type: object
   wgestabref.TablaReferencia:
     properties:
       IdTabRef:
@@ -456,6 +272,460 @@ definitions:
         type: string
       WebMethod:
         type: string
+    type: object
+  wgestabref.TablasReferencia:
+    properties:
+      CodError:
+        type: integer
+      InfoAdicional:
+        type: string
+      TablasReferencia:
+        $ref: '#/definitions/wgestabref.ArrayOfTablaReferencia'
+    type: object
+  wgestabref.Vigencia:
+    properties:
+      Codigo:
+        type: string
+      Descripcion:
+        type: string
+      VigenciaDesde:
+        type: string
+      VigenciaHasta:
+        type: string
+    type: object
+  wgestabref.Vigencias:
+    properties:
+      CodError:
+        type: integer
+      IdReferencia:
+        type: string
+      InfoAdicional:
+        type: string
+      Vigencias:
+        $ref: '#/definitions/wgestabref.ArrayOfVigencia'
+    type: object
+  wgestabref.WsDummyResponse:
+    properties:
+      appserver:
+        type: string
+      authserver:
+        type: string
+      dbserver:
+        type: string
+    type: object
+  wscoem.AnularCOEMRequest:
+    properties:
+      IdentificadorCOEM:
+        type: string
+      IdentificadorCaratula:
+        type: string
+    type: object
+  wscoem.AnularCaratulaRequest:
+    properties:
+      IdentificadorCaratula:
+        type: string
+    type: object
+  wscoem.AnularEmbarqueRta:
+    properties:
+      ListaErrores:
+        $ref: '#/definitions/wscoem.ArrayOfDgaMensajeSistemaReducido'
+      Server:
+        type: string
+      TimeStamp:
+        type: string
+    type: object
+  wscoem.ArrayOfCoemGranel:
+    properties:
+      CoemGranel:
+        items:
+          $ref: '#/definitions/wscoem.CoemGranel'
+        type: array
+    type: object
+  wscoem.ArrayOfContenedor:
+    properties:
+      Contenedor:
+        items:
+          $ref: '#/definitions/wscoem.Contenedor'
+        type: array
+    type: object
+  wscoem.ArrayOfContenedorCarga:
+    properties:
+      ContenedorCarga:
+        items:
+          $ref: '#/definitions/wscoem.ContenedorCarga'
+        type: array
+    type: object
+  wscoem.ArrayOfContenedorVacio:
+    properties:
+      ContenedorVacio:
+        items:
+          $ref: '#/definitions/wscoem.ContenedorVacio'
+        type: array
+    type: object
+  wscoem.ArrayOfDeclaracion:
+    properties:
+      Declaracion:
+        items:
+          $ref: '#/definitions/wscoem.Declaracion'
+        type: array
+    type: object
+  wscoem.ArrayOfDeclaracionCont:
+    properties:
+      DeclaracionCont:
+        items:
+          $ref: '#/definitions/wscoem.DeclaracionCont'
+        type: array
+    type: object
+  wscoem.ArrayOfDeclaracionGranel:
+    properties:
+      DeclaracionGranel:
+        items:
+          $ref: '#/definitions/wscoem.DeclaracionGranel'
+        type: array
+    type: object
+  wscoem.ArrayOfDgaMensajeSistemaReducido:
+    properties:
+      DetalleError:
+        items:
+          $ref: '#/definitions/wscoem.DgaMensajeSistemaReducido'
+        type: array
+    type: object
+  wscoem.ArrayOfEmbalaje:
+    properties:
+      Embalaje:
+        items:
+          $ref: '#/definitions/wscoem.Embalaje'
+        type: array
+    type: object
+  wscoem.ArrayOfItem:
+    properties:
+      Item:
+        items:
+          $ref: '#/definitions/wscoem.Item'
+        type: array
+    type: object
+  wscoem.ArrayOfMercaderiaSuelta:
+    properties:
+      MercaderiaSuelta:
+        items:
+          $ref: '#/definitions/wscoem.MercaderiaSuelta'
+        type: array
+    type: object
+  wscoem.ArrayOfPrecinto:
+    properties:
+      Precinto:
+        items:
+          $ref: '#/definitions/wscoem.Precinto'
+        type: array
+    type: object
+  wscoem.ArrayOfPuerto:
+    properties:
+      Puerto:
+        items:
+          $ref: '#/definitions/wscoem.Puerto'
+        type: array
+    type: object
+  wscoem.Caratula:
+    properties:
+      CodigoAduana:
+        type: string
+      CodigoLugarOperativo:
+        type: string
+      FechaArribo:
+        type: string
+      FechaZarpada:
+        type: string
+      IdentificadorBuque:
+        type: string
+      Itinerario:
+        $ref: '#/definitions/wscoem.ArrayOfPuerto'
+      NombreMedioTransporte:
+        type: string
+      NumeroViaje:
+        type: string
+      PuertoDestino:
+        type: string
+      Via:
+        type: string
+    type: object
+  wscoem.CerrarCOEMRequest:
+    properties:
+      IdentificadorCOEM:
+        type: string
+      IdentificadorCaratula:
+        type: string
+    type: object
+  wscoem.Coem:
+    properties:
+      ContenedoresConCarga:
+        $ref: '#/definitions/wscoem.ArrayOfContenedorCarga'
+      ContenedoresVacios:
+        $ref: '#/definitions/wscoem.ArrayOfContenedorVacio'
+      MercaderiasSueltas:
+        $ref: '#/definitions/wscoem.ArrayOfMercaderiaSuelta'
+    type: object
+  wscoem.CoemGranel:
+    properties:
+      Declaraciones:
+        $ref: '#/definitions/wscoem.ArrayOfDeclaracionGranel'
+      IdentificadorCoem:
+        type: string
+    type: object
+  wscoem.Contenedor:
+    properties:
+      IdentificadorContenedor:
+        type: string
+    type: object
+  wscoem.ContenedorCarga:
+    properties:
+      CuitATA:
+        type: string
+      Declaraciones:
+        $ref: '#/definitions/wscoem.ArrayOfDeclaracion'
+      IdentificadorContenedor:
+        type: string
+      Peso:
+        type: number
+      Precintos:
+        $ref: '#/definitions/wscoem.ArrayOfPrecinto'
+      Tipo:
+        type: string
+    type: object
+  wscoem.ContenedorVacio:
+    properties:
+      CodigoPais:
+        type: string
+      CuitATA:
+        type: string
+      IdentificadorContenedor:
+        type: string
+      Tipo:
+        type: string
+    type: object
+  wscoem.Declaracion:
+    properties:
+      IdentificadorDeclaracion:
+        type: string
+    type: object
+  wscoem.DeclaracionCont:
+    properties:
+      FechaEmbarque:
+        type: string
+      IdentificadorDeclaracion:
+        type: string
+    type: object
+  wscoem.DeclaracionGranel:
+    properties:
+      FechaEmbarque:
+        type: string
+      IdentificadorCierreCumplido:
+        type: string
+      IdentificadorDeclaracion:
+        type: string
+      Items:
+        $ref: '#/definitions/wscoem.ArrayOfItem'
+    type: object
+  wscoem.DgaMensajeSistemaReducido:
+    properties:
+      Codigo:
+        type: integer
+      Descripcion:
+        type: string
+      DescripcionAdicional:
+        type: string
+    type: object
+  wscoem.Embalaje:
+    properties:
+      CantidadBultos:
+        type: integer
+      CodigoEmbalaje:
+        type: string
+      Peso:
+        type: number
+    type: object
+  wscoem.Item:
+    properties:
+      cantidadReal:
+        type: number
+      numeroItem:
+        type: integer
+    type: object
+  wscoem.MercaderiaSuelta:
+    properties:
+      CuitATA:
+        type: string
+      Embalajes:
+        $ref: '#/definitions/wscoem.ArrayOfEmbalaje'
+      IdentificadorDeclaracion:
+        type: string
+    type: object
+  wscoem.Precinto:
+    properties:
+      IdentificadorPrecinto:
+        type: string
+    type: object
+  wscoem.Puerto:
+    properties:
+      CodigoPuerto:
+        type: string
+    type: object
+  wscoem.RectificarCOEMRequest:
+    properties:
+      Coem:
+        $ref: '#/definitions/wscoem.Coem'
+      IdentificadorCOEM:
+        type: string
+      IdentificadorCaratula:
+        type: string
+    type: object
+  wscoem.RectificarCaratulaRequest:
+    properties:
+      Caratula:
+        $ref: '#/definitions/wscoem.Caratula'
+      IdentificadorCaratula:
+        type: string
+    type: object
+  wscoem.RectificarEmbarqueRta:
+    properties:
+      ListaErrores:
+        $ref: '#/definitions/wscoem.ArrayOfDgaMensajeSistemaReducido'
+      Server:
+        type: string
+      TimeStamp:
+        type: string
+    type: object
+  wscoem.RegistrarCOEMRequest:
+    properties:
+      Coem:
+        $ref: '#/definitions/wscoem.Coem'
+      IdentificadorCaratula:
+        type: string
+    type: object
+  wscoem.RegistrarCaratulaRequest:
+    properties:
+      Caratula:
+        $ref: '#/definitions/wscoem.Caratula'
+    type: object
+  wscoem.RegistrarEmbarqueRta:
+    properties:
+      ListaErrores:
+        $ref: '#/definitions/wscoem.ArrayOfDgaMensajeSistemaReducido'
+      Server:
+        type: string
+      TimeStamp:
+        type: string
+    type: object
+  wscoem.ResultadoEjecucionDummy:
+    properties:
+      AppServer:
+        type: string
+      AuthServer:
+        type: string
+      DbServer:
+        type: string
+    type: object
+  wscoem.SolicitarAnulacionCOEMRequest:
+    properties:
+      IdentificadorCOEM:
+        type: string
+      IdentificadorCaratula:
+        type: string
+    type: object
+  wscoem.SolicitarCambioBuqueRequest:
+    properties:
+      IdentificadorBuque:
+        type: string
+      IdentificadorCaratula:
+        type: string
+      NombreMedioTransporte:
+        type: string
+    type: object
+  wscoem.SolicitarCambioFechasRequest:
+    properties:
+      CodigoMotivo:
+        type: string
+      DescripcionMotivo:
+        type: string
+      FechaArribo:
+        type: string
+      FechaZarpada:
+        type: string
+      IdentificadorCaratula:
+        type: string
+    type: object
+  wscoem.SolicitarCambioLOTRequest:
+    properties:
+      CodigoLugarOperativo:
+        type: string
+      IdentificadorCaratula:
+        type: string
+    type: object
+  wscoem.SolicitarCierreCargaContoBultoRequest:
+    properties:
+      Declaraciones:
+        $ref: '#/definitions/wscoem.ArrayOfDeclaracionCont'
+      FechaZarpada:
+        type: string
+      IdentificadorCaratula:
+        type: string
+      numeroViaje:
+        type: string
+    type: object
+  wscoem.SolicitarCierreCargaGranelRequest:
+    properties:
+      Coems:
+        $ref: '#/definitions/wscoem.ArrayOfCoemGranel'
+      FechaZarpada:
+        type: string
+      IdentificadorCaratula:
+        type: string
+      numeroViaje:
+        type: string
+    type: object
+  wscoem.SolicitarNoABordoRequest:
+    properties:
+      CodigoMotivo:
+        type: string
+      DescripcionMotivo:
+        type: string
+      IdentificadorCOEM:
+        type: string
+      IdentificadorCaratula:
+        type: string
+      IdentificadoresContenedorCarga:
+        $ref: '#/definitions/wscoem.ArrayOfContenedor'
+      IdentificadoresContenedoresVacios:
+        $ref: '#/definitions/wscoem.ArrayOfContenedor'
+      IdentificadoresDeclaracionesMercaderiaSuelta:
+        $ref: '#/definitions/wscoem.ArrayOfDeclaracion'
+    type: object
+  wscoemcons.ArrayOfConsultaEstadoCOEM:
+    properties:
+      ConsultaEstadoCOEM:
+        items:
+          $ref: '#/definitions/wscoemcons.ConsultaEstadoCOEM'
+        type: array
+    type: object
+  wscoemcons.ArrayOfConsultaNoAbordo:
+    properties:
+      ConsultaNoAbordo:
+        items:
+          $ref: '#/definitions/wscoemcons.ConsultaNoAbordo'
+        type: array
+    type: object
+  wscoemcons.ArrayOfConsultaSolicitudes:
+    properties:
+      ConsultaSolicitudes:
+        items:
+          $ref: '#/definitions/wscoemcons.ConsultaSolicitudes'
+        type: array
+    type: object
+  wscoemcons.ArrayOfErrorEjecucion:
+    properties:
+      ErrorEjecucion:
+        items:
+          $ref: '#/definitions/wscoemcons.ErrorEjecucion'
+        type: array
     type: object
   wscoemcons.ConsultaEstadoCOEM:
     properties:
@@ -466,7 +736,7 @@ definitions:
       Estado:
         type: string
       FechaEstado:
-        $ref: '#/definitions/soap.XSDDateTime'
+        type: string
       IdentificadorCOEM:
         type: string
       Motivo:
@@ -483,7 +753,7 @@ definitions:
       Destinacion:
         type: string
       FechaNoAbordo:
-        $ref: '#/definitions/soap.XSDDateTime'
+        type: string
       IdentificadorCACE:
         type: string
       IdentificadorCOEM:
@@ -500,7 +770,7 @@ definitions:
       Estado:
         type: string
       FechaEstado:
-        $ref: '#/definitions/soap.XSDDateTime'
+        type: string
       IdentificadorCACE:
         type: string
       IdentificadorCOEM:
@@ -510,9 +780,99 @@ definitions:
       TipoSolicitud:
         type: string
     type: object
+  wscoemcons.DummyOutput:
+    properties:
+      AppServer:
+        type: string
+      AuthServer:
+        type: string
+      DbServer:
+        type: string
+    type: object
+  wscoemcons.ErrorEjecucion:
+    properties:
+      Codigo:
+        type: string
+      Descripcion:
+        type: string
+    type: object
+  wscoemcons.ResultadoEjecucionOfDummyOutput:
+    properties:
+      Errores:
+        $ref: '#/definitions/wscoemcons.ArrayOfErrorEjecucion'
+      Resultado:
+        $ref: '#/definitions/wscoemcons.DummyOutput'
+      Server:
+        type: string
+      TimeStamp:
+        type: string
+    type: object
+  wscoemcons.ResultadoEjecucionOfResultadoEstadoProceso:
+    properties:
+      Errores:
+        $ref: '#/definitions/wscoemcons.ArrayOfErrorEjecucion'
+      Resultado:
+        $ref: '#/definitions/wscoemcons.ResultadoEstadoProceso'
+      Server:
+        type: string
+      TimeStamp:
+        type: string
+    type: object
+  wscoemcons.ResultadoEjecucionOfResultadoNoAbordoProceso:
+    properties:
+      Errores:
+        $ref: '#/definitions/wscoemcons.ArrayOfErrorEjecucion'
+      Resultado:
+        $ref: '#/definitions/wscoemcons.ResultadoNoAbordoProceso'
+      Server:
+        type: string
+      TimeStamp:
+        type: string
+    type: object
+  wscoemcons.ResultadoEjecucionOfResultadoSolicitudProceso:
+    properties:
+      Errores:
+        $ref: '#/definitions/wscoemcons.ArrayOfErrorEjecucion'
+      Resultado:
+        $ref: '#/definitions/wscoemcons.ResultadoSolicitudProceso'
+      Server:
+        type: string
+      TimeStamp:
+        type: string
+    type: object
+  wscoemcons.ResultadoEstadoProceso:
+    properties:
+      InformacionAdicional:
+        type: string
+      Listado:
+        $ref: '#/definitions/wscoemcons.ArrayOfConsultaEstadoCOEM'
+    type: object
+  wscoemcons.ResultadoNoAbordoProceso:
+    properties:
+      InformacionAdicional:
+        type: string
+      Listado:
+        $ref: '#/definitions/wscoemcons.ArrayOfConsultaNoAbordo'
+    type: object
+  wscoemcons.ResultadoSolicitudProceso:
+    properties:
+      InformacionAdicional:
+        type: string
+      Listado:
+        $ref: '#/definitions/wscoemcons.ArrayOfConsultaSolicitudes'
+    type: object
   wsfe.Actividad:
     properties:
       Id:
+        type: integer
+    type: object
+  wsfe.ActividadesTipo:
+    properties:
+      Desc:
+        type: string
+      Id:
+        type: integer
+      Orden:
         type: integer
     type: object
   wsfe.AlicIva:
@@ -531,6 +891,13 @@ definitions:
           $ref: '#/definitions/wsfe.Actividad'
         type: array
     type: object
+  wsfe.ArrayOfActividadesTipo:
+    properties:
+      ActividadesTipo:
+        items:
+          $ref: '#/definitions/wsfe.ActividadesTipo'
+        type: array
+    type: object
   wsfe.ArrayOfAlicIva:
     properties:
       AlicIva:
@@ -545,11 +912,88 @@ definitions:
           $ref: '#/definitions/wsfe.CbteAsoc'
         type: array
     type: object
+  wsfe.ArrayOfCbteTipo:
+    properties:
+      CbteTipo:
+        items:
+          $ref: '#/definitions/wsfe.CbteTipo'
+        type: array
+    type: object
   wsfe.ArrayOfComprador:
     properties:
       Comprador:
         items:
           $ref: '#/definitions/wsfe.Comprador'
+        type: array
+    type: object
+  wsfe.ArrayOfConceptoTipo:
+    properties:
+      ConceptoTipo:
+        items:
+          $ref: '#/definitions/wsfe.ConceptoTipo'
+        type: array
+    type: object
+  wsfe.ArrayOfCondicionIvaReceptor:
+    properties:
+      CondicionIvaReceptor:
+        items:
+          $ref: '#/definitions/wsfe.CondicionIvaReceptor'
+        type: array
+    type: object
+  wsfe.ArrayOfDocTipo:
+    properties:
+      DocTipo:
+        items:
+          $ref: '#/definitions/wsfe.DocTipo'
+        type: array
+    type: object
+  wsfe.ArrayOfErr:
+    properties:
+      Err:
+        items:
+          $ref: '#/definitions/wsfe.Err'
+        type: array
+    type: object
+  wsfe.ArrayOfEvt:
+    properties:
+      Evt:
+        items:
+          $ref: '#/definitions/wsfe.Evt'
+        type: array
+    type: object
+  wsfe.ArrayOfFECAEADetResponse:
+    properties:
+      FECAEADetResponse:
+        items:
+          $ref: '#/definitions/wsfe.FECAEADetResponse'
+        type: array
+    type: object
+  wsfe.ArrayOfFECAEDetResponse:
+    properties:
+      FECAEDetResponse:
+        items:
+          $ref: '#/definitions/wsfe.FECAEDetResponse'
+        type: array
+    type: object
+  wsfe.ArrayOfIvaTipo:
+    properties:
+      IvaTipo:
+        items:
+          $ref: '#/definitions/wsfe.IvaTipo'
+        type: array
+    type: object
+  wsfe.ArrayOfMoneda:
+    properties:
+      Moneda:
+        items:
+          $ref: '#/definitions/wsfe.Moneda'
+        type: array
+    type: object
+  wsfe.ArrayOfObs:
+    properties:
+      Obs:
+        items:
+          $ref: '#/definitions/wsfe.Obs'
         type: array
     type: object
   wsfe.ArrayOfOpcional:
@@ -559,11 +1003,39 @@ definitions:
           $ref: '#/definitions/wsfe.Opcional'
         type: array
     type: object
+  wsfe.ArrayOfOpcionalTipo:
+    properties:
+      OpcionalTipo:
+        items:
+          $ref: '#/definitions/wsfe.OpcionalTipo'
+        type: array
+    type: object
+  wsfe.ArrayOfPaisTipo:
+    properties:
+      PaisTipo:
+        items:
+          $ref: '#/definitions/wsfe.PaisTipo'
+        type: array
+    type: object
+  wsfe.ArrayOfPtoVenta:
+    properties:
+      PtoVenta:
+        items:
+          $ref: '#/definitions/wsfe.PtoVenta'
+        type: array
+    type: object
   wsfe.ArrayOfTributo:
     properties:
       Tributo:
         items:
           $ref: '#/definitions/wsfe.Tributo'
+        type: array
+    type: object
+  wsfe.ArrayOfTributoTipo:
+    properties:
+      TributoTipo:
+        items:
+          $ref: '#/definitions/wsfe.TributoTipo'
         type: array
     type: object
   wsfe.CbteAsoc:
@@ -590,6 +1062,15 @@ definitions:
       Id:
         type: integer
     type: object
+  wsfe.CbteTipoResponse:
+    properties:
+      Errors:
+        $ref: '#/definitions/wsfe.ArrayOfErr'
+      Events:
+        $ref: '#/definitions/wsfe.ArrayOfEvt'
+      ResultGet:
+        $ref: '#/definitions/wsfe.ArrayOfCbteTipo'
+    type: object
   wsfe.Comprador:
     properties:
       DocNro:
@@ -610,6 +1091,42 @@ definitions:
       Id:
         type: integer
     type: object
+  wsfe.ConceptoTipoResponse:
+    properties:
+      Errors:
+        $ref: '#/definitions/wsfe.ArrayOfErr'
+      Events:
+        $ref: '#/definitions/wsfe.ArrayOfEvt'
+      ResultGet:
+        $ref: '#/definitions/wsfe.ArrayOfConceptoTipo'
+    type: object
+  wsfe.CondicionIvaReceptor:
+    properties:
+      Cmp_Clase:
+        type: string
+      Desc:
+        type: string
+      Id:
+        type: integer
+    type: object
+  wsfe.CondicionIvaReceptorResponse:
+    properties:
+      Errors:
+        $ref: '#/definitions/wsfe.ArrayOfErr'
+      Events:
+        $ref: '#/definitions/wsfe.ArrayOfEvt'
+      ResultGet:
+        $ref: '#/definitions/wsfe.ArrayOfCondicionIvaReceptor'
+    type: object
+  wsfe.Cotizacion:
+    properties:
+      FchCotiz:
+        type: string
+      MonCotiz:
+        type: number
+      MonId:
+        type: string
+    type: object
   wsfe.DocTipo:
     properties:
       Desc:
@@ -620,6 +1137,172 @@ definitions:
         type: string
       Id:
         type: integer
+    type: object
+  wsfe.DocTipoResponse:
+    properties:
+      Errors:
+        $ref: '#/definitions/wsfe.ArrayOfErr'
+      Events:
+        $ref: '#/definitions/wsfe.ArrayOfEvt'
+      ResultGet:
+        $ref: '#/definitions/wsfe.ArrayOfDocTipo'
+    type: object
+  wsfe.DummyResponse:
+    properties:
+      AppServer:
+        type: string
+      AuthServer:
+        type: string
+      DbServer:
+        type: string
+    type: object
+  wsfe.Err:
+    properties:
+      Code:
+        type: integer
+      Msg:
+        type: string
+    type: object
+  wsfe.Evt:
+    properties:
+      Code:
+        type: integer
+      Msg:
+        type: string
+    type: object
+  wsfe.FEActividadesResponse:
+    properties:
+      Errors:
+        $ref: '#/definitions/wsfe.ArrayOfErr'
+      Events:
+        $ref: '#/definitions/wsfe.ArrayOfEvt'
+      ResultGet:
+        $ref: '#/definitions/wsfe.ArrayOfActividadesTipo'
+    type: object
+  wsfe.FECAEACabResponse:
+    properties:
+      CantReg:
+        type: integer
+      CbteTipo:
+        type: integer
+      Cuit:
+        type: integer
+      FchProceso:
+        type: string
+      PtoVta:
+        type: integer
+      Reproceso:
+        type: string
+      Resultado:
+        type: string
+    type: object
+  wsfe.FECAEADetRequest:
+    properties:
+      Actividades:
+        $ref: '#/definitions/wsfe.ArrayOfActividad'
+      CAEA:
+        type: string
+      CanMisMonExt:
+        type: string
+      CbteDesde:
+        type: integer
+      CbteFch:
+        type: string
+      CbteFchHsGen:
+        type: string
+      CbteHasta:
+        type: integer
+      CbtesAsoc:
+        $ref: '#/definitions/wsfe.ArrayOfCbteAsoc'
+      Compradores:
+        $ref: '#/definitions/wsfe.ArrayOfComprador'
+      Concepto:
+        type: integer
+      CondicionIVAReceptorId:
+        type: integer
+      DocNro:
+        type: integer
+      DocTipo:
+        type: integer
+      FchServDesde:
+        type: string
+      FchServHasta:
+        type: string
+      FchVtoPago:
+        type: string
+      ImpIVA:
+        type: number
+      ImpNeto:
+        type: number
+      ImpOpEx:
+        type: number
+      ImpTotConc:
+        type: number
+      ImpTotal:
+        type: number
+      ImpTrib:
+        type: number
+      Iva:
+        $ref: '#/definitions/wsfe.ArrayOfAlicIva'
+      MonCotiz:
+        type: number
+      MonId:
+        type: string
+      Opcionales:
+        $ref: '#/definitions/wsfe.ArrayOfOpcional'
+      PeriodoAsoc:
+        $ref: '#/definitions/wsfe.Periodo'
+      Tributos:
+        $ref: '#/definitions/wsfe.ArrayOfTributo'
+    type: object
+  wsfe.FECAEADetResponse:
+    properties:
+      CAEA:
+        type: string
+      CbteDesde:
+        type: integer
+      CbteFch:
+        type: string
+      CbteHasta:
+        type: integer
+      Concepto:
+        type: integer
+      DocNro:
+        type: integer
+      DocTipo:
+        type: integer
+      Observaciones:
+        $ref: '#/definitions/wsfe.ArrayOfObs'
+      Resultado:
+        type: string
+    type: object
+  wsfe.FECAEAResponse:
+    properties:
+      Errors:
+        $ref: '#/definitions/wsfe.ArrayOfErr'
+      Events:
+        $ref: '#/definitions/wsfe.ArrayOfEvt'
+      FeCabResp:
+        $ref: '#/definitions/wsfe.FECAEACabResponse'
+      FeDetResp:
+        $ref: '#/definitions/wsfe.ArrayOfFECAEADetResponse'
+    type: object
+  wsfe.FECAECabResponse:
+    properties:
+      CantReg:
+        type: integer
+      CbteTipo:
+        type: integer
+      Cuit:
+        type: integer
+      FchProceso:
+        type: string
+      PtoVta:
+        type: integer
+      Reproceso:
+        type: string
+      Resultado:
+        type: string
     type: object
   wsfe.FECAEDetRequest:
     properties:
@@ -676,6 +1359,40 @@ definitions:
       Tributos:
         $ref: '#/definitions/wsfe.ArrayOfTributo'
     type: object
+  wsfe.FECAEDetResponse:
+    properties:
+      CAE:
+        type: string
+      CAEFchVto:
+        type: string
+      CbteDesde:
+        type: integer
+      CbteFch:
+        type: string
+      CbteHasta:
+        type: integer
+      Concepto:
+        type: integer
+      DocNro:
+        type: integer
+      DocTipo:
+        type: integer
+      Observaciones:
+        $ref: '#/definitions/wsfe.ArrayOfObs'
+      Resultado:
+        type: string
+    type: object
+  wsfe.FECAEResponse:
+    properties:
+      Errors:
+        $ref: '#/definitions/wsfe.ArrayOfErr'
+      Events:
+        $ref: '#/definitions/wsfe.ArrayOfEvt'
+      FeCabResp:
+        $ref: '#/definitions/wsfe.FECAECabResponse'
+      FeDetResp:
+        $ref: '#/definitions/wsfe.ArrayOfFECAEDetResponse'
+    type: object
   wsfe.FECabRequest:
     properties:
       CantReg:
@@ -684,6 +1401,144 @@ definitions:
         type: integer
       PtoVta:
         type: integer
+    type: object
+  wsfe.FECompConsResponse:
+    properties:
+      Actividades:
+        $ref: '#/definitions/wsfe.ArrayOfActividad'
+      CanMisMonExt:
+        type: string
+      CbteDesde:
+        type: integer
+      CbteFch:
+        type: string
+      CbteHasta:
+        type: integer
+      CbteTipo:
+        type: integer
+      CbtesAsoc:
+        $ref: '#/definitions/wsfe.ArrayOfCbteAsoc'
+      CodAutorizacion:
+        type: string
+      Compradores:
+        $ref: '#/definitions/wsfe.ArrayOfComprador'
+      Concepto:
+        type: integer
+      CondicionIVAReceptorId:
+        type: integer
+      DocNro:
+        type: integer
+      DocTipo:
+        type: integer
+      EmisionTipo:
+        type: string
+      FchProceso:
+        type: string
+      FchServDesde:
+        type: string
+      FchServHasta:
+        type: string
+      FchVto:
+        type: string
+      FchVtoPago:
+        type: string
+      ImpIVA:
+        type: number
+      ImpNeto:
+        type: number
+      ImpOpEx:
+        type: number
+      ImpTotConc:
+        type: number
+      ImpTotal:
+        type: number
+      ImpTrib:
+        type: number
+      Iva:
+        $ref: '#/definitions/wsfe.ArrayOfAlicIva'
+      MonCotiz:
+        type: number
+      MonId:
+        type: string
+      Observaciones:
+        $ref: '#/definitions/wsfe.ArrayOfObs'
+      Opcionales:
+        $ref: '#/definitions/wsfe.ArrayOfOpcional'
+      PeriodoAsoc:
+        $ref: '#/definitions/wsfe.Periodo'
+      PtoVta:
+        type: integer
+      Resultado:
+        type: string
+      Tributos:
+        $ref: '#/definitions/wsfe.ArrayOfTributo'
+    type: object
+  wsfe.FECompConsultaResponse:
+    properties:
+      Errors:
+        $ref: '#/definitions/wsfe.ArrayOfErr'
+      Events:
+        $ref: '#/definitions/wsfe.ArrayOfEvt'
+      ResultGet:
+        $ref: '#/definitions/wsfe.FECompConsResponse'
+    type: object
+  wsfe.FECotizacionResponse:
+    properties:
+      Errors:
+        $ref: '#/definitions/wsfe.ArrayOfErr'
+      Events:
+        $ref: '#/definitions/wsfe.ArrayOfEvt'
+      ResultGet:
+        $ref: '#/definitions/wsfe.Cotizacion'
+    type: object
+  wsfe.FEPaisResponse:
+    properties:
+      Errors:
+        $ref: '#/definitions/wsfe.ArrayOfErr'
+      Events:
+        $ref: '#/definitions/wsfe.ArrayOfEvt'
+      ResultGet:
+        $ref: '#/definitions/wsfe.ArrayOfPaisTipo'
+    type: object
+  wsfe.FEPtoVentaResponse:
+    properties:
+      Errors:
+        $ref: '#/definitions/wsfe.ArrayOfErr'
+      Events:
+        $ref: '#/definitions/wsfe.ArrayOfEvt'
+      ResultGet:
+        $ref: '#/definitions/wsfe.ArrayOfPtoVenta'
+    type: object
+  wsfe.FERecuperaLastCbteResponse:
+    properties:
+      CbteNro:
+        type: integer
+      CbteTipo:
+        type: integer
+      Errors:
+        $ref: '#/definitions/wsfe.ArrayOfErr'
+      Events:
+        $ref: '#/definitions/wsfe.ArrayOfEvt'
+      PtoVta:
+        type: integer
+    type: object
+  wsfe.FERegXReqResponse:
+    properties:
+      Errors:
+        $ref: '#/definitions/wsfe.ArrayOfErr'
+      Events:
+        $ref: '#/definitions/wsfe.ArrayOfEvt'
+      RegXReq:
+        type: integer
+    type: object
+  wsfe.FETributoResponse:
+    properties:
+      Errors:
+        $ref: '#/definitions/wsfe.ArrayOfErr'
+      Events:
+        $ref: '#/definitions/wsfe.ArrayOfEvt'
+      ResultGet:
+        $ref: '#/definitions/wsfe.ArrayOfTributoTipo'
     type: object
   wsfe.IvaTipo:
     properties:
@@ -696,6 +1551,15 @@ definitions:
       Id:
         type: string
     type: object
+  wsfe.IvaTipoResponse:
+    properties:
+      Errors:
+        $ref: '#/definitions/wsfe.ArrayOfErr'
+      Events:
+        $ref: '#/definitions/wsfe.ArrayOfEvt'
+      ResultGet:
+        $ref: '#/definitions/wsfe.ArrayOfIvaTipo'
+    type: object
   wsfe.Moneda:
     properties:
       Desc:
@@ -705,6 +1569,22 @@ definitions:
       FchHasta:
         type: string
       Id:
+        type: string
+    type: object
+  wsfe.MonedaResponse:
+    properties:
+      Errors:
+        $ref: '#/definitions/wsfe.ArrayOfErr'
+      Events:
+        $ref: '#/definitions/wsfe.ArrayOfEvt'
+      ResultGet:
+        $ref: '#/definitions/wsfe.ArrayOfMoneda'
+    type: object
+  wsfe.Obs:
+    properties:
+      Code:
+        type: integer
+      Msg:
         type: string
     type: object
   wsfe.Opcional:
@@ -724,6 +1604,22 @@ definitions:
         type: string
       Id:
         type: string
+    type: object
+  wsfe.OpcionalTipoResponse:
+    properties:
+      Errors:
+        $ref: '#/definitions/wsfe.ArrayOfErr'
+      Events:
+        $ref: '#/definitions/wsfe.ArrayOfEvt'
+      ResultGet:
+        $ref: '#/definitions/wsfe.ArrayOfOpcionalTipo'
+    type: object
+  wsfe.PaisTipo:
+    properties:
+      Desc:
+        type: string
+      Id:
+        type: integer
     type: object
   wsfe.Periodo:
     properties:
@@ -776,47 +1672,7 @@ info:
   title: API proxy a los webservices de ARCA
   version: "1.0"
 paths:
-  /coem/anular-caratula:
-    delete:
-      consumes:
-      - application/json
-      description: Método que permite eliminar una carátula. Si se encuentran COEMs
-        en estado Presentada o Autorizada se detiene la ejecución.
-      parameters:
-      - description: API Key de acceso
-        in: header
-        name: x-api-key
-        required: true
-        type: string
-      - description: AnularCaratulaRequest
-        in: body
-        name: request
-        required: true
-        schema:
-          $ref: '#/definitions/afip.IdentificadorCaraturaParams'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/dto.MessageResponse'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/dto.ErrorResponse'
-        "401":
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/dto.ErrorResponse'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/dto.ErrorResponse'
-      summary: Anular Carátula
-      tags:
-      - Comunicación de Embarque
-  /coem/anular-coem:
+  /coem/AnularCOEM:
     delete:
       consumes:
       - application/json
@@ -833,14 +1689,14 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/afip.IdentificadorCOEMParams'
+          $ref: '#/definitions/wscoem.AnularCOEMRequest'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/dto.MessageResponse'
+            $ref: '#/definitions/wscoem.AnularEmbarqueRta'
         "400":
           description: Bad Request
           schema:
@@ -856,7 +1712,47 @@ paths:
       summary: Anular COEM
       tags:
       - Comunicación de Embarque
-  /coem/cerrar-coem:
+  /coem/AnularCaratula:
+    delete:
+      consumes:
+      - application/json
+      description: Método que permite eliminar una carátula. Si se encuentran COEMs
+        en estado Presentada o Autorizada se detiene la ejecución.
+      parameters:
+      - description: API Key de acceso
+        in: header
+        name: x-api-key
+        required: true
+        type: string
+      - description: AnularCaratulaRequest
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/wscoem.AnularCaratulaRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/wscoem.AnularEmbarqueRta'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+      summary: Anular Carátula
+      tags:
+      - Comunicación de Embarque
+  /coem/CerrarCOEM:
     post:
       consumes:
       - application/json
@@ -874,14 +1770,14 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/afip.IdentificadorCOEMParams'
+          $ref: '#/definitions/wscoem.CerrarCOEMRequest'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/dto.MessageResponse'
+            $ref: '#/definitions/wscoem.RegistrarEmbarqueRta'
         "400":
           description: Bad Request
           schema:
@@ -897,7 +1793,7 @@ paths:
       summary: Cerrar COEM
       tags:
       - Comunicación de Embarque
-  /coem/dummy:
+  /coem/Dummy:
     get:
       description: Visualizar el estado del servicio web, del servicio de autenticación
         y de la base de datos de ARCA
@@ -913,7 +1809,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/dto.DummyResponse'
+            $ref: '#/definitions/wscoem.ResultadoEjecucionDummy'
         "401":
           description: Unauthorized
           schema:
@@ -925,49 +1821,7 @@ paths:
       summary: Muestra el estado del servicio
       tags:
       - Comunicación de Embarque
-  /coem/rectificar-caratula:
-    put:
-      consumes:
-      - application/json
-      description: Permite rectificar los datos de una Carátula previamente creada
-        con el método RegistrarCaratula. Entre las restricciones, no se permitirá
-        cargar datos idénticos a otra Carátula existente, ni modificar aquella carátula
-        que tenga COEMs asociados.
-      parameters:
-      - description: API Key de acceso
-        in: header
-        name: x-api-key
-        required: true
-        type: string
-      - description: RectificarCaratulaRequest
-        in: body
-        name: request
-        required: true
-        schema:
-          $ref: '#/definitions/afip.RectificarCaratulaParams'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/dto.MessageResponse'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/dto.ErrorResponse'
-        "401":
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/dto.ErrorResponse'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/dto.ErrorResponse'
-      summary: Rectificar Carátula
-      tags:
-      - Comunicación de Embarque
-  /coem/rectificar-coem:
+  /coem/RectificarCOEM:
     put:
       consumes:
       - application/json
@@ -986,14 +1840,14 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/afip.RectificarCOEMParams'
+          $ref: '#/definitions/wscoem.RectificarCOEMRequest'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/dto.MessageResponse'
+            $ref: '#/definitions/wscoem.RectificarEmbarqueRta'
         "400":
           description: Bad Request
           schema:
@@ -1009,7 +1863,91 @@ paths:
       summary: Rectificar COEM
       tags:
       - Comunicación de Embarque
-  /coem/registrar-caratula:
+  /coem/RectificarCaratula:
+    put:
+      consumes:
+      - application/json
+      description: Permite rectificar los datos de una Carátula previamente creada
+        con el método RegistrarCaratula. Entre las restricciones, no se permitirá
+        cargar datos idénticos a otra Carátula existente, ni modificar aquella carátula
+        que tenga COEMs asociados.
+      parameters:
+      - description: API Key de acceso
+        in: header
+        name: x-api-key
+        required: true
+        type: string
+      - description: RectificarCaratulaRequest
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/wscoem.RectificarCaratulaRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/wscoem.RectificarEmbarqueRta'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+      summary: Rectificar Carátula
+      tags:
+      - Comunicación de Embarque
+  /coem/RegistrarCOEM:
+    post:
+      consumes:
+      - application/json
+      description: Método a través del cual se registran los valores de una COEM comprendidos
+        en información de Contenedores con Carga, Contenedores Vacíos y Mercadería
+        suelta, asociados a un Identificador de Carátula previamente creado con el
+        método RegistrarCaratula.
+      parameters:
+      - description: API Key de acceso
+        in: header
+        name: x-api-key
+        required: true
+        type: string
+      - description: RegistrarCOEMRequest
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/wscoem.RegistrarCOEMRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/wscoem.RegistrarEmbarqueRta'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+      summary: Registrar COEM
+      tags:
+      - Comunicación de Embarque
+  /coem/RegistrarCaratula:
     post:
       consumes:
       - application/json
@@ -1026,7 +1964,7 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/afip.CaratulaParams'
+          $ref: '#/definitions/wscoem.RegistrarCaratulaRequest'
       produces:
       - application/json
       responses:
@@ -1049,49 +1987,7 @@ paths:
       summary: Registrar Carátula
       tags:
       - Comunicación de Embarque
-  /coem/registrar-coem:
-    post:
-      consumes:
-      - application/json
-      description: Método a través del cual se registran los valores de una COEM comprendidos
-        en información de Contenedores con Carga, Contenedores Vacíos y Mercadería
-        suelta, asociados a un Identificador de Carátula previamente creado con el
-        método RegistrarCaratula.
-      parameters:
-      - description: API Key de acceso
-        in: header
-        name: x-api-key
-        required: true
-        type: string
-      - description: RegistrarCOEMRequest
-        in: body
-        name: request
-        required: true
-        schema:
-          $ref: '#/definitions/afip.RegistrarCOEMParams'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/dto.MessageResponse'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/dto.ErrorResponse'
-        "401":
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/dto.ErrorResponse'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/dto.ErrorResponse'
-      summary: Registrar COEM
-      tags:
-      - Comunicación de Embarque
-  /coem/solicitar-anulacion-coem:
+  /coem/SolicitarAnulacionCOEM:
     post:
       consumes:
       - application/json
@@ -1109,14 +2005,14 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/afip.IdentificadorCOEMParams'
+          $ref: '#/definitions/wscoem.SolicitarAnulacionCOEMRequest'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/dto.MessageResponse'
+            $ref: '#/definitions/wscoem.RegistrarEmbarqueRta'
         "400":
           description: Bad Request
           schema:
@@ -1132,7 +2028,7 @@ paths:
       summary: Solicitar Anulación COEM
       tags:
       - Comunicación de Embarque
-  /coem/solicitar-cambio-buque:
+  /coem/SolicitarCambioBuque:
     put:
       consumes:
       - application/json
@@ -1151,14 +2047,14 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/afip.CambioBuqueParams'
+          $ref: '#/definitions/wscoem.SolicitarCambioBuqueRequest'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/dto.MessageResponse'
+            $ref: '#/definitions/wscoem.RegistrarEmbarqueRta'
         "400":
           description: Bad Request
           schema:
@@ -1174,7 +2070,7 @@ paths:
       summary: Solicitar cambio de Buque
       tags:
       - Comunicación de Embarque
-  /coem/solicitar-cambio-fechas:
+  /coem/SolicitarCambioFechas:
     put:
       consumes:
       - application/json
@@ -1188,19 +2084,19 @@ paths:
         name: x-api-key
         required: true
         type: string
-      - description: CambioFechasParamsRequest
+      - description: SolicitarCambioFechasRequest
         in: body
         name: request
         required: true
         schema:
-          $ref: '#/definitions/afip.CambioFechasParams'
+          $ref: '#/definitions/wscoem.SolicitarCambioFechasRequest'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/dto.MessageResponse'
+            $ref: '#/definitions/wscoem.RegistrarEmbarqueRta'
         "400":
           description: Bad Request
           schema:
@@ -1216,7 +2112,7 @@ paths:
       summary: Solicitar cambio de Fechas
       tags:
       - Comunicación de Embarque
-  /coem/solicitar-cambio-lot:
+  /coem/SolicitarCambioLOT:
     put:
       consumes:
       - application/json
@@ -1230,19 +2126,19 @@ paths:
         name: x-api-key
         required: true
         type: string
-      - description: CambioLOTParamsRequest
+      - description: SolicitarCambioLOTRequest
         in: body
         name: request
         required: true
         schema:
-          $ref: '#/definitions/afip.CambioLOTParams'
+          $ref: '#/definitions/wscoem.SolicitarCambioLOTRequest'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/dto.MessageResponse'
+            $ref: '#/definitions/wscoem.RegistrarEmbarqueRta'
         "400":
           description: Bad Request
           schema:
@@ -1258,7 +2154,7 @@ paths:
       summary: Solicitar cambio de LOT
       tags:
       - Comunicación de Embarque
-  /coem/solicitar-cierre-carga-conto-bulto:
+  /coem/SolicitarCierreCargaContoBulto:
     post:
       consumes:
       - application/json
@@ -1278,14 +2174,14 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/afip.SolicitarCierreCargaContoBultoParams'
+          $ref: '#/definitions/wscoem.SolicitarCierreCargaContoBultoRequest'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/dto.MessageResponse'
+            $ref: '#/definitions/wscoem.RegistrarEmbarqueRta'
         "400":
           description: Bad Request
           schema:
@@ -1301,7 +2197,7 @@ paths:
       summary: Solicitar Cierre de Carga Contenedores y/o Bultos
       tags:
       - Comunicación de Embarque
-  /coem/solicitar-cierre-carga-granel:
+  /coem/SolicitarCierreCargaGranel:
     post:
       consumes:
       - application/json
@@ -1317,19 +2213,19 @@ paths:
         name: x-api-key
         required: true
         type: string
-      - description: SolicitarCierreCargaGranel
+      - description: SolicitarCierreCargaGranelRequest
         in: body
         name: request
         required: true
         schema:
-          $ref: '#/definitions/afip.SolicitarCierreCargaGranelParams'
+          $ref: '#/definitions/wscoem.SolicitarCierreCargaGranelRequest'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/dto.MessageResponse'
+            $ref: '#/definitions/wscoem.RegistrarEmbarqueRta'
         "400":
           description: Bad Request
           schema:
@@ -1345,7 +2241,7 @@ paths:
       summary: Solicitar Cierre de Carga Granel
       tags:
       - Comunicación de Embarque
-  /coem/solicitar-no-abordo:
+  /coem/SolicitarNoABordo:
     post:
       consumes:
       - application/json
@@ -1364,14 +2260,14 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/afip.SolicitarNoABordoParams'
+          $ref: '#/definitions/wscoem.SolicitarNoABordoRequest'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/dto.MessageResponse'
+            $ref: '#/definitions/wscoem.RegistrarEmbarqueRta'
         "400":
           description: Bad Request
           schema:
@@ -1387,7 +2283,7 @@ paths:
       summary: Solicitar No Abordo
       tags:
       - Comunicación de Embarque
-  /coemcons/dummy:
+  /coemcons/Dummy:
     get:
       description: Visualizar el estado del servicio web, del servicio de autenticación
         y de la base de datos de ARCA
@@ -1403,7 +2299,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/dto.DummyResponse'
+            $ref: '#/definitions/wscoemcons.ResultadoEjecucionOfDummyOutput'
         "401":
           description: Unauthorized
           schema:
@@ -1415,7 +2311,7 @@ paths:
       summary: Muestra el estado del servicio
       tags:
       - Consultas de Comunicación de Embarque
-  /coemcons/obtener-consulta-estados-coem:
+  /coemcons/ObtenerConsultaEstadosCOEM:
     get:
       consumes:
       - application/json
@@ -1429,7 +2325,7 @@ paths:
         type: string
       - description: Identificador de la caratula
         in: query
-        name: identificador
+        name: identificadorCabecera
         required: true
         type: string
       produces:
@@ -1438,9 +2334,7 @@ paths:
         "200":
           description: OK
           schema:
-            items:
-              $ref: '#/definitions/wscoemcons.ConsultaEstadoCOEM'
-            type: array
+            $ref: '#/definitions/wscoemcons.ResultadoEjecucionOfResultadoEstadoProceso'
         "400":
           description: Bad Request
           schema:
@@ -1456,7 +2350,7 @@ paths:
       summary: Obtener Consulta Estados COEM
       tags:
       - Consultas de Comunicación de Embarque
-  /coemcons/obtener-consulta-no-abordo:
+  /coemcons/ObtenerConsultaNoAbordo:
     get:
       consumes:
       - application/json
@@ -1472,7 +2366,7 @@ paths:
         type: string
       - description: Identificador de la caratula
         in: query
-        name: identificador
+        name: identificadorCabecera
         required: true
         type: string
       produces:
@@ -1481,9 +2375,7 @@ paths:
         "200":
           description: OK
           schema:
-            items:
-              $ref: '#/definitions/wscoemcons.ConsultaNoAbordo'
-            type: array
+            $ref: '#/definitions/wscoemcons.ResultadoEjecucionOfResultadoNoAbordoProceso'
         "400":
           description: Bad Request
           schema:
@@ -1499,7 +2391,7 @@ paths:
       summary: Obtener Consulta No Abordo
       tags:
       - Consultas de Comunicación de Embarque
-  /coemcons/obtener-consulta-solicitudes:
+  /coemcons/ObtenerConsultaSolicitudes:
     get:
       consumes:
       - application/json
@@ -1513,7 +2405,7 @@ paths:
         type: string
       - description: Identificador de la caratula
         in: query
-        name: identificador
+        name: identificadorCabecera
         required: true
         type: string
       produces:
@@ -1522,9 +2414,7 @@ paths:
         "200":
           description: OK
           schema:
-            items:
-              $ref: '#/definitions/wscoemcons.ConsultaSolicitudes'
-            type: array
+            $ref: '#/definitions/wscoemcons.ResultadoEjecucionOfResultadoSolicitudProceso'
         "400":
           description: Bad Request
           schema:
@@ -1540,7 +2430,87 @@ paths:
       summary: Obtener Consulta de Solicitudes
       tags:
       - Consultas de Comunicación de Embarque
-  /fe/CAESolicitar:
+  /fe/FECAEARegInformativo:
+    post:
+      description: Este método permite informar para cada CAEA otorgado, la totalidad
+        de los comprobantes emitidos y asociados a cada CAEA
+      parameters:
+      - description: API Key de acceso
+        in: header
+        name: x-api-key
+        required: true
+        type: string
+      - description: FeCAEARegInfReqRequest
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.FeCAEARegInfReqRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/wsfe.FECAEAResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+      summary: Informar comprobantes emitidos y asociados a una CAEA
+      tags:
+      - Factura Electrónica
+  /fe/FECAEASinMovimientoConsultar:
+    get:
+      description: Esta operación permite consultar mediante un CAEA, cuáles fueron
+        los puntos de venta que fueron notificados como sin movimiento. El cliente
+        envía el requerimiento, el cual es atendido por el WS, superadas las validaciones
+        de seguridad se informa el CAEA, puntos de venta identificados como sin movimientos
+        y fecha de proceso. En caso de informar el punto de venta, se informan los
+        datos vinculados a ese punto de venta en particular.
+      parameters:
+      - description: API Key de acceso
+        in: header
+        name: x-api-key
+        required: true
+        type: string
+      - description: CAEA
+        in: query
+        name: CAEA
+        required: true
+        type: string
+      - description: Punto de Venta
+        in: query
+        name: PtoVta
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/wsfe.FECotizacionResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+      summary: Consulta de Puntos Venta sin movimientos
+      tags:
+      - Factura Electrónica
+  /fe/FECAESolicitar:
     post:
       description: Solicitar CAE
       parameters:
@@ -1561,7 +2531,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/dto.DummyResponse'
+            $ref: '#/definitions/wsfe.FECAEResponse'
         "400":
           description: Bad Request
           schema:
@@ -1577,7 +2547,80 @@ paths:
       summary: Solicitar CAE
       tags:
       - Factura Electrónica
-  /fe/CompUltimoAutorizado:
+  /fe/FECompConsultar:
+    get:
+      description: Esta operación permite consultar mediante tipo, numero de comprobante
+        y punto de venta los datos de un comprobante ya emitido. Dentro de los datos
+        del comprobante resultante se obtiene el tipo de emisión utilizado para generar
+        el código de autorización.
+      parameters:
+      - description: API Key de acceso
+        in: header
+        name: x-api-key
+        required: true
+        type: string
+      - description: Punto de Venta
+        in: query
+        name: PtoVta
+        required: true
+        type: string
+      - description: Tipo de Comprobante
+        in: query
+        name: CbteTipo
+        required: true
+        type: string
+      - description: Número de Comprobante
+        in: query
+        name: CbteNro
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/wsfe.FECompConsultaResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+      summary: Consulta datos de un Comprobante
+      tags:
+      - Factura Electrónica
+  /fe/FECompTotXRequest:
+    get:
+      description: Retorna la cantidad máxima de registros que se podrá incluir en
+        un request al método FECAESolicitar / FECAEARegInformativo.
+      parameters:
+      - description: API Key de acceso
+        in: header
+        name: x-api-key
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/wsfe.FERegXReqResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+      summary: Cantidad máxima de registros por request
+      tags:
+      - Factura Electrónica
+  /fe/FECompUltimoAutorizado:
     get:
       description: Consultar último comprobante autorizado
       parameters:
@@ -1602,7 +2645,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/dto.DummyResponse'
+            $ref: '#/definitions/wsfe.FERecuperaLastCbteResponse'
         "401":
           description: Unauthorized
           schema:
@@ -1611,10 +2654,10 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/dto.ErrorResponse'
-      summary: Consultar último comprobante autorizado
+      summary: Último comprobante autorizado
       tags:
       - Factura Electrónica
-  /fe/Dummy:
+  /fe/FEDummy:
     get:
       description: Visualizar el estado del servicio web, del servicio de autenticación
         y de la base de datos de ARCA
@@ -1630,7 +2673,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/dto.DummyResponse'
+            $ref: '#/definitions/wsfe.DummyResponse'
         "401":
           description: Unauthorized
           schema:
@@ -1639,10 +2682,109 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/dto.ErrorResponse'
-      summary: Muestra el estado del servicio
+      summary: Estado del servicio
       tags:
       - Factura Electrónica
-  /fe/GetPtosVenta:
+  /fe/FEParamGetActividades:
+    get:
+      description: Esta operación permite consultar los códigos de actividades, sus
+        descripciones y el orden (si es actividad primaria, secundaria, etc)
+      parameters:
+      - description: API Key de acceso
+        in: header
+        name: x-api-key
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/wsfe.FEActividadesResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+      summary: Consulta Actividades
+      tags:
+      - Factura Electrónica
+  /fe/FEParamGetCondicionIvaReceptor:
+    get:
+      description: Esta operación permite consultar los identificadores de la condicion
+        frente al IVA del receptor, su descripción y a la clase de comprobante que
+        corresponde.
+      parameters:
+      - description: API Key de acceso
+        in: header
+        name: x-api-key
+        required: true
+        type: string
+      - description: Clase de Comprobate
+        in: query
+        name: ClaseCmp
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/wsfe.CondicionIvaReceptorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+      summary: Consulta condiciones IVA del receptor
+      tags:
+      - Factura Electrónica
+  /fe/FEParamGetCotizacion:
+    get:
+      description: Retorna la última cotización de la base de datos aduanera de la
+        moneda ingresada. Este valor es orientativo.
+      parameters:
+      - description: API Key de acceso
+        in: header
+        name: x-api-key
+        required: true
+        type: string
+      - description: código de moneda
+        in: query
+        name: monId
+        required: true
+        type: string
+      - description: fecha de cotización
+        in: query
+        name: fchCotiz
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/wsfe.FECotizacionResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+      summary: Cotización de moneda
+      tags:
+      - Factura Electrónica
+  /fe/FEParamGetPtosVenta:
     get:
       description: Este método permite consultar los puntos de venta para ambos tipos
         de Código de Autorización (CAE y CAEA) gestionados previamente por la CUIT
@@ -1659,9 +2801,7 @@ paths:
         "200":
           description: OK
           schema:
-            items:
-              $ref: '#/definitions/wsfe.PtoVenta'
-            type: array
+            $ref: '#/definitions/wsfe.FEPtoVentaResponse'
         "401":
           description: Unauthorized
           schema:
@@ -1670,10 +2810,10 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/dto.ErrorResponse'
-      summary: Listar Puntos de Venta
+      summary: Puntos de Venta
       tags:
       - Factura Electrónica
-  /fe/GetTiposCbte:
+  /fe/FEParamGetTiposCbte:
     get:
       description: Este método permite consultar los tipos de comprobantes habilitados
         en este WS.
@@ -1689,9 +2829,7 @@ paths:
         "200":
           description: OK
           schema:
-            items:
-              $ref: '#/definitions/wsfe.CbteTipo'
-            type: array
+            $ref: '#/definitions/wsfe.CbteTipoResponse'
         "401":
           description: Unauthorized
           schema:
@@ -1700,10 +2838,10 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/dto.ErrorResponse'
-      summary: Listar Tipos de Comprobante
+      summary: Tipos de Comprobante
       tags:
       - Factura Electrónica
-  /fe/GetTiposConcepto:
+  /fe/FEParamGetTiposConcepto:
     get:
       description: Este método devuelve los tipos de conceptos posibles en este WS.
       parameters:
@@ -1718,9 +2856,7 @@ paths:
         "200":
           description: OK
           schema:
-            items:
-              $ref: '#/definitions/wsfe.ConceptoTipo'
-            type: array
+            $ref: '#/definitions/wsfe.ConceptoTipoResponse'
         "401":
           description: Unauthorized
           schema:
@@ -1729,10 +2865,10 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/dto.ErrorResponse'
-      summary: Listar Tipos de Concepto
+      summary: Tipos de Concepto
       tags:
       - Factura Electrónica
-  /fe/GetTiposDoc:
+  /fe/FEParamGetTiposDoc:
     get:
       description: Este método retorna el universo de tipos de documentos disponibles
         en el presente WS.
@@ -1748,9 +2884,7 @@ paths:
         "200":
           description: OK
           schema:
-            items:
-              $ref: '#/definitions/wsfe.DocTipo'
-            type: array
+            $ref: '#/definitions/wsfe.DocTipoResponse'
         "401":
           description: Unauthorized
           schema:
@@ -1759,10 +2893,10 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/dto.ErrorResponse'
-      summary: Listar Tipos de Documento
+      summary: Tipos de Documento
       tags:
       - Factura Electrónica
-  /fe/GetTiposIva:
+  /fe/FEParamGetTiposIva:
     get:
       description: Mediante este método se obtiene la totalidad de alícuotas de IVA
         posibles de uso en el presente WS, detallando código y descripción.
@@ -1778,9 +2912,7 @@ paths:
         "200":
           description: OK
           schema:
-            items:
-              $ref: '#/definitions/wsfe.IvaTipo'
-            type: array
+            $ref: '#/definitions/wsfe.IvaTipoResponse'
         "401":
           description: Unauthorized
           schema:
@@ -1789,10 +2921,10 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/dto.ErrorResponse'
-      summary: Listar Tipos de IVA
+      summary: Tipos de IVA
       tags:
       - Factura Electrónica
-  /fe/GetTiposMonedas:
+  /fe/FEParamGetTiposMonedas:
     get:
       description: Este método retorna el universo de Monedas disponibles en el presente
         WS, indicando id y descripción de cada una.
@@ -1808,9 +2940,7 @@ paths:
         "200":
           description: OK
           schema:
-            items:
-              $ref: '#/definitions/wsfe.Moneda'
-            type: array
+            $ref: '#/definitions/wsfe.MonedaResponse'
         "401":
           description: Unauthorized
           schema:
@@ -1819,10 +2949,10 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/dto.ErrorResponse'
-      summary: Listar Tipos de Monedas
+      summary: Tipos de Monedas
       tags:
       - Factura Electrónica
-  /fe/GetTiposOpcional:
+  /fe/FEParamGetTiposOpcional:
     get:
       description: Este método permite consultar los códigos y descripciones de los
         tipos de datos Opcionales que se encuentran habilitados para ser usados en
@@ -1839,9 +2969,7 @@ paths:
         "200":
           description: OK
           schema:
-            items:
-              $ref: '#/definitions/wsfe.OpcionalTipo'
-            type: array
+            $ref: '#/definitions/wsfe.OpcionalTipoResponse'
         "401":
           description: Unauthorized
           schema:
@@ -1850,10 +2978,38 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/dto.ErrorResponse'
-      summary: Listar Tipos Opcional
+      summary: Tipos Opcional
       tags:
       - Factura Electrónica
-  /fe/GetTiposTributos:
+  /fe/FEParamGetTiposPaises:
+    get:
+      description: Esta operación permite consultar los códigos de países y descripción
+        de los mismos.
+      parameters:
+      - description: API Key de acceso
+        in: header
+        name: x-api-key
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/wsfe.FEPaisResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+      summary: Tipos de Países
+      tags:
+      - Factura Electrónica
+  /fe/FEParamGetTiposTributos:
     get:
       description: Devuelve los posibles códigos de tributos que puede contener un
         comprobante y su descripción.
@@ -1869,9 +3025,7 @@ paths:
         "200":
           description: OK
           schema:
-            items:
-              $ref: '#/definitions/wsfe.TributoTipo'
-            type: array
+            $ref: '#/definitions/wsfe.FETributoResponse'
         "401":
           description: Unauthorized
           schema:
@@ -1880,10 +3034,10 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/dto.ErrorResponse'
-      summary: Listar Tipos Tributos
+      summary: Tipos Tributos
       tags:
       - Factura Electrónica
-  /gestabref/consultar-fecha-ult-act:
+  /gestabref/ConsultarFechaUltAct:
     get:
       consumes:
       - application/json
@@ -1894,9 +3048,9 @@ paths:
         name: x-api-key
         required: true
         type: string
-      - description: Nombre de la tabla
+      - description: ID de referencia
         in: query
-        name: argNombreTabla
+        name: IdReferencia
         required: true
         type: string
       produces:
@@ -1905,7 +3059,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/dto.FecUltActResponse'
+            $ref: '#/definitions/wgestabref.FechaUltAct'
         "400":
           description: Bad Request
           schema:
@@ -1921,7 +3075,7 @@ paths:
       summary: Obtener la Fecha de última actualización de la tabla
       tags:
       - Consulta de Tablas de Referencia
-  /gestabref/dummy:
+  /gestabref/Dummy:
     get:
       description: Visualizar el estado del servicio web, del servicio de autenticación
         y de la base de datos de ARCA
@@ -1937,7 +3091,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/dto.DummyResponse'
+            $ref: '#/definitions/wgestabref.WsDummyResponse'
         "401":
           description: Unauthorized
           schema:
@@ -1949,7 +3103,7 @@ paths:
       summary: Muestra el estado del servicio
       tags:
       - Consulta de Tablas de Referencia
-  /gestabref/lista-arancel:
+  /gestabref/ListaArancel:
     get:
       consumes:
       - application/json
@@ -1960,9 +3114,9 @@ paths:
         name: x-api-key
         required: true
         type: string
-      - description: Nombre de la tabla
+      - description: ID de referencia
         in: query
-        name: argNombreTabla
+        name: IdReferencia
         required: true
         type: string
       produces:
@@ -1971,9 +3125,7 @@ paths:
         "200":
           description: OK
           schema:
-            items:
-              $ref: '#/definitions/wgestabref.Opcion'
-            type: array
+            $ref: '#/definitions/wgestabref.Opciones'
         "400":
           description: Bad Request
           schema:
@@ -1989,7 +3141,45 @@ paths:
       summary: Lista Arancel
       tags:
       - Consulta de Tablas de Referencia
-  /gestabref/lista-descripcion:
+  /gestabref/ListaDatoComplementario:
+    get:
+      consumes:
+      - application/json
+      description: Lista Datos Complementarios
+      parameters:
+      - description: API Key de acceso
+        in: header
+        name: x-api-key
+        required: true
+        type: string
+      - description: ID de referencia
+        in: query
+        name: IdReferencia
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/wgestabref.DatosComplementarios'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+      summary: Lista Datos Complementarios
+      tags:
+      - Consulta de Tablas de Referencia
+  /gestabref/ListaDescripcion:
     get:
       consumes:
       - application/json
@@ -2000,9 +3190,9 @@ paths:
         name: x-api-key
         required: true
         type: string
-      - description: Nombre de la tabla
+      - description: ID de referencia
         in: query
-        name: argNombreTabla
+        name: IdReferencia
         required: true
         type: string
       produces:
@@ -2011,9 +3201,7 @@ paths:
         "200":
           description: OK
           schema:
-            items:
-              $ref: '#/definitions/wgestabref.Descripcion'
-            type: array
+            $ref: '#/definitions/wgestabref.Descripciones'
         "400":
           description: Bad Request
           schema:
@@ -2029,7 +3217,7 @@ paths:
       summary: Lista Descripción
       tags:
       - Consulta de Tablas de Referencia
-  /gestabref/lista-descripcion-decodificacion:
+  /gestabref/ListaDescripcionDecodificacion:
     get:
       consumes:
       - application/json
@@ -2040,9 +3228,9 @@ paths:
         name: x-api-key
         required: true
         type: string
-      - description: Nombre de la tabla
+      - description: ID de referencia
         in: query
-        name: argNombreTabla
+        name: IdReferencia
         required: true
         type: string
       produces:
@@ -2051,9 +3239,7 @@ paths:
         "200":
           description: OK
           schema:
-            items:
-              $ref: '#/definitions/wgestabref.DescripcionCodificacion'
-            type: array
+            $ref: '#/definitions/wgestabref.DescripcionesCodificaciones'
         "400":
           description: Bad Request
           schema:
@@ -2069,7 +3255,7 @@ paths:
       summary: Lista Descripción Decodificación
       tags:
       - Consulta de Tablas de Referencia
-  /gestabref/lista-empresas:
+  /gestabref/ListaEmpresas:
     get:
       consumes:
       - application/json
@@ -2080,9 +3266,9 @@ paths:
         name: x-api-key
         required: true
         type: string
-      - description: Nombre de la tabla
+      - description: ID de referencia
         in: query
-        name: argNombreTabla
+        name: IdReferencia
         required: true
         type: string
       produces:
@@ -2091,9 +3277,7 @@ paths:
         "200":
           description: OK
           schema:
-            items:
-              $ref: '#/definitions/wgestabref.Empresa'
-            type: array
+            $ref: '#/definitions/wgestabref.Empresas'
         "400":
           description: Bad Request
           schema:
@@ -2109,7 +3293,7 @@ paths:
       summary: Lista de Empresas
       tags:
       - Consulta de Tablas de Referencia
-  /gestabref/lista-lugares-operativos:
+  /gestabref/ListaLugaresOperativos:
     get:
       consumes:
       - application/json
@@ -2121,9 +3305,9 @@ paths:
         name: x-api-key
         required: true
         type: string
-      - description: Nombre de la tabla
+      - description: ID de referencia
         in: query
-        name: argNombreTabla
+        name: IdReferencia
         required: true
         type: string
       produces:
@@ -2132,9 +3316,7 @@ paths:
         "200":
           description: OK
           schema:
-            items:
-              $ref: '#/definitions/wgestabref.LugarOperativo'
-            type: array
+            $ref: '#/definitions/wgestabref.LugaresOperativos'
         "400":
           description: Bad Request
           schema:
@@ -2150,7 +3332,7 @@ paths:
       summary: Lista de Lugares Operativos
       tags:
       - Consulta de Tablas de Referencia
-  /gestabref/lista-paises-aduanas:
+  /gestabref/ListaPaisesAduanas:
     get:
       consumes:
       - application/json
@@ -2161,9 +3343,9 @@ paths:
         name: x-api-key
         required: true
         type: string
-      - description: Nombre de la tabla
+      - description: ID de referencia
         in: query
-        name: argNombreTabla
+        name: IdReferencia
         required: true
         type: string
       produces:
@@ -2172,9 +3354,7 @@ paths:
         "200":
           description: OK
           schema:
-            items:
-              $ref: '#/definitions/wgestabref.PaisAduana'
-            type: array
+            $ref: '#/definitions/wgestabref.PaisesAduanas'
         "400":
           description: Bad Request
           schema:
@@ -2190,7 +3370,7 @@ paths:
       summary: Lista de Paises y Aduanas
       tags:
       - Consulta de Tablas de Referencia
-  /gestabref/lista-tablas-referencia:
+  /gestabref/ListaTablasReferencia:
     get:
       consumes:
       - application/json
@@ -2209,9 +3389,7 @@ paths:
         "200":
           description: OK
           schema:
-            items:
-              $ref: '#/definitions/wgestabref.TablaReferencia'
-            type: array
+            $ref: '#/definitions/wgestabref.TablasReferencia'
         "400":
           description: Bad Request
           schema:
@@ -2225,6 +3403,44 @@ paths:
           schema:
             $ref: '#/definitions/dto.ErrorResponse'
       summary: Lista de Tablas de Referencia
+      tags:
+      - Consulta de Tablas de Referencia
+  /gestabref/ListaVigencias:
+    get:
+      consumes:
+      - application/json
+      description: Emite tabla del tipo código / descripción / vigencia.
+      parameters:
+      - description: API Key de acceso
+        in: header
+        name: x-api-key
+        required: true
+        type: string
+      - description: ID de referencia
+        in: query
+        name: IdReferencia
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/wgestabref.Vigencias'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+      summary: Lista de Vigencias
       tags:
       - Consulta de Tablas de Referencia
   /info:

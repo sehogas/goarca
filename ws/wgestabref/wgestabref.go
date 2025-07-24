@@ -2,712 +2,713 @@
 
 package wgestabref
 
-import (
-	"context"
-	"encoding/xml"
-	"github.com/hooklift/gowsdl/soap"
-	"time"
-)
+// import (
+// 	"context"
+// 	"encoding/xml"
+// 	"time"
 
-// against "unused imports"
-var _ time.Time
-var _ xml.Name
+// 	"github.com/hooklift/gowsdl/soap"
+// )
 
-type AnyType struct {
-	InnerXML string `xml:",innerxml"`
-}
+// // against "unused imports"
+// var _ time.Time
+// var _ xml.Name
 
-type AnyURI string
+// type AnyType struct {
+// 	InnerXML string `xml:",innerxml"`
+// }
 
-type NCName string
+// type AnyURI string
 
-type ListaDescripcion struct {
-	XMLName xml.Name `xml:"ar.gov.afip.dia.serviciosweb.wgesTabRef ListaDescripcion"`
+// type NCName string
 
-	Autentica *Autenticacion `xml:"Autentica,omitempty" json:"Autentica,omitempty"`
+// type ListaDescripcion struct {
+// 	XMLName xml.Name `xml:"ar.gov.afip.dia.serviciosweb.wgesTabRef ListaDescripcion"`
 
-	IdReferencia string `xml:"IdReferencia,omitempty" json:"IdReferencia,omitempty"`
-}
+// 	Autentica *Autenticacion `xml:"Autentica,omitempty" json:"Autentica,omitempty"`
 
-type ListaDescripcionResponse struct {
-	XMLName xml.Name `xml:"ar.gov.afip.dia.serviciosweb.wgesTabRef ListaDescripcionResponse"`
+// 	IdReferencia string `xml:"IdReferencia,omitempty" json:"IdReferencia,omitempty"`
+// }
 
-	ListaDescripcionResult *Descripciones `xml:"ListaDescripcionResult,omitempty" json:"ListaDescripcionResult,omitempty"`
-}
+// type ListaDescripcionResponse struct {
+// 	XMLName xml.Name `xml:"ar.gov.afip.dia.serviciosweb.wgesTabRef ListaDescripcionResponse"`
 
-type ListaVigencias struct {
-	XMLName xml.Name `xml:"ar.gov.afip.dia.serviciosweb.wgesTabRef ListaVigencias"`
+// 	ListaDescripcionResult *Descripciones `xml:"ListaDescripcionResult,omitempty" json:"ListaDescripcionResult,omitempty"`
+// }
 
-	Autentica *Autenticacion `xml:"Autentica,omitempty" json:"Autentica,omitempty"`
+// type ListaVigencias struct {
+// 	XMLName xml.Name `xml:"ar.gov.afip.dia.serviciosweb.wgesTabRef ListaVigencias"`
 
-	IdReferencia string `xml:"IdReferencia,omitempty" json:"IdReferencia,omitempty"`
-}
+// 	Autentica *Autenticacion `xml:"Autentica,omitempty" json:"Autentica,omitempty"`
 
-type ListaVigenciasResponse struct {
-	XMLName xml.Name `xml:"ar.gov.afip.dia.serviciosweb.wgesTabRef ListaVigenciasResponse"`
+// 	IdReferencia string `xml:"IdReferencia,omitempty" json:"IdReferencia,omitempty"`
+// }
 
-	ListaVigenciasResult *Vigencias `xml:"ListaVigenciasResult,omitempty" json:"ListaVigenciasResult,omitempty"`
-}
+// type ListaVigenciasResponse struct {
+// 	XMLName xml.Name `xml:"ar.gov.afip.dia.serviciosweb.wgesTabRef ListaVigenciasResponse"`
 
-type DocumentosVigentes struct {
-	XMLName xml.Name `xml:"ar.gov.afip.dia.serviciosweb.wgesTabRef DocumentosVigentes"`
+// 	ListaVigenciasResult *Vigencias `xml:"ListaVigenciasResult,omitempty" json:"ListaVigenciasResult,omitempty"`
+// }
 
-	Autentica *Autenticacion `xml:"Autentica,omitempty" json:"Autentica,omitempty"`
-}
+// type DocumentosVigentes struct {
+// 	XMLName xml.Name `xml:"ar.gov.afip.dia.serviciosweb.wgesTabRef DocumentosVigentes"`
 
-type DocumentosVigentesResponse struct {
-	XMLName xml.Name `xml:"ar.gov.afip.dia.serviciosweb.wgesTabRef DocumentosVigentesResponse"`
+// 	Autentica *Autenticacion `xml:"Autentica,omitempty" json:"Autentica,omitempty"`
+// }
 
-	DocumentosVigentesResult *VigenciasIndicador `xml:"DocumentosVigentesResult,omitempty" json:"DocumentosVigentesResult,omitempty"`
-}
+// type DocumentosVigentesResponse struct {
+// 	XMLName xml.Name `xml:"ar.gov.afip.dia.serviciosweb.wgesTabRef DocumentosVigentesResponse"`
 
-type ListaPaisesAduanas struct {
-	XMLName xml.Name `xml:"ar.gov.afip.dia.serviciosweb.wgesTabRef ListaPaisesAduanas"`
+// 	DocumentosVigentesResult *VigenciasIndicador `xml:"DocumentosVigentesResult,omitempty" json:"DocumentosVigentesResult,omitempty"`
+// }
 
-	Autentica *Autenticacion `xml:"Autentica,omitempty" json:"Autentica,omitempty"`
+// type ListaPaisesAduanas struct {
+// 	XMLName xml.Name `xml:"ar.gov.afip.dia.serviciosweb.wgesTabRef ListaPaisesAduanas"`
 
-	IdReferencia string `xml:"IdReferencia,omitempty" json:"IdReferencia,omitempty"`
-}
+// 	Autentica *Autenticacion `xml:"Autentica,omitempty" json:"Autentica,omitempty"`
 
-type ListaPaisesAduanasResponse struct {
-	XMLName xml.Name `xml:"ar.gov.afip.dia.serviciosweb.wgesTabRef ListaPaisesAduanasResponse"`
+// 	IdReferencia string `xml:"IdReferencia,omitempty" json:"IdReferencia,omitempty"`
+// }
 
-	ListaPaisesAduanasResult *PaisesAduanas `xml:"ListaPaisesAduanasResult,omitempty" json:"ListaPaisesAduanasResult,omitempty"`
-}
+// type ListaPaisesAduanasResponse struct {
+// 	XMLName xml.Name `xml:"ar.gov.afip.dia.serviciosweb.wgesTabRef ListaPaisesAduanasResponse"`
 
-type ListaEmpresas struct {
-	XMLName xml.Name `xml:"ar.gov.afip.dia.serviciosweb.wgesTabRef ListaEmpresas"`
+// 	ListaPaisesAduanasResult *PaisesAduanas `xml:"ListaPaisesAduanasResult,omitempty" json:"ListaPaisesAduanasResult,omitempty"`
+// }
 
-	Autentica *Autenticacion `xml:"Autentica,omitempty" json:"Autentica,omitempty"`
+// type ListaEmpresas struct {
+// 	XMLName xml.Name `xml:"ar.gov.afip.dia.serviciosweb.wgesTabRef ListaEmpresas"`
 
-	IdReferencia string `xml:"IdReferencia,omitempty" json:"IdReferencia,omitempty"`
-}
+// 	Autentica *Autenticacion `xml:"Autentica,omitempty" json:"Autentica,omitempty"`
 
-type ListaEmpresasResponse struct {
-	XMLName xml.Name `xml:"ar.gov.afip.dia.serviciosweb.wgesTabRef ListaEmpresasResponse"`
+// 	IdReferencia string `xml:"IdReferencia,omitempty" json:"IdReferencia,omitempty"`
+// }
 
-	ListaEmpresasResult *Empresas `xml:"ListaEmpresasResult,omitempty" json:"ListaEmpresasResult,omitempty"`
-}
+// type ListaEmpresasResponse struct {
+// 	XMLName xml.Name `xml:"ar.gov.afip.dia.serviciosweb.wgesTabRef ListaEmpresasResponse"`
 
-type ListaArancel struct {
-	XMLName xml.Name `xml:"ar.gov.afip.dia.serviciosweb.wgesTabRef ListaArancel"`
+// 	ListaEmpresasResult *Empresas `xml:"ListaEmpresasResult,omitempty" json:"ListaEmpresasResult,omitempty"`
+// }
 
-	Autentica *Autenticacion `xml:"Autentica,omitempty" json:"Autentica,omitempty"`
+// type ListaArancel struct {
+// 	XMLName xml.Name `xml:"ar.gov.afip.dia.serviciosweb.wgesTabRef ListaArancel"`
 
-	IdReferencia string `xml:"IdReferencia,omitempty" json:"IdReferencia,omitempty"`
-}
+// 	Autentica *Autenticacion `xml:"Autentica,omitempty" json:"Autentica,omitempty"`
 
-type ListaArancelResponse struct {
-	XMLName xml.Name `xml:"ar.gov.afip.dia.serviciosweb.wgesTabRef ListaArancelResponse"`
+// 	IdReferencia string `xml:"IdReferencia,omitempty" json:"IdReferencia,omitempty"`
+// }
 
-	ListaArancelResult *Opciones `xml:"ListaArancelResult,omitempty" json:"ListaArancelResult,omitempty"`
-}
+// type ListaArancelResponse struct {
+// 	XMLName xml.Name `xml:"ar.gov.afip.dia.serviciosweb.wgesTabRef ListaArancelResponse"`
 
-type ListaLugaresOperativos struct {
-	XMLName xml.Name `xml:"ar.gov.afip.dia.serviciosweb.wgesTabRef ListaLugaresOperativos"`
+// 	ListaArancelResult *Opciones `xml:"ListaArancelResult,omitempty" json:"ListaArancelResult,omitempty"`
+// }
 
-	Autentica *Autenticacion `xml:"Autentica,omitempty" json:"Autentica,omitempty"`
+// type ListaLugaresOperativos struct {
+// 	XMLName xml.Name `xml:"ar.gov.afip.dia.serviciosweb.wgesTabRef ListaLugaresOperativos"`
 
-	IdReferencia string `xml:"IdReferencia,omitempty" json:"IdReferencia,omitempty"`
-}
+// 	Autentica *Autenticacion `xml:"Autentica,omitempty" json:"Autentica,omitempty"`
 
-type ListaLugaresOperativosResponse struct {
-	XMLName xml.Name `xml:"ar.gov.afip.dia.serviciosweb.wgesTabRef ListaLugaresOperativosResponse"`
+// 	IdReferencia string `xml:"IdReferencia,omitempty" json:"IdReferencia,omitempty"`
+// }
 
-	ListaLugaresOperativosResult *LugaresOperativos `xml:"ListaLugaresOperativosResult,omitempty" json:"ListaLugaresOperativosResult,omitempty"`
-}
+// type ListaLugaresOperativosResponse struct {
+// 	XMLName xml.Name `xml:"ar.gov.afip.dia.serviciosweb.wgesTabRef ListaLugaresOperativosResponse"`
 
-type ListaTablasReferencia struct {
-	XMLName xml.Name `xml:"ar.gov.afip.dia.serviciosweb.wgesTabRef ListaTablasReferencia"`
+// 	ListaLugaresOperativosResult *LugaresOperativos `xml:"ListaLugaresOperativosResult,omitempty" json:"ListaLugaresOperativosResult,omitempty"`
+// }
 
-	Autentica *Autenticacion `xml:"Autentica,omitempty" json:"Autentica,omitempty"`
-}
+// type ListaTablasReferencia struct {
+// 	XMLName xml.Name `xml:"ar.gov.afip.dia.serviciosweb.wgesTabRef ListaTablasReferencia"`
 
-type ListaTablasReferenciaResponse struct {
-	XMLName xml.Name `xml:"ar.gov.afip.dia.serviciosweb.wgesTabRef ListaTablasReferenciaResponse"`
+// 	Autentica *Autenticacion `xml:"Autentica,omitempty" json:"Autentica,omitempty"`
+// }
 
-	ListaTablasReferenciaResult *TablasReferencia `xml:"ListaTablasReferenciaResult,omitempty" json:"ListaTablasReferenciaResult,omitempty"`
-}
+// type ListaTablasReferenciaResponse struct {
+// 	XMLName xml.Name `xml:"ar.gov.afip.dia.serviciosweb.wgesTabRef ListaTablasReferenciaResponse"`
 
-type ListaTablasReferenciaServicio struct {
-	XMLName xml.Name `xml:"ar.gov.afip.dia.serviciosweb.wgesTabRef ListaTablasReferenciaServicio"`
+// 	ListaTablasReferenciaResult *TablasReferencia `xml:"ListaTablasReferenciaResult,omitempty" json:"ListaTablasReferenciaResult,omitempty"`
+// }
 
-	Autentica *Autenticacion `xml:"Autentica,omitempty" json:"Autentica,omitempty"`
+// type ListaTablasReferenciaServicio struct {
+// 	XMLName xml.Name `xml:"ar.gov.afip.dia.serviciosweb.wgesTabRef ListaTablasReferenciaServicio"`
 
-	IdServicio string `xml:"IdServicio,omitempty" json:"IdServicio,omitempty"`
-}
+// 	Autentica *Autenticacion `xml:"Autentica,omitempty" json:"Autentica,omitempty"`
 
-type ListaTablasReferenciaServicioResponse struct {
-	XMLName xml.Name `xml:"ar.gov.afip.dia.serviciosweb.wgesTabRef ListaTablasReferenciaServicioResponse"`
+// 	IdServicio string `xml:"IdServicio,omitempty" json:"IdServicio,omitempty"`
+// }
 
-	ListaTablasReferenciaServicioResult *TablasReferencia `xml:"ListaTablasReferenciaServicioResult,omitempty" json:"ListaTablasReferenciaServicioResult,omitempty"`
-}
+// type ListaTablasReferenciaServicioResponse struct {
+// 	XMLName xml.Name `xml:"ar.gov.afip.dia.serviciosweb.wgesTabRef ListaTablasReferenciaServicioResponse"`
 
-type ListaDescripcionDecodificacion struct {
-	XMLName xml.Name `xml:"ar.gov.afip.dia.serviciosweb.wgesTabRef ListaDescripcionDecodificacion"`
+// 	ListaTablasReferenciaServicioResult *TablasReferencia `xml:"ListaTablasReferenciaServicioResult,omitempty" json:"ListaTablasReferenciaServicioResult,omitempty"`
+// }
 
-	Autentica *Autenticacion `xml:"Autentica,omitempty" json:"Autentica,omitempty"`
+// type ListaDescripcionDecodificacion struct {
+// 	XMLName xml.Name `xml:"ar.gov.afip.dia.serviciosweb.wgesTabRef ListaDescripcionDecodificacion"`
 
-	IdReferencia string `xml:"IdReferencia,omitempty" json:"IdReferencia,omitempty"`
-}
+// 	Autentica *Autenticacion `xml:"Autentica,omitempty" json:"Autentica,omitempty"`
 
-type ListaDescripcionDecodificacionResponse struct {
-	XMLName xml.Name `xml:"ar.gov.afip.dia.serviciosweb.wgesTabRef ListaDescripcionDecodificacionResponse"`
+// 	IdReferencia string `xml:"IdReferencia,omitempty" json:"IdReferencia,omitempty"`
+// }
 
-	ListaDescripcionDecodificacionResult *DescripcionesCodificaciones `xml:"ListaDescripcionDecodificacionResult,omitempty" json:"ListaDescripcionDecodificacionResult,omitempty"`
-}
+// type ListaDescripcionDecodificacionResponse struct {
+// 	XMLName xml.Name `xml:"ar.gov.afip.dia.serviciosweb.wgesTabRef ListaDescripcionDecodificacionResponse"`
 
-type ListaDatoComplementario struct {
-	XMLName xml.Name `xml:"ar.gov.afip.dia.serviciosweb.wgesTabRef ListaDatoComplementario"`
+// 	ListaDescripcionDecodificacionResult *DescripcionesCodificaciones `xml:"ListaDescripcionDecodificacionResult,omitempty" json:"ListaDescripcionDecodificacionResult,omitempty"`
+// }
 
-	Autentica *Autenticacion `xml:"Autentica,omitempty" json:"Autentica,omitempty"`
+// type ListaDatoComplementario struct {
+// 	XMLName xml.Name `xml:"ar.gov.afip.dia.serviciosweb.wgesTabRef ListaDatoComplementario"`
 
-	IdReferencia string `xml:"IdReferencia,omitempty" json:"IdReferencia,omitempty"`
-}
+// 	Autentica *Autenticacion `xml:"Autentica,omitempty" json:"Autentica,omitempty"`
 
-type ListaDatoComplementarioResponse struct {
-	XMLName xml.Name `xml:"ar.gov.afip.dia.serviciosweb.wgesTabRef ListaDatoComplementarioResponse"`
+// 	IdReferencia string `xml:"IdReferencia,omitempty" json:"IdReferencia,omitempty"`
+// }
 
-	ListaDatoComplementarioResult *DatosComplementarios `xml:"ListaDatoComplementarioResult,omitempty" json:"ListaDatoComplementarioResult,omitempty"`
-}
+// type ListaDatoComplementarioResponse struct {
+// 	XMLName xml.Name `xml:"ar.gov.afip.dia.serviciosweb.wgesTabRef ListaDatoComplementarioResponse"`
 
-type ConsultarFechaUltAct struct {
-	XMLName xml.Name `xml:"ar.gov.afip.dia.serviciosweb.wgesTabRef ConsultarFechaUltAct"`
+// 	ListaDatoComplementarioResult *DatosComplementarios `xml:"ListaDatoComplementarioResult,omitempty" json:"ListaDatoComplementarioResult,omitempty"`
+// }
 
-	Autentica *Autenticacion `xml:"Autentica,omitempty" json:"Autentica,omitempty"`
+// type ConsultarFechaUltAct struct {
+// 	XMLName xml.Name `xml:"ar.gov.afip.dia.serviciosweb.wgesTabRef ConsultarFechaUltAct"`
 
-	IdReferencia string `xml:"IdReferencia,omitempty" json:"IdReferencia,omitempty"`
-}
+// 	Autentica *Autenticacion `xml:"Autentica,omitempty" json:"Autentica,omitempty"`
 
-type ConsultarFechaUltActResponse struct {
-	XMLName xml.Name `xml:"ar.gov.afip.dia.serviciosweb.wgesTabRef ConsultarFechaUltActResponse"`
+// 	IdReferencia string `xml:"IdReferencia,omitempty" json:"IdReferencia,omitempty"`
+// }
 
-	ConsultarFechaUltActResult *FechaUltAct `xml:"ConsultarFechaUltActResult,omitempty" json:"ConsultarFechaUltActResult,omitempty"`
-}
+// type ConsultarFechaUltActResponse struct {
+// 	XMLName xml.Name `xml:"ar.gov.afip.dia.serviciosweb.wgesTabRef ConsultarFechaUltActResponse"`
 
-type Dummy struct {
-	XMLName xml.Name `xml:"ar.gov.afip.dia.serviciosweb.wgesTabRef Dummy"`
-}
+// 	ConsultarFechaUltActResult *FechaUltAct `xml:"ConsultarFechaUltActResult,omitempty" json:"ConsultarFechaUltActResult,omitempty"`
+// }
 
-type DummyResponse struct {
-	XMLName xml.Name `xml:"ar.gov.afip.dia.serviciosweb.wgesTabRef DummyResponse"`
+// type Dummy struct {
+// 	XMLName xml.Name `xml:"ar.gov.afip.dia.serviciosweb.wgesTabRef Dummy"`
+// }
 
-	DummyResult *WsDummyResponse `xml:"DummyResult,omitempty" json:"DummyResult,omitempty"`
-}
+// type DummyResponse struct {
+// 	XMLName xml.Name `xml:"ar.gov.afip.dia.serviciosweb.wgesTabRef DummyResponse"`
 
-type Autenticacion struct {
-	Cuit string `xml:"Cuit,omitempty" json:"Cuit,omitempty"`
+// 	DummyResult *WsDummyResponse `xml:"DummyResult,omitempty" json:"DummyResult,omitempty"`
+// }
 
-	TipoAgente string `xml:"TipoAgente,omitempty" json:"TipoAgente,omitempty"`
+// type Autenticacion struct {
+// 	Cuit string `xml:"Cuit,omitempty" json:"Cuit,omitempty"`
 
-	Rol string `xml:"Rol,omitempty" json:"Rol,omitempty"`
+// 	TipoAgente string `xml:"TipoAgente,omitempty" json:"TipoAgente,omitempty"`
 
-	Token *string `xml:"Token,omitempty" json:"Token,omitempty"`
+// 	Rol string `xml:"Rol,omitempty" json:"Rol,omitempty"`
 
-	Sign *string `xml:"Sign,omitempty" json:"Sign,omitempty"`
-}
+// 	Token *string `xml:"Token,omitempty" json:"Token,omitempty"`
 
-type Descripciones struct {
-	*Contenedor
+// 	Sign *string `xml:"Sign,omitempty" json:"Sign,omitempty"`
+// }
 
-	IdReferencia string `xml:"IdReferencia,omitempty" json:"IdReferencia,omitempty"`
+// type Descripciones struct {
+// 	*Contenedor
 
-	Descripciones *ArrayOfDescripcion `xml:"Descripciones,omitempty" json:"Descripciones,omitempty"`
-}
+// 	IdReferencia string `xml:"IdReferencia,omitempty" json:"IdReferencia,omitempty"`
 
-type Contenedor struct {
-	CodError int32 `xml:"CodError,omitempty" json:"CodError,omitempty"`
+// 	Descripciones *ArrayOfDescripcion `xml:"Descripciones,omitempty" json:"Descripciones,omitempty"`
+// }
 
-	InfoAdicional string `xml:"InfoAdicional,omitempty" json:"InfoAdicional,omitempty"`
-}
+// type Contenedor struct {
+// 	CodError int32 `xml:"CodError,omitempty" json:"CodError,omitempty"`
 
-type ArrayOfDescripcion struct {
-	Descripcion []*Descripcion `xml:"Descripcion,omitempty" json:"Descripcion,omitempty"`
-}
+// 	InfoAdicional string `xml:"InfoAdicional,omitempty" json:"InfoAdicional,omitempty"`
+// }
 
-type Descripcion struct {
-	Codigo string `xml:"Codigo,omitempty" json:"Codigo,omitempty"`
+// type ArrayOfDescripcion struct {
+// 	Descripcion []*Descripcion `xml:"Descripcion,omitempty" json:"Descripcion,omitempty"`
+// }
 
-	Descripcion string `xml:"Descripcion,omitempty" json:"Descripcion,omitempty"`
-}
+// type Descripcion struct {
+// 	Codigo string `xml:"Codigo,omitempty" json:"Codigo,omitempty"`
 
-type Vigencias struct {
-	*Contenedor
+// 	Descripcion string `xml:"Descripcion,omitempty" json:"Descripcion,omitempty"`
+// }
 
-	IdReferencia string `xml:"IdReferencia,omitempty" json:"IdReferencia,omitempty"`
+// type Vigencias struct {
+// 	*Contenedor
 
-	Vigencias *ArrayOfVigencia `xml:"Vigencias,omitempty" json:"Vigencias,omitempty"`
-}
+// 	IdReferencia string `xml:"IdReferencia,omitempty" json:"IdReferencia,omitempty"`
 
-type ArrayOfVigencia struct {
-	Vigencia []*Vigencia `xml:"Vigencia,omitempty" json:"Vigencia,omitempty"`
-}
+// 	Vigencias *ArrayOfVigencia `xml:"Vigencias,omitempty" json:"Vigencias,omitempty"`
+// }
 
-type Vigencia struct {
-	*Descripcion
+// type ArrayOfVigencia struct {
+// 	Vigencia []*Vigencia `xml:"Vigencia,omitempty" json:"Vigencia,omitempty"`
+// }
 
-	VigenciaDesde string `xml:"VigenciaDesde,omitempty" json:"VigenciaDesde,omitempty"`
+// type Vigencia struct {
+// 	*Descripcion
 
-	VigenciaHasta string `xml:"VigenciaHasta,omitempty" json:"VigenciaHasta,omitempty"`
-}
+// 	VigenciaDesde string `xml:"VigenciaDesde,omitempty" json:"VigenciaDesde,omitempty"`
 
-type VigenciasIndicador struct {
-	*Contenedor
+// 	VigenciaHasta string `xml:"VigenciaHasta,omitempty" json:"VigenciaHasta,omitempty"`
+// }
 
-	VigenciasIndicador *ArrayOfVigenciaIndicador `xml:"VigenciasIndicador,omitempty" json:"VigenciasIndicador,omitempty"`
-}
+// type VigenciasIndicador struct {
+// 	*Contenedor
 
-type ArrayOfVigenciaIndicador struct {
-	VigenciaIndicador []*VigenciaIndicador `xml:"VigenciaIndicador,omitempty" json:"VigenciaIndicador,omitempty"`
-}
+// 	VigenciasIndicador *ArrayOfVigenciaIndicador `xml:"VigenciasIndicador,omitempty" json:"VigenciasIndicador,omitempty"`
+// }
 
-type VigenciaIndicador struct {
-	*Vigencia
+// type ArrayOfVigenciaIndicador struct {
+// 	VigenciaIndicador []*VigenciaIndicador `xml:"VigenciaIndicador,omitempty" json:"VigenciaIndicador,omitempty"`
+// }
 
-	Indicador string `xml:"Indicador,omitempty" json:"Indicador,omitempty"`
-}
+// type VigenciaIndicador struct {
+// 	*Vigencia
 
-type PaisesAduanas struct {
-	*Contenedor
+// 	Indicador string `xml:"Indicador,omitempty" json:"Indicador,omitempty"`
+// }
 
-	IdReferencia string `xml:"IdReferencia,omitempty" json:"IdReferencia,omitempty"`
+// type PaisesAduanas struct {
+// 	*Contenedor
 
-	PaisesAduanas *ArrayOfPaisAduana `xml:"PaisesAduanas,omitempty" json:"PaisesAduanas,omitempty"`
-}
+// 	IdReferencia string `xml:"IdReferencia,omitempty" json:"IdReferencia,omitempty"`
 
-type ArrayOfPaisAduana struct {
-	PaisAduana []*PaisAduana `xml:"PaisAduana,omitempty" json:"PaisAduana,omitempty"`
-}
+// 	PaisesAduanas *ArrayOfPaisAduana `xml:"PaisesAduanas,omitempty" json:"PaisesAduanas,omitempty"`
+// }
 
-type PaisAduana struct {
-	*Vigencia
+// type ArrayOfPaisAduana struct {
+// 	PaisAduana []*PaisAduana `xml:"PaisAduana,omitempty" json:"PaisAduana,omitempty"`
+// }
 
-	Pais string `xml:"Pais,omitempty" json:"Pais,omitempty"`
+// type PaisAduana struct {
+// 	*Vigencia
 
-	Aduana string `xml:"Aduana,omitempty" json:"Aduana,omitempty"`
-}
+// 	Pais string `xml:"Pais,omitempty" json:"Pais,omitempty"`
 
-type Empresas struct {
-	*Contenedor
+// 	Aduana string `xml:"Aduana,omitempty" json:"Aduana,omitempty"`
+// }
 
-	IdReferencia string `xml:"IdReferencia,omitempty" json:"IdReferencia,omitempty"`
+// type Empresas struct {
+// 	*Contenedor
 
-	Empresas *ArrayOfEmpresa `xml:"Empresas,omitempty" json:"Empresas,omitempty"`
-}
+// 	IdReferencia string `xml:"IdReferencia,omitempty" json:"IdReferencia,omitempty"`
 
-type ArrayOfEmpresa struct {
-	Empresa []*Empresa `xml:"Empresa,omitempty" json:"Empresa,omitempty"`
-}
+// 	Empresas *ArrayOfEmpresa `xml:"Empresas,omitempty" json:"Empresas,omitempty"`
+// }
 
-type Empresa struct {
-	Cuit string `xml:"Cuit,omitempty" json:"Cuit,omitempty"`
+// type ArrayOfEmpresa struct {
+// 	Empresa []*Empresa `xml:"Empresa,omitempty" json:"Empresa,omitempty"`
+// }
 
-	RazonSocial string `xml:"RazonSocial,omitempty" json:"RazonSocial,omitempty"`
-}
+// type Empresa struct {
+// 	Cuit string `xml:"Cuit,omitempty" json:"Cuit,omitempty"`
 
-type Opciones struct {
-	*Contenedor
+// 	RazonSocial string `xml:"RazonSocial,omitempty" json:"RazonSocial,omitempty"`
+// }
 
-	IdReferencia string `xml:"IdReferencia,omitempty" json:"IdReferencia,omitempty"`
+// type Opciones struct {
+// 	*Contenedor
 
-	Opciones *ArrayOfOpcion `xml:"Opciones,omitempty" json:"Opciones,omitempty"`
-}
+// 	IdReferencia string `xml:"IdReferencia,omitempty" json:"IdReferencia,omitempty"`
 
-type ArrayOfOpcion struct {
-	Opcion []*Opcion `xml:"Opcion,omitempty" json:"Opcion,omitempty"`
-}
+// 	Opciones *ArrayOfOpcion `xml:"Opciones,omitempty" json:"Opciones,omitempty"`
+// }
 
-type Opcion struct {
-	*Vigencia
+// type ArrayOfOpcion struct {
+// 	Opcion []*Opcion `xml:"Opcion,omitempty" json:"Opcion,omitempty"`
+// }
 
-	Opcion string `xml:"Opcion,omitempty" json:"Opcion,omitempty"`
-}
+// type Opcion struct {
+// 	*Vigencia
 
-type LugaresOperativos struct {
-	*Contenedor
+// 	Opcion string `xml:"Opcion,omitempty" json:"Opcion,omitempty"`
+// }
 
-	IdReferencia string `xml:"IdReferencia,omitempty" json:"IdReferencia,omitempty"`
+// type LugaresOperativos struct {
+// 	*Contenedor
 
-	LugaresOperativos *ArrayOfLugarOperativo `xml:"LugaresOperativos,omitempty" json:"LugaresOperativos,omitempty"`
-}
+// 	IdReferencia string `xml:"IdReferencia,omitempty" json:"IdReferencia,omitempty"`
 
-type ArrayOfLugarOperativo struct {
-	LugarOperativo []*LugarOperativo `xml:"LugarOperativo,omitempty" json:"LugarOperativo,omitempty"`
-}
+// 	LugaresOperativos *ArrayOfLugarOperativo `xml:"LugaresOperativos,omitempty" json:"LugaresOperativos,omitempty"`
+// }
 
-type LugarOperativo struct {
-	*Vigencia
+// type ArrayOfLugarOperativo struct {
+// 	LugarOperativo []*LugarOperativo `xml:"LugarOperativo,omitempty" json:"LugarOperativo,omitempty"`
+// }
 
-	Aduana string `xml:"Aduana,omitempty" json:"Aduana,omitempty"`
+// type LugarOperativo struct {
+// 	*Vigencia
 
-	LugarOperativo string `xml:"LugarOperativo,omitempty" json:"LugarOperativo,omitempty"`
-}
+// 	Aduana string `xml:"Aduana,omitempty" json:"Aduana,omitempty"`
 
-type TablasReferencia struct {
-	*Contenedor
+// 	LugarOperativo string `xml:"LugarOperativo,omitempty" json:"LugarOperativo,omitempty"`
+// }
 
-	TablasReferencia *ArrayOfTablaReferencia `xml:"TablasReferencia,omitempty" json:"TablasReferencia,omitempty"`
-}
+// type TablasReferencia struct {
+// 	*Contenedor
 
-type ArrayOfTablaReferencia struct {
-	TablaReferencia []*TablaReferencia `xml:"TablaReferencia,omitempty" json:"TablaReferencia,omitempty"`
-}
+// 	TablasReferencia *ArrayOfTablaReferencia `xml:"TablasReferencia,omitempty" json:"TablasReferencia,omitempty"`
+// }
 
-type TablaReferencia struct {
-	IdTabRef string `xml:"IdTabRef,omitempty" json:"IdTabRef,omitempty"`
+// type ArrayOfTablaReferencia struct {
+// 	TablaReferencia []*TablaReferencia `xml:"TablaReferencia,omitempty" json:"TablaReferencia,omitempty"`
+// }
 
-	TabRefDesc string `xml:"TabRefDesc,omitempty" json:"TabRefDesc,omitempty"`
+// type TablaReferencia struct {
+// 	IdTabRef string `xml:"IdTabRef,omitempty" json:"IdTabRef,omitempty"`
 
-	WebMethod string `xml:"WebMethod,omitempty" json:"WebMethod,omitempty"`
-}
+// 	TabRefDesc string `xml:"TabRefDesc,omitempty" json:"TabRefDesc,omitempty"`
 
-type DescripcionesCodificaciones struct {
-	*Contenedor
+// 	WebMethod string `xml:"WebMethod,omitempty" json:"WebMethod,omitempty"`
+// }
 
-	IdReferencia string `xml:"IdReferencia,omitempty" json:"IdReferencia,omitempty"`
+// type DescripcionesCodificaciones struct {
+// 	*Contenedor
 
-	DescripcionesCodificaciones *ArrayOfDescripcionCodificacion `xml:"DescripcionesCodificaciones,omitempty" json:"DescripcionesCodificaciones,omitempty"`
-}
+// 	IdReferencia string `xml:"IdReferencia,omitempty" json:"IdReferencia,omitempty"`
 
-type ArrayOfDescripcionCodificacion struct {
-	DescripcionCodificacion []*DescripcionCodificacion `xml:"DescripcionCodificacion,omitempty" json:"DescripcionCodificacion,omitempty"`
-}
+// 	DescripcionesCodificaciones *ArrayOfDescripcionCodificacion `xml:"DescripcionesCodificaciones,omitempty" json:"DescripcionesCodificaciones,omitempty"`
+// }
 
-type DescripcionCodificacion struct {
-	*Descripcion
+// type ArrayOfDescripcionCodificacion struct {
+// 	DescripcionCodificacion []*DescripcionCodificacion `xml:"DescripcionCodificacion,omitempty" json:"DescripcionCodificacion,omitempty"`
+// }
 
-	CodigoIso string `xml:"CodigoIso,omitempty" json:"CodigoIso,omitempty"`
-}
+// type DescripcionCodificacion struct {
+// 	*Descripcion
 
-type DatosComplementarios struct {
-	*Contenedor
+// 	CodigoIso string `xml:"CodigoIso,omitempty" json:"CodigoIso,omitempty"`
+// }
 
-	IdReferencia string `xml:"IdReferencia,omitempty" json:"IdReferencia,omitempty"`
+// type DatosComplementarios struct {
+// 	*Contenedor
 
-	DatosComplementarios *ArrayOfDatoComplementario `xml:"DatosComplementarios,omitempty" json:"DatosComplementarios,omitempty"`
-}
+// 	IdReferencia string `xml:"IdReferencia,omitempty" json:"IdReferencia,omitempty"`
 
-type ArrayOfDatoComplementario struct {
-	DatoComplementario []*DatoComplementario `xml:"DatoComplementario,omitempty" json:"DatoComplementario,omitempty"`
-}
+// 	DatosComplementarios *ArrayOfDatoComplementario `xml:"DatosComplementarios,omitempty" json:"DatosComplementarios,omitempty"`
+// }
 
-type DatoComplementario struct {
-	*VigenciaIndicador
+// type ArrayOfDatoComplementario struct {
+// 	DatoComplementario []*DatoComplementario `xml:"DatoComplementario,omitempty" json:"DatoComplementario,omitempty"`
+// }
 
-	Formato string `xml:"Formato,omitempty" json:"Formato,omitempty"`
-}
+// type DatoComplementario struct {
+// 	*VigenciaIndicador
 
-type FechaUltAct struct {
-	*Contenedor
+// 	Formato string `xml:"Formato,omitempty" json:"Formato,omitempty"`
+// }
 
-	Fecha soap.XSDDateTime `xml:"Fecha,omitempty" json:"Fecha,omitempty"`
+// type FechaUltAct struct {
+// 	*Contenedor
 
-	IdReferencia string `xml:"IdReferencia,omitempty" json:"IdReferencia,omitempty"`
-}
+// 	Fecha soap.XSDDateTime `xml:"Fecha,omitempty" json:"Fecha,omitempty"`
 
-type WsDummyResponse struct {
-	Appserver string `xml:"appserver,omitempty" json:"appserver,omitempty"`
+// 	IdReferencia string `xml:"IdReferencia,omitempty" json:"IdReferencia,omitempty"`
+// }
 
-	Dbserver string `xml:"dbserver,omitempty" json:"dbserver,omitempty"`
+// type WsDummyResponse struct {
+// 	Appserver string `xml:"appserver,omitempty" json:"appserver,omitempty"`
 
-	Authserver string `xml:"authserver,omitempty" json:"authserver,omitempty"`
-}
+// 	Dbserver string `xml:"dbserver,omitempty" json:"dbserver,omitempty"`
 
-type WgesTabRefSoap interface {
+// 	Authserver string `xml:"authserver,omitempty" json:"authserver,omitempty"`
+// }
 
-	/* Emite tabla del tipo codigo/descripcion. */
-	ListaDescripcion(request *ListaDescripcion) (*ListaDescripcionResponse, error)
+// type WgesTabRefSoap interface {
 
-	ListaDescripcionContext(ctx context.Context, request *ListaDescripcion) (*ListaDescripcionResponse, error)
+// 	/* Emite tabla del tipo codigo/descripcion. */
+// 	ListaDescripcion(request *ListaDescripcion) (*ListaDescripcionResponse, error)
 
-	/* Emite tabla del tipo codigo/descripcion/vigencia. */
-	ListaVigencias(request *ListaVigencias) (*ListaVigenciasResponse, error)
+// 	ListaDescripcionContext(ctx context.Context, request *ListaDescripcion) (*ListaDescripcionResponse, error)
 
-	ListaVigenciasContext(ctx context.Context, request *ListaVigencias) (*ListaVigenciasResponse, error)
+// 	/* Emite tabla del tipo codigo/descripcion/vigencia. */
+// 	ListaVigencias(request *ListaVigencias) (*ListaVigenciasResponse, error)
 
-	/* Emite tabla del tipo codigo/descripcion/vigencia. */
-	DocumentosVigentes(request *DocumentosVigentes) (*DocumentosVigentesResponse, error)
+// 	ListaVigenciasContext(ctx context.Context, request *ListaVigencias) (*ListaVigenciasResponse, error)
 
-	DocumentosVigentesContext(ctx context.Context, request *DocumentosVigentes) (*DocumentosVigentesResponse, error)
+// 	/* Emite tabla del tipo codigo/descripcion/vigencia. */
+// 	DocumentosVigentes(request *DocumentosVigentes) (*DocumentosVigentesResponse, error)
 
-	/* Emite tabla del tipo codigo/descripcion/vigencia/pais o aduana. */
-	ListaPaisesAduanas(request *ListaPaisesAduanas) (*ListaPaisesAduanasResponse, error)
+// 	DocumentosVigentesContext(ctx context.Context, request *DocumentosVigentes) (*DocumentosVigentesResponse, error)
 
-	ListaPaisesAduanasContext(ctx context.Context, request *ListaPaisesAduanas) (*ListaPaisesAduanasResponse, error)
+// 	/* Emite tabla del tipo codigo/descripcion/vigencia/pais o aduana. */
+// 	ListaPaisesAduanas(request *ListaPaisesAduanas) (*ListaPaisesAduanasResponse, error)
 
-	/* Emite tabla del tipo cuit/razon social. */
-	ListaEmpresas(request *ListaEmpresas) (*ListaEmpresasResponse, error)
+// 	ListaPaisesAduanasContext(ctx context.Context, request *ListaPaisesAduanas) (*ListaPaisesAduanasResponse, error)
 
-	ListaEmpresasContext(ctx context.Context, request *ListaEmpresas) (*ListaEmpresasResponse, error)
+// 	/* Emite tabla del tipo cuit/razon social. */
+// 	ListaEmpresas(request *ListaEmpresas) (*ListaEmpresasResponse, error)
 
-	/* Emite tabla del tipo codigo/descripcion/Opcion/vigencia. */
-	ListaArancel(request *ListaArancel) (*ListaArancelResponse, error)
+// 	ListaEmpresasContext(ctx context.Context, request *ListaEmpresas) (*ListaEmpresasResponse, error)
 
-	ListaArancelContext(ctx context.Context, request *ListaArancel) (*ListaArancelResponse, error)
+// 	/* Emite tabla del tipo codigo/descripcion/Opcion/vigencia. */
+// 	ListaArancel(request *ListaArancel) (*ListaArancelResponse, error)
 
-	/* Emite tabla del tipo codigo/descripcion/vigencia/aduana/lugar operativo. */
-	ListaLugaresOperativos(request *ListaLugaresOperativos) (*ListaLugaresOperativosResponse, error)
+// 	ListaArancelContext(ctx context.Context, request *ListaArancel) (*ListaArancelResponse, error)
 
-	ListaLugaresOperativosContext(ctx context.Context, request *ListaLugaresOperativos) (*ListaLugaresOperativosResponse, error)
+// 	/* Emite tabla del tipo codigo/descripcion/vigencia/aduana/lugar operativo. */
+// 	ListaLugaresOperativos(request *ListaLugaresOperativos) (*ListaLugaresOperativosResponse, error)
 
-	/* Emite tabla del tipo: Tabla de Referencia, Descripcion Tabla Referencia, WebMethod que se debe utilizar para obtener los datos de dicha tabla. */
-	ListaTablasReferencia(request *ListaTablasReferencia) (*ListaTablasReferenciaResponse, error)
+// 	ListaLugaresOperativosContext(ctx context.Context, request *ListaLugaresOperativos) (*ListaLugaresOperativosResponse, error)
 
-	ListaTablasReferenciaContext(ctx context.Context, request *ListaTablasReferencia) (*ListaTablasReferenciaResponse, error)
+// 	/* Emite tabla del tipo: Tabla de Referencia, Descripcion Tabla Referencia, WebMethod que se debe utilizar para obtener los datos de dicha tabla. */
+// 	ListaTablasReferencia(request *ListaTablasReferencia) (*ListaTablasReferenciaResponse, error)
 
-	/* Para un Id de Servicio, emite tabla del tipo: Tabla de Referencia, Descripcion Tabla Referencia, WebMethod que se debe utilizar para obtener los datos de dicha tabla. */
-	ListaTablasReferenciaServicio(request *ListaTablasReferenciaServicio) (*ListaTablasReferenciaServicioResponse, error)
+// 	ListaTablasReferenciaContext(ctx context.Context, request *ListaTablasReferencia) (*ListaTablasReferenciaResponse, error)
 
-	ListaTablasReferenciaServicioContext(ctx context.Context, request *ListaTablasReferenciaServicio) (*ListaTablasReferenciaServicioResponse, error)
+// 	/* Para un Id de Servicio, emite tabla del tipo: Tabla de Referencia, Descripcion Tabla Referencia, WebMethod que se debe utilizar para obtener los datos de dicha tabla. */
+// 	ListaTablasReferenciaServicio(request *ListaTablasReferenciaServicio) (*ListaTablasReferenciaServicioResponse, error)
 
-	/* Emite tabla del tipo codigo/descripcion/codificacion. */
-	ListaDescripcionDecodificacion(request *ListaDescripcionDecodificacion) (*ListaDescripcionDecodificacionResponse, error)
+// 	ListaTablasReferenciaServicioContext(ctx context.Context, request *ListaTablasReferenciaServicio) (*ListaTablasReferenciaServicioResponse, error)
 
-	ListaDescripcionDecodificacionContext(ctx context.Context, request *ListaDescripcionDecodificacion) (*ListaDescripcionDecodificacionResponse, error)
+// 	/* Emite tabla del tipo codigo/descripcion/codificacion. */
+// 	ListaDescripcionDecodificacion(request *ListaDescripcionDecodificacion) (*ListaDescripcionDecodificacionResponse, error)
 
-	/* Emite tabla del tipo codigo/descripcion/vigencia/indicador/formato. */
-	ListaDatoComplementario(request *ListaDatoComplementario) (*ListaDatoComplementarioResponse, error)
+// 	ListaDescripcionDecodificacionContext(ctx context.Context, request *ListaDescripcionDecodificacion) (*ListaDescripcionDecodificacionResponse, error)
 
-	ListaDatoComplementarioContext(ctx context.Context, request *ListaDatoComplementario) (*ListaDatoComplementarioResponse, error)
+// 	/* Emite tabla del tipo codigo/descripcion/vigencia/indicador/formato. */
+// 	ListaDatoComplementario(request *ListaDatoComplementario) (*ListaDatoComplementarioResponse, error)
 
-	/* Retorna la fecha de última actualización de la tabla consultada. */
-	ConsultarFechaUltAct(request *ConsultarFechaUltAct) (*ConsultarFechaUltActResponse, error)
+// 	ListaDatoComplementarioContext(ctx context.Context, request *ListaDatoComplementario) (*ListaDatoComplementarioResponse, error)
 
-	ConsultarFechaUltActContext(ctx context.Context, request *ConsultarFechaUltAct) (*ConsultarFechaUltActResponse, error)
+// 	/* Retorna la fecha de última actualización de la tabla consultada. */
+// 	ConsultarFechaUltAct(request *ConsultarFechaUltAct) (*ConsultarFechaUltActResponse, error)
 
-	/* Metodo dummy para verificacion de funcionamiento */
-	Dummy(request *Dummy) (*DummyResponse, error)
+// 	ConsultarFechaUltActContext(ctx context.Context, request *ConsultarFechaUltAct) (*ConsultarFechaUltActResponse, error)
 
-	DummyContext(ctx context.Context, request *Dummy) (*DummyResponse, error)
-}
+// 	/* Metodo dummy para verificacion de funcionamiento */
+// 	Dummy(request *Dummy) (*DummyResponse, error)
 
-type wgesTabRefSoap struct {
-	client *soap.Client
-}
+// 	DummyContext(ctx context.Context, request *Dummy) (*DummyResponse, error)
+// }
 
-func NewWgesTabRefSoap(client *soap.Client) WgesTabRefSoap {
-	return &wgesTabRefSoap{
-		client: client,
-	}
-}
+// type wgesTabRefSoap struct {
+// 	client *soap.Client
+// }
 
-func (service *wgesTabRefSoap) ListaDescripcionContext(ctx context.Context, request *ListaDescripcion) (*ListaDescripcionResponse, error) {
-	response := new(ListaDescripcionResponse)
-	err := service.client.CallContext(ctx, "ar.gov.afip.dia.serviciosweb.wgesTabRef/ListaDescripcion", request, response)
-	if err != nil {
-		return nil, err
-	}
+// func NewWgesTabRefSoap(client *soap.Client) WgesTabRefSoap {
+// 	return &wgesTabRefSoap{
+// 		client: client,
+// 	}
+// }
 
-	return response, nil
-}
+// func (service *wgesTabRefSoap) ListaDescripcionContext(ctx context.Context, request *ListaDescripcion) (*ListaDescripcionResponse, error) {
+// 	response := new(ListaDescripcionResponse)
+// 	err := service.client.CallContext(ctx, "ar.gov.afip.dia.serviciosweb.wgesTabRef/ListaDescripcion", request, response)
+// 	if err != nil {
+// 		return nil, err
+// 	}
 
-func (service *wgesTabRefSoap) ListaDescripcion(request *ListaDescripcion) (*ListaDescripcionResponse, error) {
-	return service.ListaDescripcionContext(
-		context.Background(),
-		request,
-	)
-}
+// 	return response, nil
+// }
 
-func (service *wgesTabRefSoap) ListaVigenciasContext(ctx context.Context, request *ListaVigencias) (*ListaVigenciasResponse, error) {
-	response := new(ListaVigenciasResponse)
-	err := service.client.CallContext(ctx, "ar.gov.afip.dia.serviciosweb.wgesTabRef/ListaVigencias", request, response)
-	if err != nil {
-		return nil, err
-	}
+// func (service *wgesTabRefSoap) ListaDescripcion(request *ListaDescripcion) (*ListaDescripcionResponse, error) {
+// 	return service.ListaDescripcionContext(
+// 		context.Background(),
+// 		request,
+// 	)
+// }
 
-	return response, nil
-}
+// func (service *wgesTabRefSoap) ListaVigenciasContext(ctx context.Context, request *ListaVigencias) (*ListaVigenciasResponse, error) {
+// 	response := new(ListaVigenciasResponse)
+// 	err := service.client.CallContext(ctx, "ar.gov.afip.dia.serviciosweb.wgesTabRef/ListaVigencias", request, response)
+// 	if err != nil {
+// 		return nil, err
+// 	}
 
-func (service *wgesTabRefSoap) ListaVigencias(request *ListaVigencias) (*ListaVigenciasResponse, error) {
-	return service.ListaVigenciasContext(
-		context.Background(),
-		request,
-	)
-}
+// 	return response, nil
+// }
 
-func (service *wgesTabRefSoap) DocumentosVigentesContext(ctx context.Context, request *DocumentosVigentes) (*DocumentosVigentesResponse, error) {
-	response := new(DocumentosVigentesResponse)
-	err := service.client.CallContext(ctx, "ar.gov.afip.dia.serviciosweb.wgesTabRef/DocumentosVigentes", request, response)
-	if err != nil {
-		return nil, err
-	}
+// func (service *wgesTabRefSoap) ListaVigencias(request *ListaVigencias) (*ListaVigenciasResponse, error) {
+// 	return service.ListaVigenciasContext(
+// 		context.Background(),
+// 		request,
+// 	)
+// }
 
-	return response, nil
-}
+// func (service *wgesTabRefSoap) DocumentosVigentesContext(ctx context.Context, request *DocumentosVigentes) (*DocumentosVigentesResponse, error) {
+// 	response := new(DocumentosVigentesResponse)
+// 	err := service.client.CallContext(ctx, "ar.gov.afip.dia.serviciosweb.wgesTabRef/DocumentosVigentes", request, response)
+// 	if err != nil {
+// 		return nil, err
+// 	}
 
-func (service *wgesTabRefSoap) DocumentosVigentes(request *DocumentosVigentes) (*DocumentosVigentesResponse, error) {
-	return service.DocumentosVigentesContext(
-		context.Background(),
-		request,
-	)
-}
+// 	return response, nil
+// }
 
-func (service *wgesTabRefSoap) ListaPaisesAduanasContext(ctx context.Context, request *ListaPaisesAduanas) (*ListaPaisesAduanasResponse, error) {
-	response := new(ListaPaisesAduanasResponse)
-	err := service.client.CallContext(ctx, "ar.gov.afip.dia.serviciosweb.wgesTabRef/ListaPaisesAduanas", request, response)
-	if err != nil {
-		return nil, err
-	}
+// func (service *wgesTabRefSoap) DocumentosVigentes(request *DocumentosVigentes) (*DocumentosVigentesResponse, error) {
+// 	return service.DocumentosVigentesContext(
+// 		context.Background(),
+// 		request,
+// 	)
+// }
 
-	return response, nil
-}
+// func (service *wgesTabRefSoap) ListaPaisesAduanasContext(ctx context.Context, request *ListaPaisesAduanas) (*ListaPaisesAduanasResponse, error) {
+// 	response := new(ListaPaisesAduanasResponse)
+// 	err := service.client.CallContext(ctx, "ar.gov.afip.dia.serviciosweb.wgesTabRef/ListaPaisesAduanas", request, response)
+// 	if err != nil {
+// 		return nil, err
+// 	}
 
-func (service *wgesTabRefSoap) ListaPaisesAduanas(request *ListaPaisesAduanas) (*ListaPaisesAduanasResponse, error) {
-	return service.ListaPaisesAduanasContext(
-		context.Background(),
-		request,
-	)
-}
+// 	return response, nil
+// }
 
-func (service *wgesTabRefSoap) ListaEmpresasContext(ctx context.Context, request *ListaEmpresas) (*ListaEmpresasResponse, error) {
-	response := new(ListaEmpresasResponse)
-	err := service.client.CallContext(ctx, "ar.gov.afip.dia.serviciosweb.wgesTabRef/ListaEmpresas", request, response)
-	if err != nil {
-		return nil, err
-	}
+// func (service *wgesTabRefSoap) ListaPaisesAduanas(request *ListaPaisesAduanas) (*ListaPaisesAduanasResponse, error) {
+// 	return service.ListaPaisesAduanasContext(
+// 		context.Background(),
+// 		request,
+// 	)
+// }
 
-	return response, nil
-}
+// func (service *wgesTabRefSoap) ListaEmpresasContext(ctx context.Context, request *ListaEmpresas) (*ListaEmpresasResponse, error) {
+// 	response := new(ListaEmpresasResponse)
+// 	err := service.client.CallContext(ctx, "ar.gov.afip.dia.serviciosweb.wgesTabRef/ListaEmpresas", request, response)
+// 	if err != nil {
+// 		return nil, err
+// 	}
 
-func (service *wgesTabRefSoap) ListaEmpresas(request *ListaEmpresas) (*ListaEmpresasResponse, error) {
-	return service.ListaEmpresasContext(
-		context.Background(),
-		request,
-	)
-}
+// 	return response, nil
+// }
 
-func (service *wgesTabRefSoap) ListaArancelContext(ctx context.Context, request *ListaArancel) (*ListaArancelResponse, error) {
-	response := new(ListaArancelResponse)
-	err := service.client.CallContext(ctx, "ar.gov.afip.dia.serviciosweb.wgesTabRef/ListaArancel", request, response)
-	if err != nil {
-		return nil, err
-	}
+// func (service *wgesTabRefSoap) ListaEmpresas(request *ListaEmpresas) (*ListaEmpresasResponse, error) {
+// 	return service.ListaEmpresasContext(
+// 		context.Background(),
+// 		request,
+// 	)
+// }
 
-	return response, nil
-}
+// func (service *wgesTabRefSoap) ListaArancelContext(ctx context.Context, request *ListaArancel) (*ListaArancelResponse, error) {
+// 	response := new(ListaArancelResponse)
+// 	err := service.client.CallContext(ctx, "ar.gov.afip.dia.serviciosweb.wgesTabRef/ListaArancel", request, response)
+// 	if err != nil {
+// 		return nil, err
+// 	}
 
-func (service *wgesTabRefSoap) ListaArancel(request *ListaArancel) (*ListaArancelResponse, error) {
-	return service.ListaArancelContext(
-		context.Background(),
-		request,
-	)
-}
+// 	return response, nil
+// }
 
-func (service *wgesTabRefSoap) ListaLugaresOperativosContext(ctx context.Context, request *ListaLugaresOperativos) (*ListaLugaresOperativosResponse, error) {
-	response := new(ListaLugaresOperativosResponse)
-	err := service.client.CallContext(ctx, "ar.gov.afip.dia.serviciosweb.wgesTabRef/ListaLugaresOperativos", request, response)
-	if err != nil {
-		return nil, err
-	}
+// func (service *wgesTabRefSoap) ListaArancel(request *ListaArancel) (*ListaArancelResponse, error) {
+// 	return service.ListaArancelContext(
+// 		context.Background(),
+// 		request,
+// 	)
+// }
 
-	return response, nil
-}
+// func (service *wgesTabRefSoap) ListaLugaresOperativosContext(ctx context.Context, request *ListaLugaresOperativos) (*ListaLugaresOperativosResponse, error) {
+// 	response := new(ListaLugaresOperativosResponse)
+// 	err := service.client.CallContext(ctx, "ar.gov.afip.dia.serviciosweb.wgesTabRef/ListaLugaresOperativos", request, response)
+// 	if err != nil {
+// 		return nil, err
+// 	}
 
-func (service *wgesTabRefSoap) ListaLugaresOperativos(request *ListaLugaresOperativos) (*ListaLugaresOperativosResponse, error) {
-	return service.ListaLugaresOperativosContext(
-		context.Background(),
-		request,
-	)
-}
+// 	return response, nil
+// }
 
-func (service *wgesTabRefSoap) ListaTablasReferenciaContext(ctx context.Context, request *ListaTablasReferencia) (*ListaTablasReferenciaResponse, error) {
-	response := new(ListaTablasReferenciaResponse)
-	err := service.client.CallContext(ctx, "ar.gov.afip.dia.serviciosweb.wgesTabRef/ListaTablasReferencia", request, response)
-	if err != nil {
-		return nil, err
-	}
+// func (service *wgesTabRefSoap) ListaLugaresOperativos(request *ListaLugaresOperativos) (*ListaLugaresOperativosResponse, error) {
+// 	return service.ListaLugaresOperativosContext(
+// 		context.Background(),
+// 		request,
+// 	)
+// }
 
-	return response, nil
-}
+// func (service *wgesTabRefSoap) ListaTablasReferenciaContext(ctx context.Context, request *ListaTablasReferencia) (*ListaTablasReferenciaResponse, error) {
+// 	response := new(ListaTablasReferenciaResponse)
+// 	err := service.client.CallContext(ctx, "ar.gov.afip.dia.serviciosweb.wgesTabRef/ListaTablasReferencia", request, response)
+// 	if err != nil {
+// 		return nil, err
+// 	}
 
-func (service *wgesTabRefSoap) ListaTablasReferencia(request *ListaTablasReferencia) (*ListaTablasReferenciaResponse, error) {
-	return service.ListaTablasReferenciaContext(
-		context.Background(),
-		request,
-	)
-}
+// 	return response, nil
+// }
 
-func (service *wgesTabRefSoap) ListaTablasReferenciaServicioContext(ctx context.Context, request *ListaTablasReferenciaServicio) (*ListaTablasReferenciaServicioResponse, error) {
-	response := new(ListaTablasReferenciaServicioResponse)
-	err := service.client.CallContext(ctx, "ar.gov.afip.dia.serviciosweb.wgesTabRef/ListaTablasReferenciaServicio", request, response)
-	if err != nil {
-		return nil, err
-	}
+// func (service *wgesTabRefSoap) ListaTablasReferencia(request *ListaTablasReferencia) (*ListaTablasReferenciaResponse, error) {
+// 	return service.ListaTablasReferenciaContext(
+// 		context.Background(),
+// 		request,
+// 	)
+// }
 
-	return response, nil
-}
+// func (service *wgesTabRefSoap) ListaTablasReferenciaServicioContext(ctx context.Context, request *ListaTablasReferenciaServicio) (*ListaTablasReferenciaServicioResponse, error) {
+// 	response := new(ListaTablasReferenciaServicioResponse)
+// 	err := service.client.CallContext(ctx, "ar.gov.afip.dia.serviciosweb.wgesTabRef/ListaTablasReferenciaServicio", request, response)
+// 	if err != nil {
+// 		return nil, err
+// 	}
 
-func (service *wgesTabRefSoap) ListaTablasReferenciaServicio(request *ListaTablasReferenciaServicio) (*ListaTablasReferenciaServicioResponse, error) {
-	return service.ListaTablasReferenciaServicioContext(
-		context.Background(),
-		request,
-	)
-}
+// 	return response, nil
+// }
 
-func (service *wgesTabRefSoap) ListaDescripcionDecodificacionContext(ctx context.Context, request *ListaDescripcionDecodificacion) (*ListaDescripcionDecodificacionResponse, error) {
-	response := new(ListaDescripcionDecodificacionResponse)
-	err := service.client.CallContext(ctx, "ar.gov.afip.dia.serviciosweb.wgesTabRef/ListaDescripcionDecodificacion", request, response)
-	if err != nil {
-		return nil, err
-	}
+// func (service *wgesTabRefSoap) ListaTablasReferenciaServicio(request *ListaTablasReferenciaServicio) (*ListaTablasReferenciaServicioResponse, error) {
+// 	return service.ListaTablasReferenciaServicioContext(
+// 		context.Background(),
+// 		request,
+// 	)
+// }
 
-	return response, nil
-}
+// func (service *wgesTabRefSoap) ListaDescripcionDecodificacionContext(ctx context.Context, request *ListaDescripcionDecodificacion) (*ListaDescripcionDecodificacionResponse, error) {
+// 	response := new(ListaDescripcionDecodificacionResponse)
+// 	err := service.client.CallContext(ctx, "ar.gov.afip.dia.serviciosweb.wgesTabRef/ListaDescripcionDecodificacion", request, response)
+// 	if err != nil {
+// 		return nil, err
+// 	}
 
-func (service *wgesTabRefSoap) ListaDescripcionDecodificacion(request *ListaDescripcionDecodificacion) (*ListaDescripcionDecodificacionResponse, error) {
-	return service.ListaDescripcionDecodificacionContext(
-		context.Background(),
-		request,
-	)
-}
+// 	return response, nil
+// }
 
-func (service *wgesTabRefSoap) ListaDatoComplementarioContext(ctx context.Context, request *ListaDatoComplementario) (*ListaDatoComplementarioResponse, error) {
-	response := new(ListaDatoComplementarioResponse)
-	err := service.client.CallContext(ctx, "ar.gov.afip.dia.serviciosweb.wgesTabRef/ListaDatoComplementario", request, response)
-	if err != nil {
-		return nil, err
-	}
+// func (service *wgesTabRefSoap) ListaDescripcionDecodificacion(request *ListaDescripcionDecodificacion) (*ListaDescripcionDecodificacionResponse, error) {
+// 	return service.ListaDescripcionDecodificacionContext(
+// 		context.Background(),
+// 		request,
+// 	)
+// }
 
-	return response, nil
-}
+// func (service *wgesTabRefSoap) ListaDatoComplementarioContext(ctx context.Context, request *ListaDatoComplementario) (*ListaDatoComplementarioResponse, error) {
+// 	response := new(ListaDatoComplementarioResponse)
+// 	err := service.client.CallContext(ctx, "ar.gov.afip.dia.serviciosweb.wgesTabRef/ListaDatoComplementario", request, response)
+// 	if err != nil {
+// 		return nil, err
+// 	}
 
-func (service *wgesTabRefSoap) ListaDatoComplementario(request *ListaDatoComplementario) (*ListaDatoComplementarioResponse, error) {
-	return service.ListaDatoComplementarioContext(
-		context.Background(),
-		request,
-	)
-}
+// 	return response, nil
+// }
 
-func (service *wgesTabRefSoap) ConsultarFechaUltActContext(ctx context.Context, request *ConsultarFechaUltAct) (*ConsultarFechaUltActResponse, error) {
-	response := new(ConsultarFechaUltActResponse)
-	err := service.client.CallContext(ctx, "ar.gov.afip.dia.serviciosweb.wgesTabRef/ConsultarFechaUltAct", request, response)
-	if err != nil {
-		return nil, err
-	}
+// func (service *wgesTabRefSoap) ListaDatoComplementario(request *ListaDatoComplementario) (*ListaDatoComplementarioResponse, error) {
+// 	return service.ListaDatoComplementarioContext(
+// 		context.Background(),
+// 		request,
+// 	)
+// }
 
-	return response, nil
-}
+// func (service *wgesTabRefSoap) ConsultarFechaUltActContext(ctx context.Context, request *ConsultarFechaUltAct) (*ConsultarFechaUltActResponse, error) {
+// 	response := new(ConsultarFechaUltActResponse)
+// 	err := service.client.CallContext(ctx, "ar.gov.afip.dia.serviciosweb.wgesTabRef/ConsultarFechaUltAct", request, response)
+// 	if err != nil {
+// 		return nil, err
+// 	}
 
-func (service *wgesTabRefSoap) ConsultarFechaUltAct(request *ConsultarFechaUltAct) (*ConsultarFechaUltActResponse, error) {
-	return service.ConsultarFechaUltActContext(
-		context.Background(),
-		request,
-	)
-}
+// 	return response, nil
+// }
 
-func (service *wgesTabRefSoap) DummyContext(ctx context.Context, request *Dummy) (*DummyResponse, error) {
-	response := new(DummyResponse)
-	err := service.client.CallContext(ctx, "ar.gov.afip.dia.serviciosweb.wgesTabRef/Dummy", request, response)
-	if err != nil {
-		return nil, err
-	}
+// func (service *wgesTabRefSoap) ConsultarFechaUltAct(request *ConsultarFechaUltAct) (*ConsultarFechaUltActResponse, error) {
+// 	return service.ConsultarFechaUltActContext(
+// 		context.Background(),
+// 		request,
+// 	)
+// }
 
-	return response, nil
-}
+// func (service *wgesTabRefSoap) DummyContext(ctx context.Context, request *Dummy) (*DummyResponse, error) {
+// 	response := new(DummyResponse)
+// 	err := service.client.CallContext(ctx, "ar.gov.afip.dia.serviciosweb.wgesTabRef/Dummy", request, response)
+// 	if err != nil {
+// 		return nil, err
+// 	}
 
-func (service *wgesTabRefSoap) Dummy(request *Dummy) (*DummyResponse, error) {
-	return service.DummyContext(
-		context.Background(),
-		request,
-	)
-}
+// 	return response, nil
+// }
+
+// func (service *wgesTabRefSoap) Dummy(request *Dummy) (*DummyResponse, error) {
+// 	return service.DummyContext(
+// 		context.Background(),
+// 		request,
+// 	)
+// }

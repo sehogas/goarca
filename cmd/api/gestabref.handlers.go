@@ -15,21 +15,17 @@ import (
 //	@Tags			Consulta de Tablas de Referencia
 //	@Produce		json
 //	@Param			x-api-key	header		string	true	"API Key de acceso"
-//	@Success		200			{object}	dto.DummyResponse
+//	@Success		200			{object}	wgestabref.WsDummyResponse
 //	@Failure		401			{object}	dto.ErrorResponse
 //	@Failure		500			{object}	dto.ErrorResponse
-//	@Router			/gestabref/dummy [get]
+//	@Router			/gestabref/Dummy [get]
 func DummyGesTabRefHandler(w http.ResponseWriter, r *http.Request) {
-	appServer, authServer, dbServer, err := Wscoemcons.Dummy()
+	resultado, err := Wsgestabref.Dummy()
 	if err != nil {
 		util.HttpResponseJSON(w, http.StatusInternalServerError, &dto.ErrorResponse{Error: err.Error()}, err)
 		return
 	}
-	util.HttpResponseJSON(w, http.StatusOK, &dto.DummyResponse{
-		AppServer:  appServer,
-		AuthServer: authServer,
-		DbServer:   dbServer,
-	}, nil)
+	util.HttpResponseJSON(w, http.StatusOK, resultado, nil)
 }
 
 // ConsultarFechaUltActHandler godoc
@@ -40,29 +36,27 @@ func DummyGesTabRefHandler(w http.ResponseWriter, r *http.Request) {
 //	@Accept			json
 //	@Produce		json
 //	@Param			x-api-key		header		string	true	"API Key de acceso"
-//	@Param			argNombreTabla	query		string	true	"Nombre de la tabla"
-//	@Success		200				{object}	dto.FecUltActResponse
+//	@Param			IdReferencia	query		string	true	"ID de referencia"
+//	@Success		200				{object}	wgestabref.FechaUltAct
 //	@Failure		400				{object}	dto.ErrorResponse
 //	@Failure		401				{object}	dto.ErrorResponse
 //	@Failure		500				{object}	dto.ErrorResponse
-//	@Router			/gestabref/consultar-fecha-ult-act [get]
+//	@Router			/gestabref/ConsultarFechaUltAct [get]
 func ConsultarFechaUltActHandler(w http.ResponseWriter, r *http.Request) {
-	argNombreTabla := r.URL.Query().Get("argNombreTabla")
-	if len(argNombreTabla) <= 2 {
-		err := errors.New("error leyendo parámetros de la solicitud")
+	idReferencia := r.URL.Query().Get("IdReferencia")
+	if len(idReferencia) <= 0 {
+		err := errors.New("error leyendo parámetro IdReferencia")
 		util.HttpResponseJSON(w, http.StatusBadRequest, &dto.ErrorResponse{Error: err.Error()}, err)
 		return
 	}
 
-	fecha, err := Wsgestabref.ConsultarFechaUltAct(argNombreTabla)
+	resultado, err := Wsgestabref.ConsultarFechaUltAct(idReferencia)
 	if err != nil {
 		util.HttpResponseJSON(w, http.StatusInternalServerError, &dto.ErrorResponse{Error: err.Error()}, err)
 		return
 	}
 
-	util.HttpResponseJSON(w, http.StatusOK, &dto.FecUltActResponse{
-		FechaUltAct: *fecha,
-	}, nil)
+	util.HttpResponseJSON(w, http.StatusOK, resultado, nil)
 }
 
 // ListaArancelHandler godoc
@@ -73,27 +67,27 @@ func ConsultarFechaUltActHandler(w http.ResponseWriter, r *http.Request) {
 //	@Accept			json
 //	@Produce		json
 //	@Param			x-api-key		header		string	true	"API Key de acceso"
-//	@Param			argNombreTabla	query		string	true	"Nombre de la tabla"
-//	@Success		200				{array}		wgestabref.Opcion
+//	@Param			IdReferencia	query		string	true	"ID de referencia"
+//	@Success		200				{object}	wgestabref.Opciones
 //	@Failure		400				{object}	dto.ErrorResponse
 //	@Failure		401				{object}	dto.ErrorResponse
 //	@Failure		500				{object}	dto.ErrorResponse
-//	@Router			/gestabref/lista-arancel [get]
+//	@Router			/gestabref/ListaArancel [get]
 func ListaArancelHandler(w http.ResponseWriter, r *http.Request) {
-	argNombreTabla := r.URL.Query().Get("argNombreTabla")
-	if len(argNombreTabla) <= 2 {
-		err := errors.New("error leyendo parámetros de la solicitud")
+	idReferencia := r.URL.Query().Get("IdReferencia")
+	if len(idReferencia) <= 0 {
+		err := errors.New("error leyendo parámetro IdReferencia")
 		util.HttpResponseJSON(w, http.StatusBadRequest, &dto.ErrorResponse{Error: err.Error()}, err)
 		return
 	}
 
-	data, err := Wsgestabref.ListaArancel(argNombreTabla)
+	resultado, err := Wsgestabref.ListaArancel(idReferencia)
 	if err != nil {
 		util.HttpResponseJSON(w, http.StatusInternalServerError, &dto.ErrorResponse{Error: err.Error()}, err)
 		return
 	}
 
-	util.HttpResponseJSON(w, http.StatusOK, data, nil)
+	util.HttpResponseJSON(w, http.StatusOK, resultado, nil)
 }
 
 // ListaDescripcionHandler godoc
@@ -104,21 +98,21 @@ func ListaArancelHandler(w http.ResponseWriter, r *http.Request) {
 //	@Accept			json
 //	@Produce		json
 //	@Param			x-api-key		header		string	true	"API Key de acceso"
-//	@Param			argNombreTabla	query		string	true	"Nombre de la tabla"
-//	@Success		200				{array}		wgestabref.Descripcion
+//	@Param			IdReferencia	query		string	true	"ID de referencia"
+//	@Success		200				{object}	wgestabref.Descripciones
 //	@Failure		400				{object}	dto.ErrorResponse
 //	@Failure		401				{object}	dto.ErrorResponse
 //	@Failure		500				{object}	dto.ErrorResponse
-//	@Router			/gestabref/lista-descripcion [get]
+//	@Router			/gestabref/ListaDescripcion [get]
 func ListaDescripcionHandler(w http.ResponseWriter, r *http.Request) {
-	argNombreTabla := r.URL.Query().Get("argNombreTabla")
-	if len(argNombreTabla) <= 2 {
-		err := errors.New("error leyendo parámetros de la solicitud")
+	idReferencia := r.URL.Query().Get("IdReferencia")
+	if len(idReferencia) <= 0 {
+		err := errors.New("error leyendo parámetro IdReferencia")
 		util.HttpResponseJSON(w, http.StatusBadRequest, &dto.ErrorResponse{Error: err.Error()}, err)
 		return
 	}
 
-	data, err := Wsgestabref.ListaDescripcion(argNombreTabla)
+	data, err := Wsgestabref.ListaDescripcion(idReferencia)
 	if err != nil {
 		util.HttpResponseJSON(w, http.StatusInternalServerError, &dto.ErrorResponse{Error: err.Error()}, err)
 		return
@@ -135,21 +129,21 @@ func ListaDescripcionHandler(w http.ResponseWriter, r *http.Request) {
 //	@Accept			json
 //	@Produce		json
 //	@Param			x-api-key		header		string	true	"API Key de acceso"
-//	@Param			argNombreTabla	query		string	true	"Nombre de la tabla"
-//	@Success		200				{array}		wgestabref.DescripcionCodificacion
+//	@Param			IdReferencia	query		string	true	"ID de referencia"
+//	@Success		200				{object}	wgestabref.DescripcionesCodificaciones
 //	@Failure		400				{object}	dto.ErrorResponse
 //	@Failure		401				{object}	dto.ErrorResponse
 //	@Failure		500				{object}	dto.ErrorResponse
-//	@Router			/gestabref/lista-descripcion-decodificacion [get]
+//	@Router			/gestabref/ListaDescripcionDecodificacion [get]
 func ListaDescripcionDecodificacionHandler(w http.ResponseWriter, r *http.Request) {
-	argNombreTabla := r.URL.Query().Get("argNombreTabla")
-	if len(argNombreTabla) <= 2 {
-		err := errors.New("error leyendo parámetros de la solicitud")
+	idReferencia := r.URL.Query().Get("IdReferencia")
+	if len(idReferencia) <= 0 {
+		err := errors.New("error leyendo parámetro IdReferencia")
 		util.HttpResponseJSON(w, http.StatusBadRequest, &dto.ErrorResponse{Error: err.Error()}, err)
 		return
 	}
 
-	data, err := Wsgestabref.ListaDescripcionDecodificacion(argNombreTabla)
+	data, err := Wsgestabref.ListaDescripcionDecodificacion(idReferencia)
 	if err != nil {
 		util.HttpResponseJSON(w, http.StatusInternalServerError, &dto.ErrorResponse{Error: err.Error()}, err)
 		return
@@ -166,21 +160,21 @@ func ListaDescripcionDecodificacionHandler(w http.ResponseWriter, r *http.Reques
 //	@Accept			json
 //	@Produce		json
 //	@Param			x-api-key		header		string	true	"API Key de acceso"
-//	@Param			argNombreTabla	query		string	true	"Nombre de la tabla"
-//	@Success		200				{array}		wgestabref.Empresa
+//	@Param			IdReferencia	query		string	true	"ID de referencia"
+//	@Success		200				{object}	wgestabref.Empresas
 //	@Failure		400				{object}	dto.ErrorResponse
 //	@Failure		401				{object}	dto.ErrorResponse
 //	@Failure		500				{object}	dto.ErrorResponse
-//	@Router			/gestabref/lista-empresas [get]
+//	@Router			/gestabref/ListaEmpresas [get]
 func ListaEmpresasHandler(w http.ResponseWriter, r *http.Request) {
-	argNombreTabla := r.URL.Query().Get("argNombreTabla")
-	if len(argNombreTabla) <= 2 {
-		err := errors.New("error leyendo parámetros de la solicitud")
+	idReferencia := r.URL.Query().Get("IdReferencia")
+	if len(idReferencia) <= 0 {
+		err := errors.New("error leyendo parámetro IdReferencia")
 		util.HttpResponseJSON(w, http.StatusBadRequest, &dto.ErrorResponse{Error: err.Error()}, err)
 		return
 	}
 
-	data, err := Wsgestabref.ListaEmpresas(argNombreTabla)
+	data, err := Wsgestabref.ListaEmpresas(idReferencia)
 	if err != nil {
 		util.HttpResponseJSON(w, http.StatusInternalServerError, &dto.ErrorResponse{Error: err.Error()}, err)
 		return
@@ -197,21 +191,21 @@ func ListaEmpresasHandler(w http.ResponseWriter, r *http.Request) {
 //	@Accept			json
 //	@Produce		json
 //	@Param			x-api-key		header		string	true	"API Key de acceso"
-//	@Param			argNombreTabla	query		string	true	"Nombre de la tabla"
-//	@Success		200				{array}		wgestabref.LugarOperativo
+//	@Param			IdReferencia	query		string	true	"ID de referencia"
+//	@Success		200				{object}	wgestabref.LugaresOperativos
 //	@Failure		400				{object}	dto.ErrorResponse
 //	@Failure		401				{object}	dto.ErrorResponse
 //	@Failure		500				{object}	dto.ErrorResponse
-//	@Router			/gestabref/lista-lugares-operativos [get]
+//	@Router			/gestabref/ListaLugaresOperativos [get]
 func ListaLugaresOperativosHandler(w http.ResponseWriter, r *http.Request) {
-	argNombreTabla := r.URL.Query().Get("argNombreTabla")
-	if len(argNombreTabla) <= 2 {
-		err := errors.New("error leyendo parámetros de la solicitud")
+	idReferencia := r.URL.Query().Get("IdReferencia")
+	if len(idReferencia) <= 0 {
+		err := errors.New("error leyendo parámetro IdReferencia")
 		util.HttpResponseJSON(w, http.StatusBadRequest, &dto.ErrorResponse{Error: err.Error()}, err)
 		return
 	}
 
-	data, err := Wsgestabref.ListaListaLugaresOperativos(argNombreTabla)
+	data, err := Wsgestabref.ListaLugaresOperativos(idReferencia)
 	if err != nil {
 		util.HttpResponseJSON(w, http.StatusInternalServerError, &dto.ErrorResponse{Error: err.Error()}, err)
 		return
@@ -228,21 +222,21 @@ func ListaLugaresOperativosHandler(w http.ResponseWriter, r *http.Request) {
 //	@Accept			json
 //	@Produce		json
 //	@Param			x-api-key		header		string	true	"API Key de acceso"
-//	@Param			argNombreTabla	query		string	true	"Nombre de la tabla"
-//	@Success		200				{array}		wgestabref.PaisAduana
+//	@Param			IdReferencia	query		string	true	"ID de referencia"
+//	@Success		200				{object}	wgestabref.PaisesAduanas
 //	@Failure		400				{object}	dto.ErrorResponse
 //	@Failure		401				{object}	dto.ErrorResponse
 //	@Failure		500				{object}	dto.ErrorResponse
-//	@Router			/gestabref/lista-paises-aduanas [get]
+//	@Router			/gestabref/ListaPaisesAduanas [get]
 func ListaPaisesAduanasHandler(w http.ResponseWriter, r *http.Request) {
-	argNombreTabla := r.URL.Query().Get("argNombreTabla")
-	if len(argNombreTabla) <= 2 {
-		err := errors.New("error leyendo parámetros de la solicitud")
+	idReferencia := r.URL.Query().Get("IdReferencia")
+	if len(idReferencia) <= 0 {
+		err := errors.New("error leyendo parámetro IdReferencia")
 		util.HttpResponseJSON(w, http.StatusBadRequest, &dto.ErrorResponse{Error: err.Error()}, err)
 		return
 	}
 
-	data, err := Wsgestabref.ListaPaisesAduanas(argNombreTabla)
+	data, err := Wsgestabref.ListaPaisesAduanas(idReferencia)
 	if err != nil {
 		util.HttpResponseJSON(w, http.StatusInternalServerError, &dto.ErrorResponse{Error: err.Error()}, err)
 		return
@@ -259,13 +253,75 @@ func ListaPaisesAduanasHandler(w http.ResponseWriter, r *http.Request) {
 //	@Accept			json
 //	@Produce		json
 //	@Param			x-api-key	header		string	true	"API Key de acceso"
-//	@Success		200			{array}		wgestabref.TablaReferencia
+//	@Success		200			{object}	wgestabref.TablasReferencia
 //	@Failure		400			{object}	dto.ErrorResponse
 //	@Failure		401			{object}	dto.ErrorResponse
 //	@Failure		500			{object}	dto.ErrorResponse
-//	@Router			/gestabref/lista-tablas-referencia [get]
+//	@Router			/gestabref/ListaTablasReferencia [get]
 func ListaTablasReferenciaHandler(w http.ResponseWriter, r *http.Request) {
 	data, err := Wsgestabref.ListaTablasReferencia()
+	if err != nil {
+		util.HttpResponseJSON(w, http.StatusInternalServerError, &dto.ErrorResponse{Error: err.Error()}, err)
+		return
+	}
+
+	util.HttpResponseJSON(w, http.StatusOK, data, nil)
+}
+
+// ListaVigenciasHandler godoc
+//
+//	@Summary		Lista de Vigencias
+//	@Description	Emite tabla del tipo código / descripción / vigencia.
+//	@Tags			Consulta de Tablas de Referencia
+//	@Accept			json
+//	@Produce		json
+//	@Param			x-api-key		header		string	true	"API Key de acceso"
+//	@Param			IdReferencia	query		string	true	"ID de referencia"
+//	@Success		200				{object}	wgestabref.Vigencias
+//	@Failure		400				{object}	dto.ErrorResponse
+//	@Failure		401				{object}	dto.ErrorResponse
+//	@Failure		500				{object}	dto.ErrorResponse
+//	@Router			/gestabref/ListaVigencias [get]
+func ListaVigenciasHandler(w http.ResponseWriter, r *http.Request) {
+	idReferencia := r.URL.Query().Get("IdReferencia")
+	if len(idReferencia) <= 0 {
+		err := errors.New("error leyendo parámetro IdReferencia")
+		util.HttpResponseJSON(w, http.StatusBadRequest, &dto.ErrorResponse{Error: err.Error()}, err)
+		return
+	}
+
+	data, err := Wsgestabref.ListaVigencias(idReferencia)
+	if err != nil {
+		util.HttpResponseJSON(w, http.StatusInternalServerError, &dto.ErrorResponse{Error: err.Error()}, err)
+		return
+	}
+
+	util.HttpResponseJSON(w, http.StatusOK, data, nil)
+}
+
+// ListaDatoComplementarioHandler godoc
+//
+//	@Summary		Lista Datos Complementarios
+//	@Description	Lista Datos Complementarios
+//	@Tags			Consulta de Tablas de Referencia
+//	@Accept			json
+//	@Produce		json
+//	@Param			x-api-key		header		string	true	"API Key de acceso"
+//	@Param			IdReferencia	query		string	true	"ID de referencia"
+//	@Success		200				{object}	wgestabref.DatosComplementarios
+//	@Failure		400				{object}	dto.ErrorResponse
+//	@Failure		401				{object}	dto.ErrorResponse
+//	@Failure		500				{object}	dto.ErrorResponse
+//	@Router			/gestabref/ListaDatoComplementario [get]
+func ListaDatoComplementarioHandler(w http.ResponseWriter, r *http.Request) {
+	idReferencia := r.URL.Query().Get("IdReferencia")
+	if len(idReferencia) <= 0 {
+		err := errors.New("error leyendo parámetro IdReferencia")
+		util.HttpResponseJSON(w, http.StatusBadRequest, &dto.ErrorResponse{Error: err.Error()}, err)
+		return
+	}
+
+	data, err := Wsgestabref.ListaDatoComplementario(idReferencia)
 	if err != nil {
 		util.HttpResponseJSON(w, http.StatusInternalServerError, &dto.ErrorResponse{Error: err.Error()}, err)
 		return

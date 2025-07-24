@@ -1,13 +1,15 @@
 services:
   api-arca:
-    image: shogas/goarca
+    image: shogas/goarca:latest
     restart: always
     ports:
       - 4433:4433
     volumes:
       - ./keys:/keys:ro
+      - ./xml:/xml
     env_file:
       - .env
 
 volumes:
   keys:
+  xml:

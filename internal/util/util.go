@@ -1,4 +1,4 @@
-package afip
+package util
 
 import (
 	"crypto/rsa"
@@ -9,13 +9,15 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log/slog"
 	"os"
+	"strings"
 
 	"go.mozilla.org/pkcs7"
 )
 
-// encodeCMS devuelve el content firmado PKCS#7
-func encodeCMS(content []byte, certificate *x509.Certificate, privateKey *rsa.PrivateKey) ([]byte, error) {
+// EncodeCMS devuelve el content firmado PKCS#7
+func EncodeCMS(content []byte, certificate *x509.Certificate, privateKey *rsa.PrivateKey) ([]byte, error) {
 
 	signedData, err := pkcs7.NewSignedData(content)
 	if err != nil {
@@ -34,7 +36,7 @@ func encodeCMS(content []byte, certificate *x509.Certificate, privateKey *rsa.Pr
 	return detachedSignature, nil
 }
 
-func readPrivateKey(file string) (any, error) {
+func ReadPrivateKey(file string) (any, error) {
 	f, err := os.Open(file)
 	if err != nil {
 		return nil, err
@@ -52,7 +54,7 @@ func readPrivateKey(file string) (any, error) {
 	return x509.ParsePKCS8PrivateKey(p.Bytes)
 }
 
-func readCertificate(file string) (*x509.Certificate, error) {
+func ReadCertificate(file string) (*x509.Certificate, error) {
 	var certificate *x509.Certificate
 
 	certPEMBlock, err := os.ReadFile(file)
@@ -94,5 +96,20 @@ func PrintlnAsXML(obj interface{}) {
 	data, err := xml.MarshalIndent(obj, " ", "  ")
 	if err == nil {
 		fmt.Println(string(data))
+	}
+}
+
+func GetLogLevelFromEnv() slog.Level {
+	levelStr := os.Getenv("LOG_LEVEL")
+
+	switch strings.ToLower(levelStr) {
+	case "debug":
+		return slog.LevelDebug
+	case "warn":
+		return slog.LevelWarn
+	case "error":
+		return slog.LevelError
+	default:
+		return slog.LevelInfo
 	}
 }

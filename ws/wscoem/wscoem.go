@@ -2,899 +2,900 @@
 
 package wscoem
 
-import (
-	"context"
-	"encoding/xml"
-	"github.com/hooklift/gowsdl/soap"
-	"time"
-)
+// import (
+// 	"context"
+// 	"encoding/xml"
+// 	"time"
 
-// against "unused imports"
-var _ time.Time
-var _ xml.Name
+// 	"github.com/hooklift/gowsdl/soap"
+// )
 
-type AnyType struct {
-	InnerXML string `xml:",innerxml"`
-}
+// // against "unused imports"
+// var _ time.Time
+// var _ xml.Name
 
-type AnyURI string
+// type AnyType struct {
+// 	InnerXML string `xml:",innerxml"`
+// }
 
-type NCName string
+// type AnyURI string
 
-type RegistrarCaratula struct {
-	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wgescomunicacionembarque RegistrarCaratula"`
+// type NCName string
 
-	ArgWSAutenticacionEmpresa *WSAutenticacionEmpresa `xml:"argWSAutenticacionEmpresa,omitempty" json:"argWSAutenticacionEmpresa,omitempty"`
+// type RegistrarCaratula struct {
+// 	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wgescomunicacionembarque RegistrarCaratula"`
 
-	ArgRegistrarCaratula *RegistrarCaratulaRequest `xml:"argRegistrarCaratula,omitempty" json:"argRegistrarCaratula,omitempty"`
-}
+// 	ArgWSAutenticacionEmpresa *WSAutenticacionEmpresa `xml:"argWSAutenticacionEmpresa,omitempty" json:"argWSAutenticacionEmpresa,omitempty"`
 
-type RegistrarCaratulaResponse struct {
-	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wgescomunicacionembarque RegistrarCaratulaResponse"`
+// 	ArgRegistrarCaratula *RegistrarCaratulaRequest `xml:"argRegistrarCaratula,omitempty" json:"argRegistrarCaratula,omitempty"`
+// }
 
-	RegistrarCaratulaResult *RegistrarEmbarqueRta `xml:"RegistrarCaratulaResult,omitempty" json:"RegistrarCaratulaResult,omitempty"`
-}
+// type RegistrarCaratulaResponse struct {
+// 	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wgescomunicacionembarque RegistrarCaratulaResponse"`
 
-type RectificarCaratula struct {
-	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wgescomunicacionembarque RectificarCaratula"`
+// 	RegistrarCaratulaResult *RegistrarEmbarqueRta `xml:"RegistrarCaratulaResult,omitempty" json:"RegistrarCaratulaResult,omitempty"`
+// }
 
-	ArgWSAutenticacionEmpresa *WSAutenticacionEmpresa `xml:"argWSAutenticacionEmpresa,omitempty" json:"argWSAutenticacionEmpresa,omitempty"`
+// type RectificarCaratula struct {
+// 	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wgescomunicacionembarque RectificarCaratula"`
 
-	ArgRectificarCaratula *RectificarCaratulaRequest `xml:"argRectificarCaratula,omitempty" json:"argRectificarCaratula,omitempty"`
-}
+// 	ArgWSAutenticacionEmpresa *WSAutenticacionEmpresa `xml:"argWSAutenticacionEmpresa,omitempty" json:"argWSAutenticacionEmpresa,omitempty"`
 
-type RectificarCaratulaResponse struct {
-	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wgescomunicacionembarque RectificarCaratulaResponse"`
+// 	ArgRectificarCaratula *RectificarCaratulaRequest `xml:"argRectificarCaratula,omitempty" json:"argRectificarCaratula,omitempty"`
+// }
 
-	RectificarCaratulaResult *RectificarEmbarqueRta `xml:"RectificarCaratulaResult,omitempty" json:"RectificarCaratulaResult,omitempty"`
-}
+// type RectificarCaratulaResponse struct {
+// 	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wgescomunicacionembarque RectificarCaratulaResponse"`
 
-type AnularCaratula struct {
-	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wgescomunicacionembarque AnularCaratula"`
+// 	RectificarCaratulaResult *RectificarEmbarqueRta `xml:"RectificarCaratulaResult,omitempty" json:"RectificarCaratulaResult,omitempty"`
+// }
 
-	ArgWSAutenticacionEmpresa *WSAutenticacionEmpresa `xml:"argWSAutenticacionEmpresa,omitempty" json:"argWSAutenticacionEmpresa,omitempty"`
+// type AnularCaratula struct {
+// 	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wgescomunicacionembarque AnularCaratula"`
 
-	ArgAnularCaratula *AnularCaratulaRequest `xml:"argAnularCaratula,omitempty" json:"argAnularCaratula,omitempty"`
-}
+// 	ArgWSAutenticacionEmpresa *WSAutenticacionEmpresa `xml:"argWSAutenticacionEmpresa,omitempty" json:"argWSAutenticacionEmpresa,omitempty"`
 
-type AnularCaratulaResponse struct {
-	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wgescomunicacionembarque AnularCaratulaResponse"`
+// 	ArgAnularCaratula *AnularCaratulaRequest `xml:"argAnularCaratula,omitempty" json:"argAnularCaratula,omitempty"`
+// }
 
-	AnularCaratulaResult *AnularEmbarqueRta `xml:"AnularCaratulaResult,omitempty" json:"AnularCaratulaResult,omitempty"`
-}
+// type AnularCaratulaResponse struct {
+// 	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wgescomunicacionembarque AnularCaratulaResponse"`
 
-type RegistrarCOEM struct {
-	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wgescomunicacionembarque RegistrarCOEM"`
+// 	AnularCaratulaResult *AnularEmbarqueRta `xml:"AnularCaratulaResult,omitempty" json:"AnularCaratulaResult,omitempty"`
+// }
 
-	ArgWSAutenticacionEmpresa *WSAutenticacionEmpresa `xml:"argWSAutenticacionEmpresa,omitempty" json:"argWSAutenticacionEmpresa,omitempty"`
+// type RegistrarCOEM struct {
+// 	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wgescomunicacionembarque RegistrarCOEM"`
 
-	ArgRegistrarCOEM *RegistrarCOEMRequest `xml:"argRegistrarCOEM,omitempty" json:"argRegistrarCOEM,omitempty"`
-}
+// 	ArgWSAutenticacionEmpresa *WSAutenticacionEmpresa `xml:"argWSAutenticacionEmpresa,omitempty" json:"argWSAutenticacionEmpresa,omitempty"`
 
-type RegistrarCOEMResponse struct {
-	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wgescomunicacionembarque RegistrarCOEMResponse"`
+// 	ArgRegistrarCOEM *RegistrarCOEMRequest `xml:"argRegistrarCOEM,omitempty" json:"argRegistrarCOEM,omitempty"`
+// }
 
-	RegistrarCOEMResult *RegistrarEmbarqueRta `xml:"RegistrarCOEMResult,omitempty" json:"RegistrarCOEMResult,omitempty"`
-}
+// type RegistrarCOEMResponse struct {
+// 	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wgescomunicacionembarque RegistrarCOEMResponse"`
 
-type RectificarCOEM struct {
-	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wgescomunicacionembarque RectificarCOEM"`
+// 	RegistrarCOEMResult *RegistrarEmbarqueRta `xml:"RegistrarCOEMResult,omitempty" json:"RegistrarCOEMResult,omitempty"`
+// }
 
-	ArgWSAutenticacionEmpresa *WSAutenticacionEmpresa `xml:"argWSAutenticacionEmpresa,omitempty" json:"argWSAutenticacionEmpresa,omitempty"`
+// type RectificarCOEM struct {
+// 	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wgescomunicacionembarque RectificarCOEM"`
 
-	ArgRectificarCOEM *RectificarCOEMRequest `xml:"argRectificarCOEM,omitempty" json:"argRectificarCOEM,omitempty"`
-}
+// 	ArgWSAutenticacionEmpresa *WSAutenticacionEmpresa `xml:"argWSAutenticacionEmpresa,omitempty" json:"argWSAutenticacionEmpresa,omitempty"`
 
-type RectificarCOEMResponse struct {
-	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wgescomunicacionembarque RectificarCOEMResponse"`
+// 	ArgRectificarCOEM *RectificarCOEMRequest `xml:"argRectificarCOEM,omitempty" json:"argRectificarCOEM,omitempty"`
+// }
 
-	RectificarCOEMResult *RectificarEmbarqueRta `xml:"RectificarCOEMResult,omitempty" json:"RectificarCOEMResult,omitempty"`
-}
+// type RectificarCOEMResponse struct {
+// 	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wgescomunicacionembarque RectificarCOEMResponse"`
 
-type AnularCOEM struct {
-	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wgescomunicacionembarque AnularCOEM"`
+// 	RectificarCOEMResult *RectificarEmbarqueRta `xml:"RectificarCOEMResult,omitempty" json:"RectificarCOEMResult,omitempty"`
+// }
 
-	ArgWSAutenticacionEmpresa *WSAutenticacionEmpresa `xml:"argWSAutenticacionEmpresa,omitempty" json:"argWSAutenticacionEmpresa,omitempty"`
+// type AnularCOEM struct {
+// 	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wgescomunicacionembarque AnularCOEM"`
 
-	ArgAnularCOEM *AnularCOEMRequest `xml:"argAnularCOEM,omitempty" json:"argAnularCOEM,omitempty"`
-}
+// 	ArgWSAutenticacionEmpresa *WSAutenticacionEmpresa `xml:"argWSAutenticacionEmpresa,omitempty" json:"argWSAutenticacionEmpresa,omitempty"`
 
-type AnularCOEMResponse struct {
-	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wgescomunicacionembarque AnularCOEMResponse"`
+// 	ArgAnularCOEM *AnularCOEMRequest `xml:"argAnularCOEM,omitempty" json:"argAnularCOEM,omitempty"`
+// }
 
-	AnularCOEMResult *AnularEmbarqueRta `xml:"AnularCOEMResult,omitempty" json:"AnularCOEMResult,omitempty"`
-}
+// type AnularCOEMResponse struct {
+// 	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wgescomunicacionembarque AnularCOEMResponse"`
 
-type CerrarCOEM struct {
-	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wgescomunicacionembarque CerrarCOEM"`
+// 	AnularCOEMResult *AnularEmbarqueRta `xml:"AnularCOEMResult,omitempty" json:"AnularCOEMResult,omitempty"`
+// }
 
-	ArgWSAutenticacionEmpresa *WSAutenticacionEmpresa `xml:"argWSAutenticacionEmpresa,omitempty" json:"argWSAutenticacionEmpresa,omitempty"`
+// type CerrarCOEM struct {
+// 	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wgescomunicacionembarque CerrarCOEM"`
 
-	ArgCerrarCOEM *CerrarCOEMRequest `xml:"argCerrarCOEM,omitempty" json:"argCerrarCOEM,omitempty"`
-}
+// 	ArgWSAutenticacionEmpresa *WSAutenticacionEmpresa `xml:"argWSAutenticacionEmpresa,omitempty" json:"argWSAutenticacionEmpresa,omitempty"`
 
-type CerrarCOEMResponse struct {
-	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wgescomunicacionembarque CerrarCOEMResponse"`
+// 	ArgCerrarCOEM *CerrarCOEMRequest `xml:"argCerrarCOEM,omitempty" json:"argCerrarCOEM,omitempty"`
+// }
 
-	CerrarCOEMResult *RegistrarEmbarqueRta `xml:"CerrarCOEMResult,omitempty" json:"CerrarCOEMResult,omitempty"`
-}
+// type CerrarCOEMResponse struct {
+// 	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wgescomunicacionembarque CerrarCOEMResponse"`
 
-type SolicitarCambioBuque struct {
-	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wgescomunicacionembarque SolicitarCambioBuque"`
+// 	CerrarCOEMResult *RegistrarEmbarqueRta `xml:"CerrarCOEMResult,omitempty" json:"CerrarCOEMResult,omitempty"`
+// }
 
-	ArgWSAutenticacionEmpresa *WSAutenticacionEmpresa `xml:"argWSAutenticacionEmpresa,omitempty" json:"argWSAutenticacionEmpresa,omitempty"`
+// type SolicitarCambioBuque struct {
+// 	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wgescomunicacionembarque SolicitarCambioBuque"`
 
-	ArgSolicitarCambioBuque *SolicitarCambioBuqueRequest `xml:"argSolicitarCambioBuque,omitempty" json:"argSolicitarCambioBuque,omitempty"`
-}
+// 	ArgWSAutenticacionEmpresa *WSAutenticacionEmpresa `xml:"argWSAutenticacionEmpresa,omitempty" json:"argWSAutenticacionEmpresa,omitempty"`
 
-type SolicitarCambioBuqueResponse struct {
-	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wgescomunicacionembarque SolicitarCambioBuqueResponse"`
+// 	ArgSolicitarCambioBuque *SolicitarCambioBuqueRequest `xml:"argSolicitarCambioBuque,omitempty" json:"argSolicitarCambioBuque,omitempty"`
+// }
 
-	SolicitarCambioBuqueResult *RegistrarEmbarqueRta `xml:"SolicitarCambioBuqueResult,omitempty" json:"SolicitarCambioBuqueResult,omitempty"`
-}
+// type SolicitarCambioBuqueResponse struct {
+// 	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wgescomunicacionembarque SolicitarCambioBuqueResponse"`
 
-type SolicitarCambioFechas struct {
-	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wgescomunicacionembarque SolicitarCambioFechas"`
+// 	SolicitarCambioBuqueResult *RegistrarEmbarqueRta `xml:"SolicitarCambioBuqueResult,omitempty" json:"SolicitarCambioBuqueResult,omitempty"`
+// }
 
-	ArgWSAutenticacionEmpresa *WSAutenticacionEmpresa `xml:"argWSAutenticacionEmpresa,omitempty" json:"argWSAutenticacionEmpresa,omitempty"`
+// type SolicitarCambioFechas struct {
+// 	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wgescomunicacionembarque SolicitarCambioFechas"`
 
-	ArgSolicitarCambioFechas *SolicitarCambioFechasRequest `xml:"argSolicitarCambioFechas,omitempty" json:"argSolicitarCambioFechas,omitempty"`
-}
+// 	ArgWSAutenticacionEmpresa *WSAutenticacionEmpresa `xml:"argWSAutenticacionEmpresa,omitempty" json:"argWSAutenticacionEmpresa,omitempty"`
 
-type SolicitarCambioFechasResponse struct {
-	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wgescomunicacionembarque SolicitarCambioFechasResponse"`
+// 	ArgSolicitarCambioFechas *SolicitarCambioFechasRequest `xml:"argSolicitarCambioFechas,omitempty" json:"argSolicitarCambioFechas,omitempty"`
+// }
 
-	SolicitarCambioFechasResult *RegistrarEmbarqueRta `xml:"SolicitarCambioFechasResult,omitempty" json:"SolicitarCambioFechasResult,omitempty"`
-}
+// type SolicitarCambioFechasResponse struct {
+// 	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wgescomunicacionembarque SolicitarCambioFechasResponse"`
 
-type SolicitarCambioLOT struct {
-	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wgescomunicacionembarque SolicitarCambioLOT"`
+// 	SolicitarCambioFechasResult *RegistrarEmbarqueRta `xml:"SolicitarCambioFechasResult,omitempty" json:"SolicitarCambioFechasResult,omitempty"`
+// }
 
-	ArgWSAutenticacionEmpresa *WSAutenticacionEmpresa `xml:"argWSAutenticacionEmpresa,omitempty" json:"argWSAutenticacionEmpresa,omitempty"`
+// type SolicitarCambioLOT struct {
+// 	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wgescomunicacionembarque SolicitarCambioLOT"`
 
-	ArgSolicitarCambioLOT *SolicitarCambioLOTRequest `xml:"argSolicitarCambioLOT,omitempty" json:"argSolicitarCambioLOT,omitempty"`
-}
+// 	ArgWSAutenticacionEmpresa *WSAutenticacionEmpresa `xml:"argWSAutenticacionEmpresa,omitempty" json:"argWSAutenticacionEmpresa,omitempty"`
 
-type SolicitarCambioLOTResponse struct {
-	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wgescomunicacionembarque SolicitarCambioLOTResponse"`
+// 	ArgSolicitarCambioLOT *SolicitarCambioLOTRequest `xml:"argSolicitarCambioLOT,omitempty" json:"argSolicitarCambioLOT,omitempty"`
+// }
 
-	SolicitarCambioLOTResult *RegistrarEmbarqueRta `xml:"SolicitarCambioLOTResult,omitempty" json:"SolicitarCambioLOTResult,omitempty"`
-}
+// type SolicitarCambioLOTResponse struct {
+// 	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wgescomunicacionembarque SolicitarCambioLOTResponse"`
 
-type SolicitarNoABordo struct {
-	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wgescomunicacionembarque SolicitarNoABordo"`
+// 	SolicitarCambioLOTResult *RegistrarEmbarqueRta `xml:"SolicitarCambioLOTResult,omitempty" json:"SolicitarCambioLOTResult,omitempty"`
+// }
 
-	ArgWSAutenticacionEmpresa *WSAutenticacionEmpresa `xml:"argWSAutenticacionEmpresa,omitempty" json:"argWSAutenticacionEmpresa,omitempty"`
+// type SolicitarNoABordo struct {
+// 	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wgescomunicacionembarque SolicitarNoABordo"`
 
-	ArgSolicitarNoABordo *SolicitarNoABordoRequest `xml:"argSolicitarNoABordo,omitempty" json:"argSolicitarNoABordo,omitempty"`
-}
+// 	ArgWSAutenticacionEmpresa *WSAutenticacionEmpresa `xml:"argWSAutenticacionEmpresa,omitempty" json:"argWSAutenticacionEmpresa,omitempty"`
 
-type SolicitarNoABordoResponse struct {
-	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wgescomunicacionembarque SolicitarNoABordoResponse"`
+// 	ArgSolicitarNoABordo *SolicitarNoABordoRequest `xml:"argSolicitarNoABordo,omitempty" json:"argSolicitarNoABordo,omitempty"`
+// }
 
-	SolicitarNoABordoResult *RegistrarEmbarqueRta `xml:"SolicitarNoABordoResult,omitempty" json:"SolicitarNoABordoResult,omitempty"`
-}
+// type SolicitarNoABordoResponse struct {
+// 	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wgescomunicacionembarque SolicitarNoABordoResponse"`
 
-type SolicitarCierreCargaContoBulto struct {
-	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wgescomunicacionembarque SolicitarCierreCargaContoBulto"`
+// 	SolicitarNoABordoResult *RegistrarEmbarqueRta `xml:"SolicitarNoABordoResult,omitempty" json:"SolicitarNoABordoResult,omitempty"`
+// }
 
-	ArgWSAutenticacionEmpresa *WSAutenticacionEmpresa `xml:"argWSAutenticacionEmpresa,omitempty" json:"argWSAutenticacionEmpresa,omitempty"`
+// type SolicitarCierreCargaContoBulto struct {
+// 	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wgescomunicacionembarque SolicitarCierreCargaContoBulto"`
 
-	ArgSolicitarCierreCargaContoBulto *SolicitarCierreCargaContoBultoRequest `xml:"argSolicitarCierreCargaContoBulto,omitempty" json:"argSolicitarCierreCargaContoBulto,omitempty"`
-}
+// 	ArgWSAutenticacionEmpresa *WSAutenticacionEmpresa `xml:"argWSAutenticacionEmpresa,omitempty" json:"argWSAutenticacionEmpresa,omitempty"`
 
-type SolicitarCierreCargaContoBultoResponse struct {
-	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wgescomunicacionembarque SolicitarCierreCargaContoBultoResponse"`
+// 	ArgSolicitarCierreCargaContoBulto *SolicitarCierreCargaContoBultoRequest `xml:"argSolicitarCierreCargaContoBulto,omitempty" json:"argSolicitarCierreCargaContoBulto,omitempty"`
+// }
 
-	SolicitarCierreCargaContoBultoResult *RegistrarEmbarqueRta `xml:"SolicitarCierreCargaContoBultoResult,omitempty" json:"SolicitarCierreCargaContoBultoResult,omitempty"`
-}
+// type SolicitarCierreCargaContoBultoResponse struct {
+// 	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wgescomunicacionembarque SolicitarCierreCargaContoBultoResponse"`
 
-type SolicitarCierreCargaGranel struct {
-	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wgescomunicacionembarque SolicitarCierreCargaGranel"`
+// 	SolicitarCierreCargaContoBultoResult *RegistrarEmbarqueRta `xml:"SolicitarCierreCargaContoBultoResult,omitempty" json:"SolicitarCierreCargaContoBultoResult,omitempty"`
+// }
 
-	ArgWSAutenticacionEmpresa *WSAutenticacionEmpresa `xml:"argWSAutenticacionEmpresa,omitempty" json:"argWSAutenticacionEmpresa,omitempty"`
+// type SolicitarCierreCargaGranel struct {
+// 	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wgescomunicacionembarque SolicitarCierreCargaGranel"`
 
-	ArgSolicitarCierreCargaGranel *SolicitarCierreCargaGranelRequest `xml:"argSolicitarCierreCargaGranel,omitempty" json:"argSolicitarCierreCargaGranel,omitempty"`
-}
+// 	ArgWSAutenticacionEmpresa *WSAutenticacionEmpresa `xml:"argWSAutenticacionEmpresa,omitempty" json:"argWSAutenticacionEmpresa,omitempty"`
 
-type SolicitarCierreCargaGranelResponse struct {
-	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wgescomunicacionembarque SolicitarCierreCargaGranelResponse"`
+// 	ArgSolicitarCierreCargaGranel *SolicitarCierreCargaGranelRequest `xml:"argSolicitarCierreCargaGranel,omitempty" json:"argSolicitarCierreCargaGranel,omitempty"`
+// }
 
-	SolicitarCierreCargaGranelResult *RegistrarEmbarqueRta `xml:"SolicitarCierreCargaGranelResult,omitempty" json:"SolicitarCierreCargaGranelResult,omitempty"`
-}
+// type SolicitarCierreCargaGranelResponse struct {
+// 	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wgescomunicacionembarque SolicitarCierreCargaGranelResponse"`
 
-type SolicitarAnulacionCOEM struct {
-	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wgescomunicacionembarque SolicitarAnulacionCOEM"`
+// 	SolicitarCierreCargaGranelResult *RegistrarEmbarqueRta `xml:"SolicitarCierreCargaGranelResult,omitempty" json:"SolicitarCierreCargaGranelResult,omitempty"`
+// }
 
-	ArgWSAutenticacionEmpresa *WSAutenticacionEmpresa `xml:"argWSAutenticacionEmpresa,omitempty" json:"argWSAutenticacionEmpresa,omitempty"`
+// type SolicitarAnulacionCOEM struct {
+// 	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wgescomunicacionembarque SolicitarAnulacionCOEM"`
 
-	ArgSolicitarAnulacionCOEM *SolicitarAnulacionCOEMRequest `xml:"argSolicitarAnulacionCOEM,omitempty" json:"argSolicitarAnulacionCOEM,omitempty"`
-}
+// 	ArgWSAutenticacionEmpresa *WSAutenticacionEmpresa `xml:"argWSAutenticacionEmpresa,omitempty" json:"argWSAutenticacionEmpresa,omitempty"`
 
-type SolicitarAnulacionCOEMResponse struct {
-	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wgescomunicacionembarque SolicitarAnulacionCOEMResponse"`
+// 	ArgSolicitarAnulacionCOEM *SolicitarAnulacionCOEMRequest `xml:"argSolicitarAnulacionCOEM,omitempty" json:"argSolicitarAnulacionCOEM,omitempty"`
+// }
 
-	SolicitarAnulacionCOEMResult *RegistrarEmbarqueRta `xml:"SolicitarAnulacionCOEMResult,omitempty" json:"SolicitarAnulacionCOEMResult,omitempty"`
-}
+// type SolicitarAnulacionCOEMResponse struct {
+// 	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wgescomunicacionembarque SolicitarAnulacionCOEMResponse"`
 
-type Dummy struct {
-	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wgescomunicacionembarque Dummy"`
-}
+// 	SolicitarAnulacionCOEMResult *RegistrarEmbarqueRta `xml:"SolicitarAnulacionCOEMResult,omitempty" json:"SolicitarAnulacionCOEMResult,omitempty"`
+// }
 
-type DummyResponse struct {
-	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wgescomunicacionembarque DummyResponse"`
+// type Dummy struct {
+// 	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wgescomunicacionembarque Dummy"`
+// }
 
-	DummyResult *ResultadoEjecucionDummy `xml:"DummyResult,omitempty" json:"DummyResult,omitempty"`
-}
+// type DummyResponse struct {
+// 	XMLName xml.Name `xml:"Ar.Gob.Afip.Dga.wgescomunicacionembarque DummyResponse"`
 
-type WSAutenticacionEmpresa struct {
-	*WSAutenticacion
+// 	DummyResult *ResultadoEjecucionDummy `xml:"DummyResult,omitempty" json:"DummyResult,omitempty"`
+// }
 
-	CuitEmpresaConectada int64 `xml:"CuitEmpresaConectada,omitempty" json:"CuitEmpresaConectada,omitempty"`
+// type WSAutenticacionEmpresa struct {
+// 	*WSAutenticacion
 
-	TipoAgente string `xml:"TipoAgente,omitempty" json:"TipoAgente,omitempty"`
+// 	CuitEmpresaConectada int64 `xml:"CuitEmpresaConectada,omitempty" json:"CuitEmpresaConectada,omitempty"`
 
-	Rol string `xml:"Rol,omitempty" json:"Rol,omitempty"`
-}
+// 	TipoAgente string `xml:"TipoAgente,omitempty" json:"TipoAgente,omitempty"`
 
-type WSAutenticacion struct {
-	Token string `xml:"Token,omitempty" json:"Token,omitempty"`
+// 	Rol string `xml:"Rol,omitempty" json:"Rol,omitempty"`
+// }
 
-	Sign string `xml:"Sign,omitempty" json:"Sign,omitempty"`
-}
+// type WSAutenticacion struct {
+// 	Token string `xml:"Token,omitempty" json:"Token,omitempty"`
 
-type RegistrarCaratulaRequest struct {
-	Caratula *Caratula `xml:"Caratula,omitempty" json:"Caratula,omitempty"`
-}
+// 	Sign string `xml:"Sign,omitempty" json:"Sign,omitempty"`
+// }
 
-type Caratula struct {
-	IdentificadorBuque string `xml:"IdentificadorBuque,omitempty" json:"IdentificadorBuque,omitempty"`
+// type RegistrarCaratulaRequest struct {
+// 	Caratula *Caratula `xml:"Caratula,omitempty" json:"Caratula,omitempty"`
+// }
 
-	CodigoAduana string `xml:"CodigoAduana,omitempty" json:"CodigoAduana,omitempty"`
+// type Caratula struct {
+// 	IdentificadorBuque string `xml:"IdentificadorBuque,omitempty" json:"IdentificadorBuque,omitempty"`
 
-	CodigoLugarOperativo string `xml:"CodigoLugarOperativo,omitempty" json:"CodigoLugarOperativo,omitempty"`
+// 	CodigoAduana string `xml:"CodigoAduana,omitempty" json:"CodigoAduana,omitempty"`
 
-	FechaArribo soap.XSDDateTime `xml:"FechaArribo,omitempty" json:"FechaArribo,omitempty"`
+// 	CodigoLugarOperativo string `xml:"CodigoLugarOperativo,omitempty" json:"CodigoLugarOperativo,omitempty"`
 
-	FechaZarpada soap.XSDDateTime `xml:"FechaZarpada,omitempty" json:"FechaZarpada,omitempty"`
+// 	FechaArribo soap.XSDDateTime `xml:"FechaArribo,omitempty" json:"FechaArribo,omitempty"`
 
-	Via string `xml:"Via,omitempty" json:"Via,omitempty"`
+// 	FechaZarpada soap.XSDDateTime `xml:"FechaZarpada,omitempty" json:"FechaZarpada,omitempty"`
 
-	NombreMedioTransporte string `xml:"NombreMedioTransporte,omitempty" json:"NombreMedioTransporte,omitempty"`
+// 	Via string `xml:"Via,omitempty" json:"Via,omitempty"`
 
-	PuertoDestino string `xml:"PuertoDestino,omitempty" json:"PuertoDestino,omitempty"`
+// 	NombreMedioTransporte string `xml:"NombreMedioTransporte,omitempty" json:"NombreMedioTransporte,omitempty"`
 
-	NumeroViaje string `xml:"NumeroViaje,omitempty" json:"NumeroViaje,omitempty"`
+// 	PuertoDestino string `xml:"PuertoDestino,omitempty" json:"PuertoDestino,omitempty"`
 
-	Itinerario *ArrayOfPuerto `xml:"Itinerario,omitempty" json:"Itinerario,omitempty"`
-}
+// 	NumeroViaje string `xml:"NumeroViaje,omitempty" json:"NumeroViaje,omitempty"`
 
-type ArrayOfPuerto struct {
-	Puerto []*Puerto `xml:"Puerto,omitempty" json:"Puerto,omitempty"`
-}
+// 	Itinerario *ArrayOfPuerto `xml:"Itinerario,omitempty" json:"Itinerario,omitempty"`
+// }
 
-type Puerto struct {
-	CodigoPuerto string `xml:"CodigoPuerto,omitempty" json:"CodigoPuerto,omitempty"`
-}
+// type ArrayOfPuerto struct {
+// 	Puerto []*Puerto `xml:"Puerto,omitempty" json:"Puerto,omitempty"`
+// }
 
-type RegistrarEmbarqueRta struct {
-	*ResponseAbstract
-}
+// type Puerto struct {
+// 	CodigoPuerto string `xml:"CodigoPuerto,omitempty" json:"CodigoPuerto,omitempty"`
+// }
 
-type ResponseAbstract struct {
-	*ResultadoEjecucionSerializable
-}
+// type RegistrarEmbarqueRta struct {
+// 	*ResponseAbstract
+// }
 
-type ResultadoEjecucionSerializable struct {
-	ListaErrores *ArrayOfDgaMensajeSistemaReducido `xml:"ListaErrores,omitempty" json:"ListaErrores,omitempty"`
+// type ResponseAbstract struct {
+// 	*ResultadoEjecucionSerializable
+// }
 
-	Server string `xml:"Server,omitempty" json:"Server,omitempty"`
+// type ResultadoEjecucionSerializable struct {
+// 	ListaErrores *ArrayOfDgaMensajeSistemaReducido `xml:"ListaErrores,omitempty" json:"ListaErrores,omitempty"`
 
-	TimeStamp soap.XSDDateTime `xml:"TimeStamp,omitempty" json:"TimeStamp,omitempty"`
-}
+// 	Server string `xml:"Server,omitempty" json:"Server,omitempty"`
 
-type ArrayOfDgaMensajeSistemaReducido struct {
-	DetalleError []*DgaMensajeSistemaReducido `xml:"DetalleError,omitempty" json:"DetalleError,omitempty"`
-}
+// 	TimeStamp soap.XSDDateTime `xml:"TimeStamp,omitempty" json:"TimeStamp,omitempty"`
+// }
 
-type DgaMensajeSistemaReducido struct {
-	Codigo *int32 `xml:"Codigo,omitempty" json:"Codigo,omitempty"`
+// type ArrayOfDgaMensajeSistemaReducido struct {
+// 	DetalleError []*DgaMensajeSistemaReducido `xml:"DetalleError,omitempty" json:"DetalleError,omitempty"`
+// }
 
-	Descripcion string `xml:"Descripcion,omitempty" json:"Descripcion,omitempty"`
+// type DgaMensajeSistemaReducido struct {
+// 	Codigo *int32 `xml:"Codigo,omitempty" json:"Codigo,omitempty"`
 
-	DescripcionAdicional string `xml:"DescripcionAdicional,omitempty" json:"DescripcionAdicional,omitempty"`
-}
+// 	Descripcion string `xml:"Descripcion,omitempty" json:"Descripcion,omitempty"`
 
-type RectificarCaratulaRequest struct {
-	Caratula *Caratula `xml:"Caratula,omitempty" json:"Caratula,omitempty"`
+// 	DescripcionAdicional string `xml:"DescripcionAdicional,omitempty" json:"DescripcionAdicional,omitempty"`
+// }
 
-	IdentificadorCaratula string `xml:"IdentificadorCaratula,omitempty" json:"IdentificadorCaratula,omitempty"`
-}
+// type RectificarCaratulaRequest struct {
+// 	Caratula *Caratula `xml:"Caratula,omitempty" json:"Caratula,omitempty"`
 
-type RectificarEmbarqueRta struct {
-	*ResponseAbstract
-}
+// 	IdentificadorCaratula string `xml:"IdentificadorCaratula,omitempty" json:"IdentificadorCaratula,omitempty"`
+// }
 
-type AnularCaratulaRequest struct {
-	IdentificadorCaratula string `xml:"IdentificadorCaratula,omitempty" json:"IdentificadorCaratula,omitempty"`
-}
+// type RectificarEmbarqueRta struct {
+// 	*ResponseAbstract
+// }
 
-type AnularEmbarqueRta struct {
-	*ResponseAbstract
-}
+// type AnularCaratulaRequest struct {
+// 	IdentificadorCaratula string `xml:"IdentificadorCaratula,omitempty" json:"IdentificadorCaratula,omitempty"`
+// }
 
-type RegistrarCOEMRequest struct {
-	IdentificadorCaratula string `xml:"IdentificadorCaratula,omitempty" json:"IdentificadorCaratula,omitempty"`
+// type AnularEmbarqueRta struct {
+// 	*ResponseAbstract
+// }
 
-	Coem *Coem `xml:"Coem,omitempty" json:"Coem,omitempty"`
-}
+// type RegistrarCOEMRequest struct {
+// 	IdentificadorCaratula string `xml:"IdentificadorCaratula,omitempty" json:"IdentificadorCaratula,omitempty"`
 
-type Coem struct {
-	ContenedoresConCarga *ArrayOfContenedorCarga `xml:"ContenedoresConCarga,omitempty" json:"ContenedoresConCarga,omitempty"`
+// 	Coem *Coem `xml:"Coem,omitempty" json:"Coem,omitempty"`
+// }
 
-	ContenedoresVacios *ArrayOfContenedorVacio `xml:"ContenedoresVacios,omitempty" json:"ContenedoresVacios,omitempty"`
+// type Coem struct {
+// 	ContenedoresConCarga *ArrayOfContenedorCarga `xml:"ContenedoresConCarga,omitempty" json:"ContenedoresConCarga,omitempty"`
 
-	MercaderiasSueltas *ArrayOfMercaderiaSuelta `xml:"MercaderiasSueltas,omitempty" json:"MercaderiasSueltas,omitempty"`
-}
+// 	ContenedoresVacios *ArrayOfContenedorVacio `xml:"ContenedoresVacios,omitempty" json:"ContenedoresVacios,omitempty"`
 
-type ArrayOfContenedorCarga struct {
-	ContenedorCarga []*ContenedorCarga `xml:"ContenedorCarga,omitempty" json:"ContenedorCarga,omitempty"`
-}
+// 	MercaderiasSueltas *ArrayOfMercaderiaSuelta `xml:"MercaderiasSueltas,omitempty" json:"MercaderiasSueltas,omitempty"`
+// }
 
-type ContenedorCarga struct {
-	IdentificadorContenedor string `xml:"IdentificadorContenedor,omitempty" json:"IdentificadorContenedor,omitempty"`
+// type ArrayOfContenedorCarga struct {
+// 	ContenedorCarga []*ContenedorCarga `xml:"ContenedorCarga,omitempty" json:"ContenedorCarga,omitempty"`
+// }
 
-	CuitATA string `xml:"CuitATA,omitempty" json:"CuitATA,omitempty"`
+// type ContenedorCarga struct {
+// 	IdentificadorContenedor string `xml:"IdentificadorContenedor,omitempty" json:"IdentificadorContenedor,omitempty"`
 
-	Tipo string `xml:"Tipo,omitempty" json:"Tipo,omitempty"`
+// 	CuitATA string `xml:"CuitATA,omitempty" json:"CuitATA,omitempty"`
 
-	Peso float64 `xml:"Peso,omitempty" json:"Peso,omitempty"`
+// 	Tipo string `xml:"Tipo,omitempty" json:"Tipo,omitempty"`
 
-	Precintos *ArrayOfPrecinto `xml:"Precintos,omitempty" json:"Precintos,omitempty"`
+// 	Peso float64 `xml:"Peso,omitempty" json:"Peso,omitempty"`
 
-	Declaraciones *ArrayOfDeclaracion `xml:"Declaraciones,omitempty" json:"Declaraciones,omitempty"`
-}
+// 	Precintos *ArrayOfPrecinto `xml:"Precintos,omitempty" json:"Precintos,omitempty"`
 
-type ArrayOfPrecinto struct {
-	Precinto []*Precinto `xml:"Precinto,omitempty" json:"Precinto,omitempty"`
-}
+// 	Declaraciones *ArrayOfDeclaracion `xml:"Declaraciones,omitempty" json:"Declaraciones,omitempty"`
+// }
 
-type Precinto struct {
-	IdentificadorPrecinto string `xml:"IdentificadorPrecinto,omitempty" json:"IdentificadorPrecinto,omitempty"`
-}
+// type ArrayOfPrecinto struct {
+// 	Precinto []*Precinto `xml:"Precinto,omitempty" json:"Precinto,omitempty"`
+// }
 
-type ArrayOfDeclaracion struct {
-	Declaracion []*Declaracion `xml:"Declaracion,omitempty" json:"Declaracion,omitempty"`
-}
+// type Precinto struct {
+// 	IdentificadorPrecinto string `xml:"IdentificadorPrecinto,omitempty" json:"IdentificadorPrecinto,omitempty"`
+// }
 
-type Declaracion struct {
-	IdentificadorDeclaracion string `xml:"IdentificadorDeclaracion,omitempty" json:"IdentificadorDeclaracion,omitempty"`
-}
+// type ArrayOfDeclaracion struct {
+// 	Declaracion []*Declaracion `xml:"Declaracion,omitempty" json:"Declaracion,omitempty"`
+// }
 
-type ArrayOfContenedorVacio struct {
-	ContenedorVacio []*ContenedorVacio `xml:"ContenedorVacio,omitempty" json:"ContenedorVacio,omitempty"`
-}
+// type Declaracion struct {
+// 	IdentificadorDeclaracion string `xml:"IdentificadorDeclaracion,omitempty" json:"IdentificadorDeclaracion,omitempty"`
+// }
 
-type ContenedorVacio struct {
-	IdentificadorContenedor string `xml:"IdentificadorContenedor,omitempty" json:"IdentificadorContenedor,omitempty"`
+// type ArrayOfContenedorVacio struct {
+// 	ContenedorVacio []*ContenedorVacio `xml:"ContenedorVacio,omitempty" json:"ContenedorVacio,omitempty"`
+// }
 
-	Tipo string `xml:"Tipo,omitempty" json:"Tipo,omitempty"`
+// type ContenedorVacio struct {
+// 	IdentificadorContenedor string `xml:"IdentificadorContenedor,omitempty" json:"IdentificadorContenedor,omitempty"`
 
-	CuitATA string `xml:"CuitATA,omitempty" json:"CuitATA,omitempty"`
+// 	Tipo string `xml:"Tipo,omitempty" json:"Tipo,omitempty"`
 
-	CodigoPais string `xml:"CodigoPais,omitempty" json:"CodigoPais,omitempty"`
-}
+// 	CuitATA string `xml:"CuitATA,omitempty" json:"CuitATA,omitempty"`
 
-type ArrayOfMercaderiaSuelta struct {
-	MercaderiaSuelta []*MercaderiaSuelta `xml:"MercaderiaSuelta,omitempty" json:"MercaderiaSuelta,omitempty"`
-}
+// 	CodigoPais string `xml:"CodigoPais,omitempty" json:"CodigoPais,omitempty"`
+// }
 
-type MercaderiaSuelta struct {
-	IdentificadorDeclaracion string `xml:"IdentificadorDeclaracion,omitempty" json:"IdentificadorDeclaracion,omitempty"`
+// type ArrayOfMercaderiaSuelta struct {
+// 	MercaderiaSuelta []*MercaderiaSuelta `xml:"MercaderiaSuelta,omitempty" json:"MercaderiaSuelta,omitempty"`
+// }
 
-	CuitATA string `xml:"CuitATA,omitempty" json:"CuitATA,omitempty"`
+// type MercaderiaSuelta struct {
+// 	IdentificadorDeclaracion string `xml:"IdentificadorDeclaracion,omitempty" json:"IdentificadorDeclaracion,omitempty"`
 
-	Embalajes *ArrayOfEmbalaje `xml:"Embalajes,omitempty" json:"Embalajes,omitempty"`
-}
+// 	CuitATA string `xml:"CuitATA,omitempty" json:"CuitATA,omitempty"`
 
-type ArrayOfEmbalaje struct {
-	Embalaje []*Embalaje `xml:"Embalaje,omitempty" json:"Embalaje,omitempty"`
-}
+// 	Embalajes *ArrayOfEmbalaje `xml:"Embalajes,omitempty" json:"Embalajes,omitempty"`
+// }
 
-type Embalaje struct {
-	CodigoEmbalaje string `xml:"CodigoEmbalaje,omitempty" json:"CodigoEmbalaje,omitempty"`
+// type ArrayOfEmbalaje struct {
+// 	Embalaje []*Embalaje `xml:"Embalaje,omitempty" json:"Embalaje,omitempty"`
+// }
 
-	Peso float64 `xml:"Peso,omitempty" json:"Peso,omitempty"`
+// type Embalaje struct {
+// 	CodigoEmbalaje string `xml:"CodigoEmbalaje,omitempty" json:"CodigoEmbalaje,omitempty"`
 
-	CantidadBultos int32 `xml:"CantidadBultos,omitempty" json:"CantidadBultos,omitempty"`
-}
+// 	Peso float64 `xml:"Peso,omitempty" json:"Peso,omitempty"`
 
-type RectificarCOEMRequest struct {
-	IdentificadorCaratula string `xml:"IdentificadorCaratula,omitempty" json:"IdentificadorCaratula,omitempty"`
+// 	CantidadBultos int32 `xml:"CantidadBultos,omitempty" json:"CantidadBultos,omitempty"`
+// }
 
-	IdentificadorCOEM string `xml:"IdentificadorCOEM,omitempty" json:"IdentificadorCOEM,omitempty"`
+// type RectificarCOEMRequest struct {
+// 	IdentificadorCaratula string `xml:"IdentificadorCaratula,omitempty" json:"IdentificadorCaratula,omitempty"`
 
-	Coem *Coem `xml:"Coem,omitempty" json:"Coem,omitempty"`
-}
+// 	IdentificadorCOEM string `xml:"IdentificadorCOEM,omitempty" json:"IdentificadorCOEM,omitempty"`
 
-type AnularCOEMRequest struct {
-	IdentificadorCaratula string `xml:"IdentificadorCaratula,omitempty" json:"IdentificadorCaratula,omitempty"`
+// 	Coem *Coem `xml:"Coem,omitempty" json:"Coem,omitempty"`
+// }
 
-	IdentificadorCOEM string `xml:"IdentificadorCOEM,omitempty" json:"IdentificadorCOEM,omitempty"`
-}
+// type AnularCOEMRequest struct {
+// 	IdentificadorCaratula string `xml:"IdentificadorCaratula,omitempty" json:"IdentificadorCaratula,omitempty"`
 
-type CerrarCOEMRequest struct {
-	IdentificadorCaratula string `xml:"IdentificadorCaratula,omitempty" json:"IdentificadorCaratula,omitempty"`
+// 	IdentificadorCOEM string `xml:"IdentificadorCOEM,omitempty" json:"IdentificadorCOEM,omitempty"`
+// }
 
-	IdentificadorCOEM string `xml:"IdentificadorCOEM,omitempty" json:"IdentificadorCOEM,omitempty"`
-}
+// type CerrarCOEMRequest struct {
+// 	IdentificadorCaratula string `xml:"IdentificadorCaratula,omitempty" json:"IdentificadorCaratula,omitempty"`
 
-type SolicitarCambioBuqueRequest struct {
-	IdentificadorCaratula string `xml:"IdentificadorCaratula,omitempty" json:"IdentificadorCaratula,omitempty"`
+// 	IdentificadorCOEM string `xml:"IdentificadorCOEM,omitempty" json:"IdentificadorCOEM,omitempty"`
+// }
 
-	IdentificadorBuque string `xml:"IdentificadorBuque,omitempty" json:"IdentificadorBuque,omitempty"`
+// type SolicitarCambioBuqueRequest struct {
+// 	IdentificadorCaratula string `xml:"IdentificadorCaratula,omitempty" json:"IdentificadorCaratula,omitempty"`
 
-	NombreMedioTransporte string `xml:"NombreMedioTransporte,omitempty" json:"NombreMedioTransporte,omitempty"`
-}
+// 	IdentificadorBuque string `xml:"IdentificadorBuque,omitempty" json:"IdentificadorBuque,omitempty"`
 
-type SolicitarCambioFechasRequest struct {
-	IdentificadorCaratula string `xml:"IdentificadorCaratula,omitempty" json:"IdentificadorCaratula,omitempty"`
+// 	NombreMedioTransporte string `xml:"NombreMedioTransporte,omitempty" json:"NombreMedioTransporte,omitempty"`
+// }
 
-	FechaArribo soap.XSDDateTime `xml:"FechaArribo,omitempty" json:"FechaArribo,omitempty"`
+// type SolicitarCambioFechasRequest struct {
+// 	IdentificadorCaratula string `xml:"IdentificadorCaratula,omitempty" json:"IdentificadorCaratula,omitempty"`
 
-	FechaZarpada soap.XSDDateTime `xml:"FechaZarpada,omitempty" json:"FechaZarpada,omitempty"`
+// 	FechaArribo soap.XSDDateTime `xml:"FechaArribo,omitempty" json:"FechaArribo,omitempty"`
 
-	CodigoMotivo string `xml:"CodigoMotivo,omitempty" json:"CodigoMotivo,omitempty"`
+// 	FechaZarpada soap.XSDDateTime `xml:"FechaZarpada,omitempty" json:"FechaZarpada,omitempty"`
 
-	DescripcionMotivo string `xml:"DescripcionMotivo,omitempty" json:"DescripcionMotivo,omitempty"`
-}
+// 	CodigoMotivo string `xml:"CodigoMotivo,omitempty" json:"CodigoMotivo,omitempty"`
 
-type SolicitarCambioLOTRequest struct {
-	IdentificadorCaratula string `xml:"IdentificadorCaratula,omitempty" json:"IdentificadorCaratula,omitempty"`
+// 	DescripcionMotivo string `xml:"DescripcionMotivo,omitempty" json:"DescripcionMotivo,omitempty"`
+// }
 
-	CodigoLugarOperativo string `xml:"CodigoLugarOperativo,omitempty" json:"CodigoLugarOperativo,omitempty"`
-}
+// type SolicitarCambioLOTRequest struct {
+// 	IdentificadorCaratula string `xml:"IdentificadorCaratula,omitempty" json:"IdentificadorCaratula,omitempty"`
 
-type SolicitarNoABordoRequest struct {
-	IdentificadorCaratula string `xml:"IdentificadorCaratula,omitempty" json:"IdentificadorCaratula,omitempty"`
+// 	CodigoLugarOperativo string `xml:"CodigoLugarOperativo,omitempty" json:"CodigoLugarOperativo,omitempty"`
+// }
 
-	IdentificadorCOEM string `xml:"IdentificadorCOEM,omitempty" json:"IdentificadorCOEM,omitempty"`
+// type SolicitarNoABordoRequest struct {
+// 	IdentificadorCaratula string `xml:"IdentificadorCaratula,omitempty" json:"IdentificadorCaratula,omitempty"`
 
-	CodigoMotivo string `xml:"CodigoMotivo,omitempty" json:"CodigoMotivo,omitempty"`
+// 	IdentificadorCOEM string `xml:"IdentificadorCOEM,omitempty" json:"IdentificadorCOEM,omitempty"`
 
-	DescripcionMotivo string `xml:"DescripcionMotivo,omitempty" json:"DescripcionMotivo,omitempty"`
+// 	CodigoMotivo string `xml:"CodigoMotivo,omitempty" json:"CodigoMotivo,omitempty"`
 
-	IdentificadoresContenedoresVacios *ArrayOfContenedor `xml:"IdentificadoresContenedoresVacios,omitempty" json:"IdentificadoresContenedoresVacios,omitempty"`
+// 	DescripcionMotivo string `xml:"DescripcionMotivo,omitempty" json:"DescripcionMotivo,omitempty"`
 
-	IdentificadoresContenedorCarga *ArrayOfContenedor `xml:"IdentificadoresContenedorCarga,omitempty" json:"IdentificadoresContenedorCarga,omitempty"`
+// 	IdentificadoresContenedoresVacios *ArrayOfContenedor `xml:"IdentificadoresContenedoresVacios,omitempty" json:"IdentificadoresContenedoresVacios,omitempty"`
 
-	IdentificadoresDeclaracionesMercaderiaSuelta *ArrayOfDeclaracion `xml:"IdentificadoresDeclaracionesMercaderiaSuelta,omitempty" json:"IdentificadoresDeclaracionesMercaderiaSuelta,omitempty"`
-}
+// 	IdentificadoresContenedorCarga *ArrayOfContenedor `xml:"IdentificadoresContenedorCarga,omitempty" json:"IdentificadoresContenedorCarga,omitempty"`
 
-type ArrayOfContenedor struct {
-	Contenedor []*Contenedor `xml:"Contenedor,omitempty" json:"Contenedor,omitempty"`
-}
+// 	IdentificadoresDeclaracionesMercaderiaSuelta *ArrayOfDeclaracion `xml:"IdentificadoresDeclaracionesMercaderiaSuelta,omitempty" json:"IdentificadoresDeclaracionesMercaderiaSuelta,omitempty"`
+// }
 
-type Contenedor struct {
-	IdentificadorContenedor string `xml:"IdentificadorContenedor,omitempty" json:"IdentificadorContenedor,omitempty"`
-}
+// type ArrayOfContenedor struct {
+// 	Contenedor []*Contenedor `xml:"Contenedor,omitempty" json:"Contenedor,omitempty"`
+// }
 
-type SolicitarCierreCargaContoBultoRequest struct {
-	IdentificadorCaratula string `xml:"IdentificadorCaratula,omitempty" json:"IdentificadorCaratula,omitempty"`
+// type Contenedor struct {
+// 	IdentificadorContenedor string `xml:"IdentificadorContenedor,omitempty" json:"IdentificadorContenedor,omitempty"`
+// }
 
-	FechaZarpada soap.XSDDateTime `xml:"FechaZarpada,omitempty" json:"FechaZarpada,omitempty"`
+// type SolicitarCierreCargaContoBultoRequest struct {
+// 	IdentificadorCaratula string `xml:"IdentificadorCaratula,omitempty" json:"IdentificadorCaratula,omitempty"`
 
-	NumeroViaje string `xml:"numeroViaje,omitempty" json:"numeroViaje,omitempty"`
+// 	FechaZarpada soap.XSDDateTime `xml:"FechaZarpada,omitempty" json:"FechaZarpada,omitempty"`
 
-	Declaraciones *ArrayOfDeclaracionCont `xml:"Declaraciones,omitempty" json:"Declaraciones,omitempty"`
-}
+// 	NumeroViaje string `xml:"numeroViaje,omitempty" json:"numeroViaje,omitempty"`
 
-type ArrayOfDeclaracionCont struct {
-	DeclaracionCont []*DeclaracionCont `xml:"DeclaracionCont,omitempty" json:"DeclaracionCont,omitempty"`
-}
+// 	Declaraciones *ArrayOfDeclaracionCont `xml:"Declaraciones,omitempty" json:"Declaraciones,omitempty"`
+// }
 
-type DeclaracionCont struct {
-	IdentificadorDeclaracion string `xml:"IdentificadorDeclaracion,omitempty" json:"IdentificadorDeclaracion,omitempty"`
+// type ArrayOfDeclaracionCont struct {
+// 	DeclaracionCont []*DeclaracionCont `xml:"DeclaracionCont,omitempty" json:"DeclaracionCont,omitempty"`
+// }
 
-	FechaEmbarque soap.XSDDateTime `xml:"FechaEmbarque,omitempty" json:"FechaEmbarque,omitempty"`
-}
+// type DeclaracionCont struct {
+// 	IdentificadorDeclaracion string `xml:"IdentificadorDeclaracion,omitempty" json:"IdentificadorDeclaracion,omitempty"`
 
-type SolicitarCierreCargaGranelRequest struct {
-	IdentificadorCaratula string `xml:"IdentificadorCaratula,omitempty" json:"IdentificadorCaratula,omitempty"`
+// 	FechaEmbarque soap.XSDDateTime `xml:"FechaEmbarque,omitempty" json:"FechaEmbarque,omitempty"`
+// }
 
-	FechaZarpada soap.XSDDateTime `xml:"FechaZarpada,omitempty" json:"FechaZarpada,omitempty"`
+// type SolicitarCierreCargaGranelRequest struct {
+// 	IdentificadorCaratula string `xml:"IdentificadorCaratula,omitempty" json:"IdentificadorCaratula,omitempty"`
 
-	NumeroViaje string `xml:"numeroViaje,omitempty" json:"numeroViaje,omitempty"`
+// 	FechaZarpada soap.XSDDateTime `xml:"FechaZarpada,omitempty" json:"FechaZarpada,omitempty"`
 
-	Coems *ArrayOfCoemGranel `xml:"Coems,omitempty" json:"Coems,omitempty"`
-}
+// 	NumeroViaje string `xml:"numeroViaje,omitempty" json:"numeroViaje,omitempty"`
 
-type ArrayOfCoemGranel struct {
-	CoemGranel []*CoemGranel `xml:"CoemGranel,omitempty" json:"CoemGranel,omitempty"`
-}
+// 	Coems *ArrayOfCoemGranel `xml:"Coems,omitempty" json:"Coems,omitempty"`
+// }
 
-type CoemGranel struct {
-	IdentificadorCoem string `xml:"IdentificadorCoem,omitempty" json:"IdentificadorCoem,omitempty"`
+// type ArrayOfCoemGranel struct {
+// 	CoemGranel []*CoemGranel `xml:"CoemGranel,omitempty" json:"CoemGranel,omitempty"`
+// }
 
-	Declaraciones *ArrayOfDeclaracionGranel `xml:"Declaraciones,omitempty" json:"Declaraciones,omitempty"`
-}
+// type CoemGranel struct {
+// 	IdentificadorCoem string `xml:"IdentificadorCoem,omitempty" json:"IdentificadorCoem,omitempty"`
 
-type ArrayOfDeclaracionGranel struct {
-	DeclaracionGranel []*DeclaracionGranel `xml:"DeclaracionGranel,omitempty" json:"DeclaracionGranel,omitempty"`
-}
+// 	Declaraciones *ArrayOfDeclaracionGranel `xml:"Declaraciones,omitempty" json:"Declaraciones,omitempty"`
+// }
 
-type DeclaracionGranel struct {
-	IdentificadorDeclaracion string `xml:"IdentificadorDeclaracion,omitempty" json:"IdentificadorDeclaracion,omitempty"`
+// type ArrayOfDeclaracionGranel struct {
+// 	DeclaracionGranel []*DeclaracionGranel `xml:"DeclaracionGranel,omitempty" json:"DeclaracionGranel,omitempty"`
+// }
 
-	FechaEmbarque soap.XSDDateTime `xml:"FechaEmbarque,omitempty" json:"FechaEmbarque,omitempty"`
+// type DeclaracionGranel struct {
+// 	IdentificadorDeclaracion string `xml:"IdentificadorDeclaracion,omitempty" json:"IdentificadorDeclaracion,omitempty"`
 
-	IdentificadorCierreCumplido string `xml:"IdentificadorCierreCumplido,omitempty" json:"IdentificadorCierreCumplido,omitempty"`
+// 	FechaEmbarque soap.XSDDateTime `xml:"FechaEmbarque,omitempty" json:"FechaEmbarque,omitempty"`
 
-	Items *ArrayOfItem `xml:"Items,omitempty" json:"Items,omitempty"`
-}
+// 	IdentificadorCierreCumplido string `xml:"IdentificadorCierreCumplido,omitempty" json:"IdentificadorCierreCumplido,omitempty"`
 
-type ArrayOfItem struct {
-	Item []*Item `xml:"Item,omitempty" json:"Item,omitempty"`
-}
+// 	Items *ArrayOfItem `xml:"Items,omitempty" json:"Items,omitempty"`
+// }
 
-type Item struct {
-	NumeroItem int32 `xml:"numeroItem,omitempty" json:"numeroItem,omitempty"`
+// type ArrayOfItem struct {
+// 	Item []*Item `xml:"Item,omitempty" json:"Item,omitempty"`
+// }
 
-	CantidadReal float64 `xml:"cantidadReal,omitempty" json:"cantidadReal,omitempty"`
-}
+// type Item struct {
+// 	NumeroItem int32 `xml:"numeroItem,omitempty" json:"numeroItem,omitempty"`
 
-type SolicitarAnulacionCOEMRequest struct {
-	IdentificadorCaratula string `xml:"IdentificadorCaratula,omitempty" json:"IdentificadorCaratula,omitempty"`
+// 	CantidadReal float64 `xml:"cantidadReal,omitempty" json:"cantidadReal,omitempty"`
+// }
 
-	IdentificadorCOEM string `xml:"IdentificadorCOEM,omitempty" json:"IdentificadorCOEM,omitempty"`
-}
+// type SolicitarAnulacionCOEMRequest struct {
+// 	IdentificadorCaratula string `xml:"IdentificadorCaratula,omitempty" json:"IdentificadorCaratula,omitempty"`
 
-type ResultadoEjecucionDummy struct {
-	AppServer string `xml:"AppServer,omitempty" json:"AppServer,omitempty"`
+// 	IdentificadorCOEM string `xml:"IdentificadorCOEM,omitempty" json:"IdentificadorCOEM,omitempty"`
+// }
 
-	DbServer string `xml:"DbServer,omitempty" json:"DbServer,omitempty"`
+// type ResultadoEjecucionDummy struct {
+// 	AppServer string `xml:"AppServer,omitempty" json:"AppServer,omitempty"`
 
-	AuthServer string `xml:"AuthServer,omitempty" json:"AuthServer,omitempty"`
-}
+// 	DbServer string `xml:"DbServer,omitempty" json:"DbServer,omitempty"`
 
-type WgescomunicacionembarqueSoap interface {
+// 	AuthServer string `xml:"AuthServer,omitempty" json:"AuthServer,omitempty"`
+// }
 
-	/* Registrar Carátula */
-	RegistrarCaratula(request *RegistrarCaratula) (*RegistrarCaratulaResponse, error)
+// type WgescomunicacionembarqueSoap interface {
 
-	RegistrarCaratulaContext(ctx context.Context, request *RegistrarCaratula) (*RegistrarCaratulaResponse, error)
+// 	/* Registrar Carátula */
+// 	RegistrarCaratula(request *RegistrarCaratula) (*RegistrarCaratulaResponse, error)
 
-	/* Rectificar Carátula */
-	RectificarCaratula(request *RectificarCaratula) (*RectificarCaratulaResponse, error)
+// 	RegistrarCaratulaContext(ctx context.Context, request *RegistrarCaratula) (*RegistrarCaratulaResponse, error)
 
-	RectificarCaratulaContext(ctx context.Context, request *RectificarCaratula) (*RectificarCaratulaResponse, error)
+// 	/* Rectificar Carátula */
+// 	RectificarCaratula(request *RectificarCaratula) (*RectificarCaratulaResponse, error)
 
-	/* Anular Carátula */
-	AnularCaratula(request *AnularCaratula) (*AnularCaratulaResponse, error)
+// 	RectificarCaratulaContext(ctx context.Context, request *RectificarCaratula) (*RectificarCaratulaResponse, error)
 
-	AnularCaratulaContext(ctx context.Context, request *AnularCaratula) (*AnularCaratulaResponse, error)
+// 	/* Anular Carátula */
+// 	AnularCaratula(request *AnularCaratula) (*AnularCaratulaResponse, error)
 
-	/* Registrar Comunicación de Embarque */
-	RegistrarCOEM(request *RegistrarCOEM) (*RegistrarCOEMResponse, error)
+// 	AnularCaratulaContext(ctx context.Context, request *AnularCaratula) (*AnularCaratulaResponse, error)
 
-	RegistrarCOEMContext(ctx context.Context, request *RegistrarCOEM) (*RegistrarCOEMResponse, error)
+// 	/* Registrar Comunicación de Embarque */
+// 	RegistrarCOEM(request *RegistrarCOEM) (*RegistrarCOEMResponse, error)
 
-	/* Rectificar Comunicación de Embarque */
-	RectificarCOEM(request *RectificarCOEM) (*RectificarCOEMResponse, error)
+// 	RegistrarCOEMContext(ctx context.Context, request *RegistrarCOEM) (*RegistrarCOEMResponse, error)
 
-	RectificarCOEMContext(ctx context.Context, request *RectificarCOEM) (*RectificarCOEMResponse, error)
+// 	/* Rectificar Comunicación de Embarque */
+// 	RectificarCOEM(request *RectificarCOEM) (*RectificarCOEMResponse, error)
 
-	/* Anular una Comunicación de Embarque */
-	AnularCOEM(request *AnularCOEM) (*AnularCOEMResponse, error)
+// 	RectificarCOEMContext(ctx context.Context, request *RectificarCOEM) (*RectificarCOEMResponse, error)
 
-	AnularCOEMContext(ctx context.Context, request *AnularCOEM) (*AnularCOEMResponse, error)
+// 	/* Anular una Comunicación de Embarque */
+// 	AnularCOEM(request *AnularCOEM) (*AnularCOEMResponse, error)
 
-	/* Cerrar Comunicación de Embarque */
-	CerrarCOEM(request *CerrarCOEM) (*CerrarCOEMResponse, error)
+// 	AnularCOEMContext(ctx context.Context, request *AnularCOEM) (*AnularCOEMResponse, error)
 
-	CerrarCOEMContext(ctx context.Context, request *CerrarCOEM) (*CerrarCOEMResponse, error)
+// 	/* Cerrar Comunicación de Embarque */
+// 	CerrarCOEM(request *CerrarCOEM) (*CerrarCOEMResponse, error)
 
-	/* Solicitar Cambio de Buque */
-	SolicitarCambioBuque(request *SolicitarCambioBuque) (*SolicitarCambioBuqueResponse, error)
+// 	CerrarCOEMContext(ctx context.Context, request *CerrarCOEM) (*CerrarCOEMResponse, error)
 
-	SolicitarCambioBuqueContext(ctx context.Context, request *SolicitarCambioBuque) (*SolicitarCambioBuqueResponse, error)
+// 	/* Solicitar Cambio de Buque */
+// 	SolicitarCambioBuque(request *SolicitarCambioBuque) (*SolicitarCambioBuqueResponse, error)
 
-	/* Solicitar Cambio de Fecha/s */
-	SolicitarCambioFechas(request *SolicitarCambioFechas) (*SolicitarCambioFechasResponse, error)
+// 	SolicitarCambioBuqueContext(ctx context.Context, request *SolicitarCambioBuque) (*SolicitarCambioBuqueResponse, error)
 
-	SolicitarCambioFechasContext(ctx context.Context, request *SolicitarCambioFechas) (*SolicitarCambioFechasResponse, error)
+// 	/* Solicitar Cambio de Fecha/s */
+// 	SolicitarCambioFechas(request *SolicitarCambioFechas) (*SolicitarCambioFechasResponse, error)
 
-	/* Solicitar Cambio de Lugar Operativo */
-	SolicitarCambioLOT(request *SolicitarCambioLOT) (*SolicitarCambioLOTResponse, error)
+// 	SolicitarCambioFechasContext(ctx context.Context, request *SolicitarCambioFechas) (*SolicitarCambioFechasResponse, error)
 
-	SolicitarCambioLOTContext(ctx context.Context, request *SolicitarCambioLOT) (*SolicitarCambioLOTResponse, error)
+// 	/* Solicitar Cambio de Lugar Operativo */
+// 	SolicitarCambioLOT(request *SolicitarCambioLOT) (*SolicitarCambioLOTResponse, error)
 
-	/* Solicitud de No Abordar */
-	SolicitarNoABordo(request *SolicitarNoABordo) (*SolicitarNoABordoResponse, error)
+// 	SolicitarCambioLOTContext(ctx context.Context, request *SolicitarCambioLOT) (*SolicitarCambioLOTResponse, error)
 
-	SolicitarNoABordoContext(ctx context.Context, request *SolicitarNoABordo) (*SolicitarNoABordoResponse, error)
+// 	/* Solicitud de No Abordar */
+// 	SolicitarNoABordo(request *SolicitarNoABordo) (*SolicitarNoABordoResponse, error)
 
-	/* Solicitud de Cierre de Carga Contenedores o Bultos Sueltos */
-	SolicitarCierreCargaContoBulto(request *SolicitarCierreCargaContoBulto) (*SolicitarCierreCargaContoBultoResponse, error)
+// 	SolicitarNoABordoContext(ctx context.Context, request *SolicitarNoABordo) (*SolicitarNoABordoResponse, error)
 
-	SolicitarCierreCargaContoBultoContext(ctx context.Context, request *SolicitarCierreCargaContoBulto) (*SolicitarCierreCargaContoBultoResponse, error)
+// 	/* Solicitud de Cierre de Carga Contenedores o Bultos Sueltos */
+// 	SolicitarCierreCargaContoBulto(request *SolicitarCierreCargaContoBulto) (*SolicitarCierreCargaContoBultoResponse, error)
 
-	/* Solicitud de Cierre de Carga Granel */
-	SolicitarCierreCargaGranel(request *SolicitarCierreCargaGranel) (*SolicitarCierreCargaGranelResponse, error)
+// 	SolicitarCierreCargaContoBultoContext(ctx context.Context, request *SolicitarCierreCargaContoBulto) (*SolicitarCierreCargaContoBultoResponse, error)
 
-	SolicitarCierreCargaGranelContext(ctx context.Context, request *SolicitarCierreCargaGranel) (*SolicitarCierreCargaGranelResponse, error)
+// 	/* Solicitud de Cierre de Carga Granel */
+// 	SolicitarCierreCargaGranel(request *SolicitarCierreCargaGranel) (*SolicitarCierreCargaGranelResponse, error)
 
-	/* Solicitar Anulación de Comunicación de Embarque */
-	SolicitarAnulacionCOEM(request *SolicitarAnulacionCOEM) (*SolicitarAnulacionCOEMResponse, error)
+// 	SolicitarCierreCargaGranelContext(ctx context.Context, request *SolicitarCierreCargaGranel) (*SolicitarCierreCargaGranelResponse, error)
 
-	SolicitarAnulacionCOEMContext(ctx context.Context, request *SolicitarAnulacionCOEM) (*SolicitarAnulacionCOEMResponse, error)
+// 	/* Solicitar Anulación de Comunicación de Embarque */
+// 	SolicitarAnulacionCOEM(request *SolicitarAnulacionCOEM) (*SolicitarAnulacionCOEMResponse, error)
 
-	Dummy(request *Dummy) (*DummyResponse, error)
+// 	SolicitarAnulacionCOEMContext(ctx context.Context, request *SolicitarAnulacionCOEM) (*SolicitarAnulacionCOEMResponse, error)
 
-	DummyContext(ctx context.Context, request *Dummy) (*DummyResponse, error)
-}
+// 	Dummy(request *Dummy) (*DummyResponse, error)
 
-type wgescomunicacionembarqueSoap struct {
-	client *soap.Client
-}
+// 	DummyContext(ctx context.Context, request *Dummy) (*DummyResponse, error)
+// }
 
-func NewWgescomunicacionembarqueSoap(client *soap.Client) WgescomunicacionembarqueSoap {
-	return &wgescomunicacionembarqueSoap{
-		client: client,
-	}
-}
+// type wgescomunicacionembarqueSoap struct {
+// 	client *soap.Client
+// }
 
-func (service *wgescomunicacionembarqueSoap) RegistrarCaratulaContext(ctx context.Context, request *RegistrarCaratula) (*RegistrarCaratulaResponse, error) {
-	response := new(RegistrarCaratulaResponse)
-	err := service.client.CallContext(ctx, "Ar.Gob.Afip.Dga.wgescomunicacionembarque/RegistrarCaratula", request, response)
-	if err != nil {
-		return nil, err
-	}
+// func NewWgescomunicacionembarqueSoap(client *soap.Client) WgescomunicacionembarqueSoap {
+// 	return &wgescomunicacionembarqueSoap{
+// 		client: client,
+// 	}
+// }
 
-	return response, nil
-}
+// func (service *wgescomunicacionembarqueSoap) RegistrarCaratulaContext(ctx context.Context, request *RegistrarCaratula) (*RegistrarCaratulaResponse, error) {
+// 	response := new(RegistrarCaratulaResponse)
+// 	err := service.client.CallContext(ctx, "Ar.Gob.Afip.Dga.wgescomunicacionembarque/RegistrarCaratula", request, response)
+// 	if err != nil {
+// 		return nil, err
+// 	}
 
-func (service *wgescomunicacionembarqueSoap) RegistrarCaratula(request *RegistrarCaratula) (*RegistrarCaratulaResponse, error) {
-	return service.RegistrarCaratulaContext(
-		context.Background(),
-		request,
-	)
-}
+// 	return response, nil
+// }
 
-func (service *wgescomunicacionembarqueSoap) RectificarCaratulaContext(ctx context.Context, request *RectificarCaratula) (*RectificarCaratulaResponse, error) {
-	response := new(RectificarCaratulaResponse)
-	err := service.client.CallContext(ctx, "Ar.Gob.Afip.Dga.wgescomunicacionembarque/RectificarCaratula", request, response)
-	if err != nil {
-		return nil, err
-	}
+// func (service *wgescomunicacionembarqueSoap) RegistrarCaratula(request *RegistrarCaratula) (*RegistrarCaratulaResponse, error) {
+// 	return service.RegistrarCaratulaContext(
+// 		context.Background(),
+// 		request,
+// 	)
+// }
 
-	return response, nil
-}
+// func (service *wgescomunicacionembarqueSoap) RectificarCaratulaContext(ctx context.Context, request *RectificarCaratula) (*RectificarCaratulaResponse, error) {
+// 	response := new(RectificarCaratulaResponse)
+// 	err := service.client.CallContext(ctx, "Ar.Gob.Afip.Dga.wgescomunicacionembarque/RectificarCaratula", request, response)
+// 	if err != nil {
+// 		return nil, err
+// 	}
 
-func (service *wgescomunicacionembarqueSoap) RectificarCaratula(request *RectificarCaratula) (*RectificarCaratulaResponse, error) {
-	return service.RectificarCaratulaContext(
-		context.Background(),
-		request,
-	)
-}
+// 	return response, nil
+// }
 
-func (service *wgescomunicacionembarqueSoap) AnularCaratulaContext(ctx context.Context, request *AnularCaratula) (*AnularCaratulaResponse, error) {
-	response := new(AnularCaratulaResponse)
-	err := service.client.CallContext(ctx, "Ar.Gob.Afip.Dga.wgescomunicacionembarque/AnularCaratula", request, response)
-	if err != nil {
-		return nil, err
-	}
+// func (service *wgescomunicacionembarqueSoap) RectificarCaratula(request *RectificarCaratula) (*RectificarCaratulaResponse, error) {
+// 	return service.RectificarCaratulaContext(
+// 		context.Background(),
+// 		request,
+// 	)
+// }
 
-	return response, nil
-}
+// func (service *wgescomunicacionembarqueSoap) AnularCaratulaContext(ctx context.Context, request *AnularCaratula) (*AnularCaratulaResponse, error) {
+// 	response := new(AnularCaratulaResponse)
+// 	err := service.client.CallContext(ctx, "Ar.Gob.Afip.Dga.wgescomunicacionembarque/AnularCaratula", request, response)
+// 	if err != nil {
+// 		return nil, err
+// 	}
 
-func (service *wgescomunicacionembarqueSoap) AnularCaratula(request *AnularCaratula) (*AnularCaratulaResponse, error) {
-	return service.AnularCaratulaContext(
-		context.Background(),
-		request,
-	)
-}
+// 	return response, nil
+// }
 
-func (service *wgescomunicacionembarqueSoap) RegistrarCOEMContext(ctx context.Context, request *RegistrarCOEM) (*RegistrarCOEMResponse, error) {
-	response := new(RegistrarCOEMResponse)
-	err := service.client.CallContext(ctx, "Ar.Gob.Afip.Dga.wgescomunicacionembarque/RegistrarCOEM", request, response)
-	if err != nil {
-		return nil, err
-	}
+// func (service *wgescomunicacionembarqueSoap) AnularCaratula(request *AnularCaratula) (*AnularCaratulaResponse, error) {
+// 	return service.AnularCaratulaContext(
+// 		context.Background(),
+// 		request,
+// 	)
+// }
 
-	return response, nil
-}
+// func (service *wgescomunicacionembarqueSoap) RegistrarCOEMContext(ctx context.Context, request *RegistrarCOEM) (*RegistrarCOEMResponse, error) {
+// 	response := new(RegistrarCOEMResponse)
+// 	err := service.client.CallContext(ctx, "Ar.Gob.Afip.Dga.wgescomunicacionembarque/RegistrarCOEM", request, response)
+// 	if err != nil {
+// 		return nil, err
+// 	}
 
-func (service *wgescomunicacionembarqueSoap) RegistrarCOEM(request *RegistrarCOEM) (*RegistrarCOEMResponse, error) {
-	return service.RegistrarCOEMContext(
-		context.Background(),
-		request,
-	)
-}
+// 	return response, nil
+// }
 
-func (service *wgescomunicacionembarqueSoap) RectificarCOEMContext(ctx context.Context, request *RectificarCOEM) (*RectificarCOEMResponse, error) {
-	response := new(RectificarCOEMResponse)
-	err := service.client.CallContext(ctx, "Ar.Gob.Afip.Dga.wgescomunicacionembarque/RectificarCOEM", request, response)
-	if err != nil {
-		return nil, err
-	}
+// func (service *wgescomunicacionembarqueSoap) RegistrarCOEM(request *RegistrarCOEM) (*RegistrarCOEMResponse, error) {
+// 	return service.RegistrarCOEMContext(
+// 		context.Background(),
+// 		request,
+// 	)
+// }
 
-	return response, nil
-}
+// func (service *wgescomunicacionembarqueSoap) RectificarCOEMContext(ctx context.Context, request *RectificarCOEM) (*RectificarCOEMResponse, error) {
+// 	response := new(RectificarCOEMResponse)
+// 	err := service.client.CallContext(ctx, "Ar.Gob.Afip.Dga.wgescomunicacionembarque/RectificarCOEM", request, response)
+// 	if err != nil {
+// 		return nil, err
+// 	}
 
-func (service *wgescomunicacionembarqueSoap) RectificarCOEM(request *RectificarCOEM) (*RectificarCOEMResponse, error) {
-	return service.RectificarCOEMContext(
-		context.Background(),
-		request,
-	)
-}
+// 	return response, nil
+// }
 
-func (service *wgescomunicacionembarqueSoap) AnularCOEMContext(ctx context.Context, request *AnularCOEM) (*AnularCOEMResponse, error) {
-	response := new(AnularCOEMResponse)
-	err := service.client.CallContext(ctx, "Ar.Gob.Afip.Dga.wgescomunicacionembarque/AnularCOEM", request, response)
-	if err != nil {
-		return nil, err
-	}
+// func (service *wgescomunicacionembarqueSoap) RectificarCOEM(request *RectificarCOEM) (*RectificarCOEMResponse, error) {
+// 	return service.RectificarCOEMContext(
+// 		context.Background(),
+// 		request,
+// 	)
+// }
 
-	return response, nil
-}
+// func (service *wgescomunicacionembarqueSoap) AnularCOEMContext(ctx context.Context, request *AnularCOEM) (*AnularCOEMResponse, error) {
+// 	response := new(AnularCOEMResponse)
+// 	err := service.client.CallContext(ctx, "Ar.Gob.Afip.Dga.wgescomunicacionembarque/AnularCOEM", request, response)
+// 	if err != nil {
+// 		return nil, err
+// 	}
 
-func (service *wgescomunicacionembarqueSoap) AnularCOEM(request *AnularCOEM) (*AnularCOEMResponse, error) {
-	return service.AnularCOEMContext(
-		context.Background(),
-		request,
-	)
-}
+// 	return response, nil
+// }
 
-func (service *wgescomunicacionembarqueSoap) CerrarCOEMContext(ctx context.Context, request *CerrarCOEM) (*CerrarCOEMResponse, error) {
-	response := new(CerrarCOEMResponse)
-	err := service.client.CallContext(ctx, "Ar.Gob.Afip.Dga.wgescomunicacionembarque/CerrarCOEM", request, response)
-	if err != nil {
-		return nil, err
-	}
+// func (service *wgescomunicacionembarqueSoap) AnularCOEM(request *AnularCOEM) (*AnularCOEMResponse, error) {
+// 	return service.AnularCOEMContext(
+// 		context.Background(),
+// 		request,
+// 	)
+// }
 
-	return response, nil
-}
+// func (service *wgescomunicacionembarqueSoap) CerrarCOEMContext(ctx context.Context, request *CerrarCOEM) (*CerrarCOEMResponse, error) {
+// 	response := new(CerrarCOEMResponse)
+// 	err := service.client.CallContext(ctx, "Ar.Gob.Afip.Dga.wgescomunicacionembarque/CerrarCOEM", request, response)
+// 	if err != nil {
+// 		return nil, err
+// 	}
 
-func (service *wgescomunicacionembarqueSoap) CerrarCOEM(request *CerrarCOEM) (*CerrarCOEMResponse, error) {
-	return service.CerrarCOEMContext(
-		context.Background(),
-		request,
-	)
-}
+// 	return response, nil
+// }
 
-func (service *wgescomunicacionembarqueSoap) SolicitarCambioBuqueContext(ctx context.Context, request *SolicitarCambioBuque) (*SolicitarCambioBuqueResponse, error) {
-	response := new(SolicitarCambioBuqueResponse)
-	err := service.client.CallContext(ctx, "Ar.Gob.Afip.Dga.wgescomunicacionembarque/SolicitarCambioBuque", request, response)
-	if err != nil {
-		return nil, err
-	}
+// func (service *wgescomunicacionembarqueSoap) CerrarCOEM(request *CerrarCOEM) (*CerrarCOEMResponse, error) {
+// 	return service.CerrarCOEMContext(
+// 		context.Background(),
+// 		request,
+// 	)
+// }
 
-	return response, nil
-}
+// func (service *wgescomunicacionembarqueSoap) SolicitarCambioBuqueContext(ctx context.Context, request *SolicitarCambioBuque) (*SolicitarCambioBuqueResponse, error) {
+// 	response := new(SolicitarCambioBuqueResponse)
+// 	err := service.client.CallContext(ctx, "Ar.Gob.Afip.Dga.wgescomunicacionembarque/SolicitarCambioBuque", request, response)
+// 	if err != nil {
+// 		return nil, err
+// 	}
 
-func (service *wgescomunicacionembarqueSoap) SolicitarCambioBuque(request *SolicitarCambioBuque) (*SolicitarCambioBuqueResponse, error) {
-	return service.SolicitarCambioBuqueContext(
-		context.Background(),
-		request,
-	)
-}
+// 	return response, nil
+// }
 
-func (service *wgescomunicacionembarqueSoap) SolicitarCambioFechasContext(ctx context.Context, request *SolicitarCambioFechas) (*SolicitarCambioFechasResponse, error) {
-	response := new(SolicitarCambioFechasResponse)
-	err := service.client.CallContext(ctx, "Ar.Gob.Afip.Dga.wgescomunicacionembarque/SolicitarCambioFechas", request, response)
-	if err != nil {
-		return nil, err
-	}
+// func (service *wgescomunicacionembarqueSoap) SolicitarCambioBuque(request *SolicitarCambioBuque) (*SolicitarCambioBuqueResponse, error) {
+// 	return service.SolicitarCambioBuqueContext(
+// 		context.Background(),
+// 		request,
+// 	)
+// }
 
-	return response, nil
-}
+// func (service *wgescomunicacionembarqueSoap) SolicitarCambioFechasContext(ctx context.Context, request *SolicitarCambioFechas) (*SolicitarCambioFechasResponse, error) {
+// 	response := new(SolicitarCambioFechasResponse)
+// 	err := service.client.CallContext(ctx, "Ar.Gob.Afip.Dga.wgescomunicacionembarque/SolicitarCambioFechas", request, response)
+// 	if err != nil {
+// 		return nil, err
+// 	}
 
-func (service *wgescomunicacionembarqueSoap) SolicitarCambioFechas(request *SolicitarCambioFechas) (*SolicitarCambioFechasResponse, error) {
-	return service.SolicitarCambioFechasContext(
-		context.Background(),
-		request,
-	)
-}
+// 	return response, nil
+// }
 
-func (service *wgescomunicacionembarqueSoap) SolicitarCambioLOTContext(ctx context.Context, request *SolicitarCambioLOT) (*SolicitarCambioLOTResponse, error) {
-	response := new(SolicitarCambioLOTResponse)
-	err := service.client.CallContext(ctx, "Ar.Gob.Afip.Dga.wgescomunicacionembarque/SolicitarCambioLOT", request, response)
-	if err != nil {
-		return nil, err
-	}
+// func (service *wgescomunicacionembarqueSoap) SolicitarCambioFechas(request *SolicitarCambioFechas) (*SolicitarCambioFechasResponse, error) {
+// 	return service.SolicitarCambioFechasContext(
+// 		context.Background(),
+// 		request,
+// 	)
+// }
 
-	return response, nil
-}
+// func (service *wgescomunicacionembarqueSoap) SolicitarCambioLOTContext(ctx context.Context, request *SolicitarCambioLOT) (*SolicitarCambioLOTResponse, error) {
+// 	response := new(SolicitarCambioLOTResponse)
+// 	err := service.client.CallContext(ctx, "Ar.Gob.Afip.Dga.wgescomunicacionembarque/SolicitarCambioLOT", request, response)
+// 	if err != nil {
+// 		return nil, err
+// 	}
 
-func (service *wgescomunicacionembarqueSoap) SolicitarCambioLOT(request *SolicitarCambioLOT) (*SolicitarCambioLOTResponse, error) {
-	return service.SolicitarCambioLOTContext(
-		context.Background(),
-		request,
-	)
-}
+// 	return response, nil
+// }
 
-func (service *wgescomunicacionembarqueSoap) SolicitarNoABordoContext(ctx context.Context, request *SolicitarNoABordo) (*SolicitarNoABordoResponse, error) {
-	response := new(SolicitarNoABordoResponse)
-	err := service.client.CallContext(ctx, "Ar.Gob.Afip.Dga.wgescomunicacionembarque/SolicitarNoABordo", request, response)
-	if err != nil {
-		return nil, err
-	}
+// func (service *wgescomunicacionembarqueSoap) SolicitarCambioLOT(request *SolicitarCambioLOT) (*SolicitarCambioLOTResponse, error) {
+// 	return service.SolicitarCambioLOTContext(
+// 		context.Background(),
+// 		request,
+// 	)
+// }
 
-	return response, nil
-}
+// func (service *wgescomunicacionembarqueSoap) SolicitarNoABordoContext(ctx context.Context, request *SolicitarNoABordo) (*SolicitarNoABordoResponse, error) {
+// 	response := new(SolicitarNoABordoResponse)
+// 	err := service.client.CallContext(ctx, "Ar.Gob.Afip.Dga.wgescomunicacionembarque/SolicitarNoABordo", request, response)
+// 	if err != nil {
+// 		return nil, err
+// 	}
 
-func (service *wgescomunicacionembarqueSoap) SolicitarNoABordo(request *SolicitarNoABordo) (*SolicitarNoABordoResponse, error) {
-	return service.SolicitarNoABordoContext(
-		context.Background(),
-		request,
-	)
-}
+// 	return response, nil
+// }
 
-func (service *wgescomunicacionembarqueSoap) SolicitarCierreCargaContoBultoContext(ctx context.Context, request *SolicitarCierreCargaContoBulto) (*SolicitarCierreCargaContoBultoResponse, error) {
-	response := new(SolicitarCierreCargaContoBultoResponse)
-	err := service.client.CallContext(ctx, "Ar.Gob.Afip.Dga.wgescomunicacionembarque/SolicitarCierreCargaContoBulto", request, response)
-	if err != nil {
-		return nil, err
-	}
+// func (service *wgescomunicacionembarqueSoap) SolicitarNoABordo(request *SolicitarNoABordo) (*SolicitarNoABordoResponse, error) {
+// 	return service.SolicitarNoABordoContext(
+// 		context.Background(),
+// 		request,
+// 	)
+// }
 
-	return response, nil
-}
+// func (service *wgescomunicacionembarqueSoap) SolicitarCierreCargaContoBultoContext(ctx context.Context, request *SolicitarCierreCargaContoBulto) (*SolicitarCierreCargaContoBultoResponse, error) {
+// 	response := new(SolicitarCierreCargaContoBultoResponse)
+// 	err := service.client.CallContext(ctx, "Ar.Gob.Afip.Dga.wgescomunicacionembarque/SolicitarCierreCargaContoBulto", request, response)
+// 	if err != nil {
+// 		return nil, err
+// 	}
 
-func (service *wgescomunicacionembarqueSoap) SolicitarCierreCargaContoBulto(request *SolicitarCierreCargaContoBulto) (*SolicitarCierreCargaContoBultoResponse, error) {
-	return service.SolicitarCierreCargaContoBultoContext(
-		context.Background(),
-		request,
-	)
-}
+// 	return response, nil
+// }
 
-func (service *wgescomunicacionembarqueSoap) SolicitarCierreCargaGranelContext(ctx context.Context, request *SolicitarCierreCargaGranel) (*SolicitarCierreCargaGranelResponse, error) {
-	response := new(SolicitarCierreCargaGranelResponse)
-	err := service.client.CallContext(ctx, "Ar.Gob.Afip.Dga.wgescomunicacionembarque/SolicitarCierreCargaGranel", request, response)
-	if err != nil {
-		return nil, err
-	}
+// func (service *wgescomunicacionembarqueSoap) SolicitarCierreCargaContoBulto(request *SolicitarCierreCargaContoBulto) (*SolicitarCierreCargaContoBultoResponse, error) {
+// 	return service.SolicitarCierreCargaContoBultoContext(
+// 		context.Background(),
+// 		request,
+// 	)
+// }
 
-	return response, nil
-}
+// func (service *wgescomunicacionembarqueSoap) SolicitarCierreCargaGranelContext(ctx context.Context, request *SolicitarCierreCargaGranel) (*SolicitarCierreCargaGranelResponse, error) {
+// 	response := new(SolicitarCierreCargaGranelResponse)
+// 	err := service.client.CallContext(ctx, "Ar.Gob.Afip.Dga.wgescomunicacionembarque/SolicitarCierreCargaGranel", request, response)
+// 	if err != nil {
+// 		return nil, err
+// 	}
 
-func (service *wgescomunicacionembarqueSoap) SolicitarCierreCargaGranel(request *SolicitarCierreCargaGranel) (*SolicitarCierreCargaGranelResponse, error) {
-	return service.SolicitarCierreCargaGranelContext(
-		context.Background(),
-		request,
-	)
-}
+// 	return response, nil
+// }
 
-func (service *wgescomunicacionembarqueSoap) SolicitarAnulacionCOEMContext(ctx context.Context, request *SolicitarAnulacionCOEM) (*SolicitarAnulacionCOEMResponse, error) {
-	response := new(SolicitarAnulacionCOEMResponse)
-	err := service.client.CallContext(ctx, "Ar.Gob.Afip.Dga.wgescomunicacionembarque/SolicitarAnulacionCOEM", request, response)
-	if err != nil {
-		return nil, err
-	}
+// func (service *wgescomunicacionembarqueSoap) SolicitarCierreCargaGranel(request *SolicitarCierreCargaGranel) (*SolicitarCierreCargaGranelResponse, error) {
+// 	return service.SolicitarCierreCargaGranelContext(
+// 		context.Background(),
+// 		request,
+// 	)
+// }
 
-	return response, nil
-}
+// func (service *wgescomunicacionembarqueSoap) SolicitarAnulacionCOEMContext(ctx context.Context, request *SolicitarAnulacionCOEM) (*SolicitarAnulacionCOEMResponse, error) {
+// 	response := new(SolicitarAnulacionCOEMResponse)
+// 	err := service.client.CallContext(ctx, "Ar.Gob.Afip.Dga.wgescomunicacionembarque/SolicitarAnulacionCOEM", request, response)
+// 	if err != nil {
+// 		return nil, err
+// 	}
 
-func (service *wgescomunicacionembarqueSoap) SolicitarAnulacionCOEM(request *SolicitarAnulacionCOEM) (*SolicitarAnulacionCOEMResponse, error) {
-	return service.SolicitarAnulacionCOEMContext(
-		context.Background(),
-		request,
-	)
-}
+// 	return response, nil
+// }
 
-func (service *wgescomunicacionembarqueSoap) DummyContext(ctx context.Context, request *Dummy) (*DummyResponse, error) {
-	response := new(DummyResponse)
-	err := service.client.CallContext(ctx, "Ar.Gob.Afip.Dga.wgescomunicacionembarque/Dummy", request, response)
-	if err != nil {
-		return nil, err
-	}
+// func (service *wgescomunicacionembarqueSoap) SolicitarAnulacionCOEM(request *SolicitarAnulacionCOEM) (*SolicitarAnulacionCOEMResponse, error) {
+// 	return service.SolicitarAnulacionCOEMContext(
+// 		context.Background(),
+// 		request,
+// 	)
+// }
 
-	return response, nil
-}
+// func (service *wgescomunicacionembarqueSoap) DummyContext(ctx context.Context, request *Dummy) (*DummyResponse, error) {
+// 	response := new(DummyResponse)
+// 	err := service.client.CallContext(ctx, "Ar.Gob.Afip.Dga.wgescomunicacionembarque/Dummy", request, response)
+// 	if err != nil {
+// 		return nil, err
+// 	}
 
-func (service *wgescomunicacionembarqueSoap) Dummy(request *Dummy) (*DummyResponse, error) {
-	return service.DummyContext(
-		context.Background(),
-		request,
-	)
-}
+// 	return response, nil
+// }
+
+// func (service *wgescomunicacionembarqueSoap) Dummy(request *Dummy) (*DummyResponse, error) {
+// 	return service.DummyContext(
+// 		context.Background(),
+// 		request,
+// 	)
+// }

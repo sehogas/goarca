@@ -2,13 +2,12 @@ package main
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
-	"strings"
 
-	"github.com/sehogas/goarca/afip"
 	"github.com/sehogas/goarca/internal/dto"
 	"github.com/sehogas/goarca/internal/util"
-	"github.com/sehogas/goarca/internal/util/validator"
+	"github.com/sehogas/goarca/ws/wscoem"
 )
 
 // DummyHandler godoc
@@ -18,22 +17,18 @@ import (
 //	@Tags			Comunicación de Embarque
 //	@Produce		json
 //	@Param			x-api-key	header		string	true	"API Key de acceso"
-//	@Success		200			{object}	dto.DummyResponse
+//	@Success		200			{object}	wscoem.ResultadoEjecucionDummy
 //	@Failure		401			{object}	dto.ErrorResponse
 //	@Failure		500			{object}	dto.ErrorResponse
 //
-//	@Router			/coem/dummy [get]
+//	@Router			/coem/Dummy [get]
 func DummyCoemHandler(w http.ResponseWriter, r *http.Request) {
-	appServer, authServer, dbServer, err := Wscoem.Dummy()
+	resultado, err := Wscoem.Dummy()
 	if err != nil {
 		util.HttpResponseJSON(w, http.StatusInternalServerError, &dto.ErrorResponse{Error: err.Error()}, err)
 		return
 	}
-	util.HttpResponseJSON(w, http.StatusOK, &dto.DummyResponse{
-		AppServer:  appServer,
-		AuthServer: authServer,
-		DbServer:   dbServer,
-	}, nil)
+	util.HttpResponseJSON(w, http.StatusOK, resultado, nil)
 }
 
 // RegistrarCaratulaHandler godoc
@@ -43,69 +38,30 @@ func DummyCoemHandler(w http.ResponseWriter, r *http.Request) {
 //	@Tags			Comunicación de Embarque
 //	@Accept			json
 //	@Produce		json
-//	@Param			x-api-key	header		string				true	"API Key de acceso"
-//	@Param			request		body		afip.CaratulaParams	true	"RegistrarCaratulaRequest"
-//	@Success		200			{object}	dto.MessageResponse
-//	@Failure		400			{object}	dto.ErrorResponse
-//	@Failure		401			{object}	dto.ErrorResponse
-//	@Failure		500			{object}	dto.ErrorResponse
-//	@Router			/coem/registrar-caratula [post]
-func RegistrarCaratulaHandler(w http.ResponseWriter, r *http.Request) {
-	var post afip.CaratulaParams
-	err := json.NewDecoder(r.Body).Decode(&post)
-	if err != nil {
-		util.HttpResponseJSON(w, http.StatusBadRequest, &dto.ErrorResponse{Error: "error leyendo parámetros de la solicitud"}, err)
-		return
-	}
-
-	if err := validate.Struct(post); err != nil {
-		util.HttpResponseJSON(w, http.StatusBadRequest, &dto.ErrorResponse{Error: strings.Join(validator.ToErrResponse(err).Errors, ", ")}, err)
-		return
-	}
-
-	identificador, err := Wscoem.RegistrarCaratula(&post)
-	if err != nil {
-		util.HttpResponseJSON(w, http.StatusInternalServerError, &dto.ErrorResponse{Error: err.Error()}, err)
-		return
-	}
-
-	util.HttpResponseJSON(w, http.StatusOK, &dto.MessageResponse{Message: identificador}, nil)
-}
-
-// RectificarCaratulaHandler godoc
-//
-//	@Summary		Rectificar Carátula
-//	@Description	Permite rectificar los datos de una Carátula previamente creada con el método RegistrarCaratula. Entre las restricciones, no se permitirá cargar datos idénticos a otra Carátula existente, ni modificar aquella carátula que tenga COEMs asociados.
-//	@Tags			Comunicación de Embarque
-//	@Accept			json
-//	@Produce		json
 //	@Param			x-api-key	header		string							true	"API Key de acceso"
-//	@Param			request		body		afip.RectificarCaratulaParams	true	"RectificarCaratulaRequest"
+//	@Param			request		body		wscoem.RegistrarCaratulaRequest	true	"RegistrarCaratulaRequest"
 //	@Success		200			{object}	dto.MessageResponse
 //	@Failure		400			{object}	dto.ErrorResponse
 //	@Failure		401			{object}	dto.ErrorResponse
 //	@Failure		500			{object}	dto.ErrorResponse
-//	@Router			/coem/rectificar-caratula [put]
-func RectificarCaratulaHandler(w http.ResponseWriter, r *http.Request) {
-	var post afip.RectificarCaratulaParams
+//	@Router			/coem/RegistrarCaratula [post]
+func RegistrarCaratulaHandler(w http.ResponseWriter, r *http.Request) {
+	var post wscoem.RegistrarCaratulaRequest
 	err := json.NewDecoder(r.Body).Decode(&post)
 	if err != nil {
 		util.HttpResponseJSON(w, http.StatusBadRequest, &dto.ErrorResponse{Error: "error leyendo parámetros de la solicitud"}, err)
 		return
 	}
 
-	if err := validate.Struct(post); err != nil {
-		util.HttpResponseJSON(w, http.StatusBadRequest, &dto.ErrorResponse{Error: strings.Join(validator.ToErrResponse(err).Errors, ", ")}, err)
-		return
-	}
+	log.Println(post)
 
-	identificador, err := Wscoem.RectificarCaratula(&post)
+	resultado, err := Wscoem.RegistrarCaratula(&post)
 	if err != nil {
 		util.HttpResponseJSON(w, http.StatusInternalServerError, &dto.ErrorResponse{Error: err.Error()}, err)
 		return
 	}
 
-	util.HttpResponseJSON(w, http.StatusOK, &dto.MessageResponse{Message: identificador}, nil)
+	util.HttpResponseJSON(w, http.StatusOK, resultado, nil)
 }
 
 // AnularCaratulaHandler godoc
@@ -115,27 +71,22 @@ func RectificarCaratulaHandler(w http.ResponseWriter, r *http.Request) {
 //	@Tags			Comunicación de Embarque
 //	@Accept			json
 //	@Produce		json
-//	@Param			x-api-key	header		string								true	"API Key de acceso"
-//	@Param			request		body		afip.IdentificadorCaraturaParams	true	"AnularCaratulaRequest"
-//	@Success		200			{object}	dto.MessageResponse
+//	@Param			x-api-key	header		string							true	"API Key de acceso"
+//	@Param			request		body		wscoem.AnularCaratulaRequest	true	"AnularCaratulaRequest"
+//	@Success		200			{object}	wscoem.AnularEmbarqueRta
 //	@Failure		400			{object}	dto.ErrorResponse
 //	@Failure		401			{object}	dto.ErrorResponse
 //	@Failure		500			{object}	dto.ErrorResponse
-//	@Router			/coem/anular-caratula [delete]
+//	@Router			/coem/AnularCaratula [delete]
 func AnularCaratulaHandler(w http.ResponseWriter, r *http.Request) {
-	var post afip.IdentificadorCaraturaParams
+	var post wscoem.AnularCaratulaRequest
 	err := json.NewDecoder(r.Body).Decode(&post)
 	if err != nil {
 		util.HttpResponseJSON(w, http.StatusBadRequest, &dto.ErrorResponse{Error: "error leyendo parámetros de la solicitud"}, err)
 		return
 	}
 
-	if err := validate.Struct(post); err != nil {
-		util.HttpResponseJSON(w, http.StatusBadRequest, &dto.ErrorResponse{Error: strings.Join(validator.ToErrResponse(err).Errors, ", ")}, err)
-		return
-	}
-
-	identificador, err := Wscoem.AnularCaratula(&afip.IdentificadorCaraturaParams{
+	resultado, err := Wscoem.AnularCaratula(&wscoem.AnularCaratulaRequest{
 		IdentificadorCaratula: post.IdentificadorCaratula,
 	})
 	if err != nil {
@@ -143,115 +94,38 @@ func AnularCaratulaHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	util.HttpResponseJSON(w, http.StatusOK, &dto.MessageResponse{Message: identificador}, nil)
+	util.HttpResponseJSON(w, http.StatusOK, resultado, nil)
 }
 
-// SolicitarCambioBuqueHandler godoc
+// RectificarCaratulaHandler godoc
 //
-//	@Summary		Solicitar cambio de Buque
-//	@Description	Método a través del cual se modificarán el Identificador y/o nombre del buque. Deben existir COEMs presentadas o autorizadas, caso contrario aún se puede enviar la rectificación de la carátula. No debe existir solicitud de cierre de carga iniciada o aprobada.
+//	@Summary		Rectificar Carátula
+//	@Description	Permite rectificar los datos de una Carátula previamente creada con el método RegistrarCaratula. Entre las restricciones, no se permitirá cargar datos idénticos a otra Carátula existente, ni modificar aquella carátula que tenga COEMs asociados.
 //	@Tags			Comunicación de Embarque
 //	@Accept			json
 //	@Produce		json
-//	@Param			x-api-key	header		string					true	"API Key de acceso"
-//	@Param			request		body		afip.CambioBuqueParams	true	"SolicitarCambioBuqueRequest"
-//	@Success		200			{object}	dto.MessageResponse
+//	@Param			x-api-key	header		string								true	"API Key de acceso"
+//	@Param			request		body		wscoem.RectificarCaratulaRequest	true	"RectificarCaratulaRequest"
+//	@Success		200			{object}	wscoem.RectificarEmbarqueRta
 //	@Failure		400			{object}	dto.ErrorResponse
 //	@Failure		401			{object}	dto.ErrorResponse
 //	@Failure		500			{object}	dto.ErrorResponse
-//	@Router			/coem/solicitar-cambio-buque [put]
-func SolicitarCambioBuqueHandler(w http.ResponseWriter, r *http.Request) {
-	var post afip.CambioBuqueParams
+//	@Router			/coem/RectificarCaratula [put]
+func RectificarCaratulaHandler(w http.ResponseWriter, r *http.Request) {
+	var post wscoem.RectificarCaratulaRequest
 	err := json.NewDecoder(r.Body).Decode(&post)
 	if err != nil {
 		util.HttpResponseJSON(w, http.StatusBadRequest, &dto.ErrorResponse{Error: "error leyendo parámetros de la solicitud"}, err)
 		return
 	}
 
-	if err := validate.Struct(post); err != nil {
-		util.HttpResponseJSON(w, http.StatusBadRequest, &dto.ErrorResponse{Error: strings.Join(validator.ToErrResponse(err).Errors, ", ")}, err)
-		return
-	}
-
-	identificador, err := Wscoem.SolicitarCambioBuque(&post)
+	resultado, err := Wscoem.RectificarCaratula(&post)
 	if err != nil {
 		util.HttpResponseJSON(w, http.StatusInternalServerError, &dto.ErrorResponse{Error: err.Error()}, err)
 		return
 	}
 
-	util.HttpResponseJSON(w, http.StatusOK, &dto.MessageResponse{Message: identificador}, nil)
-}
-
-// SolicitarCambioFechasHandler godoc
-//
-//	@Summary		Solicitar cambio de Fechas
-//	@Description	Método a través del cual se modifican las Fechas de Arribo y/o Fecha de Zarpada de la Carátula. Deben existir COEMs presentadas o autorizadas, caso contrario aún se puede enviar la rectificación de la carátula. No debe existir solicitud de cierre de carga iniciada o aprobada.
-//	@Tags			Comunicación de Embarque
-//	@Accept			json
-//	@Produce		json
-//	@Param			x-api-key	header		string					true	"API Key de acceso"
-//	@Param			request		body		afip.CambioFechasParams	true	"CambioFechasParamsRequest"
-//	@Success		200			{object}	dto.MessageResponse
-//	@Failure		400			{object}	dto.ErrorResponse
-//	@Failure		401			{object}	dto.ErrorResponse
-//	@Failure		500			{object}	dto.ErrorResponse
-//	@Router			/coem/solicitar-cambio-fechas [put]
-func SolicitarCambioFechasHandler(w http.ResponseWriter, r *http.Request) {
-	var post afip.CambioFechasParams
-	err := json.NewDecoder(r.Body).Decode(&post)
-	if err != nil {
-		util.HttpResponseJSON(w, http.StatusBadRequest, &dto.ErrorResponse{Error: "error leyendo parámetros de la solicitud"}, err)
-		return
-	}
-
-	if err := validate.Struct(post); err != nil {
-		util.HttpResponseJSON(w, http.StatusBadRequest, &dto.ErrorResponse{Error: strings.Join(validator.ToErrResponse(err).Errors, ", ")}, err)
-		return
-	}
-
-	identificador, err := Wscoem.SolicitarCambioFechas(&post)
-	if err != nil {
-		util.HttpResponseJSON(w, http.StatusInternalServerError, &dto.ErrorResponse{Error: err.Error()}, err)
-		return
-	}
-
-	util.HttpResponseJSON(w, http.StatusOK, &dto.MessageResponse{Message: identificador}, nil)
-}
-
-// SolicitarCambioLOTHandler godoc
-//
-//	@Summary		Solicitar cambio de LOT
-//	@Description	Método a través del cual se modifica el Lugar Operativo de la Carátula. Deben existir COEMs presentadas o autorizadas, caso contrario aún se puede enviar la rectificación de la carátula. No debe existir solicitud de cierre de carga iniciada o aprobada.
-//	@Tags			Comunicación de Embarque
-//	@Accept			json
-//	@Produce		json
-//	@Param			x-api-key	header		string					true	"API Key de acceso"
-//	@Param			request		body		afip.CambioLOTParams	true	"CambioLOTParamsRequest"
-//	@Success		200			{object}	dto.MessageResponse
-//	@Failure		400			{object}	dto.ErrorResponse
-//	@Failure		401			{object}	dto.ErrorResponse
-//	@Failure		500			{object}	dto.ErrorResponse
-//	@Router			/coem/solicitar-cambio-lot [put]
-func SolicitarCambioLOTHandler(w http.ResponseWriter, r *http.Request) {
-	var post afip.CambioLOTParams
-	err := json.NewDecoder(r.Body).Decode(&post)
-	if err != nil {
-		util.HttpResponseJSON(w, http.StatusBadRequest, &dto.ErrorResponse{Error: "error leyendo parámetros de la solicitud"}, err)
-		return
-	}
-
-	if err := validate.Struct(post); err != nil {
-		util.HttpResponseJSON(w, http.StatusBadRequest, &dto.ErrorResponse{Error: strings.Join(validator.ToErrResponse(err).Errors, ", ")}, err)
-		return
-	}
-
-	identificador, err := Wscoem.SolicitarCambioLOT(&post)
-	if err != nil {
-		util.HttpResponseJSON(w, http.StatusInternalServerError, &dto.ErrorResponse{Error: err.Error()}, err)
-		return
-	}
-
-	util.HttpResponseJSON(w, http.StatusOK, &dto.MessageResponse{Message: identificador}, nil)
+	util.HttpResponseJSON(w, http.StatusOK, resultado, nil)
 }
 
 // RegistrarCOEMHandler godoc
@@ -262,32 +136,119 @@ func SolicitarCambioLOTHandler(w http.ResponseWriter, r *http.Request) {
 //	@Accept			json
 //	@Produce		json
 //	@Param			x-api-key	header		string						true	"API Key de acceso"
-//	@Param			request		body		afip.RegistrarCOEMParams	true	"RegistrarCOEMRequest"
-//	@Success		200			{object}	dto.MessageResponse
+//	@Param			request		body		wscoem.RegistrarCOEMRequest	true	"RegistrarCOEMRequest"
+//	@Success		200			{object}	wscoem.RegistrarEmbarqueRta
 //	@Failure		400			{object}	dto.ErrorResponse
 //	@Failure		401			{object}	dto.ErrorResponse
 //	@Failure		500			{object}	dto.ErrorResponse
-//	@Router			/coem/registrar-coem [post]
+//	@Router			/coem/RegistrarCOEM [post]
 func RegistrarCOEMHandler(w http.ResponseWriter, r *http.Request) {
-	var post afip.RegistrarCOEMParams
+	var post wscoem.RegistrarCOEMRequest
 	err := json.NewDecoder(r.Body).Decode(&post)
 	if err != nil {
 		util.HttpResponseJSON(w, http.StatusBadRequest, &dto.ErrorResponse{Error: "error leyendo parámetros de la solicitud"}, err)
 		return
 	}
 
-	if err := validate.Struct(post); err != nil {
-		util.HttpResponseJSON(w, http.StatusBadRequest, &dto.ErrorResponse{Error: strings.Join(validator.ToErrResponse(err).Errors, ", ")}, err)
-		return
-	}
-
-	identificador, err := Wscoem.RegistrarCOEM(&post)
+	resultado, err := Wscoem.RegistrarCOEM(&post)
 	if err != nil {
 		util.HttpResponseJSON(w, http.StatusInternalServerError, &dto.ErrorResponse{Error: err.Error()}, err)
 		return
 	}
 
-	util.HttpResponseJSON(w, http.StatusOK, &dto.MessageResponse{Message: identificador}, nil)
+	util.HttpResponseJSON(w, http.StatusOK, resultado, nil)
+}
+
+// SolicitarCambioBuqueHandler godoc
+//
+//	@Summary		Solicitar cambio de Buque
+//	@Description	Método a través del cual se modificarán el Identificador y/o nombre del buque. Deben existir COEMs presentadas o autorizadas, caso contrario aún se puede enviar la rectificación de la carátula. No debe existir solicitud de cierre de carga iniciada o aprobada.
+//	@Tags			Comunicación de Embarque
+//	@Accept			json
+//	@Produce		json
+//	@Param			x-api-key	header		string								true	"API Key de acceso"
+//	@Param			request		body		wscoem.SolicitarCambioBuqueRequest	true	"SolicitarCambioBuqueRequest"
+//	@Success		200			{object}	wscoem.RegistrarEmbarqueRta
+//	@Failure		400			{object}	dto.ErrorResponse
+//	@Failure		401			{object}	dto.ErrorResponse
+//	@Failure		500			{object}	dto.ErrorResponse
+//	@Router			/coem/SolicitarCambioBuque [put]
+func SolicitarCambioBuqueHandler(w http.ResponseWriter, r *http.Request) {
+	var post wscoem.SolicitarCambioBuqueRequest
+	err := json.NewDecoder(r.Body).Decode(&post)
+	if err != nil {
+		util.HttpResponseJSON(w, http.StatusBadRequest, &dto.ErrorResponse{Error: "error leyendo parámetros de la solicitud"}, err)
+		return
+	}
+
+	resultado, err := Wscoem.SolicitarCambioBuque(&post)
+	if err != nil {
+		util.HttpResponseJSON(w, http.StatusInternalServerError, &dto.ErrorResponse{Error: err.Error()}, err)
+		return
+	}
+
+	util.HttpResponseJSON(w, http.StatusOK, resultado, nil)
+}
+
+// SolicitarCambioFechasHandler godoc
+//
+//	@Summary		Solicitar cambio de Fechas
+//	@Description	Método a través del cual se modifican las Fechas de Arribo y/o Fecha de Zarpada de la Carátula. Deben existir COEMs presentadas o autorizadas, caso contrario aún se puede enviar la rectificación de la carátula. No debe existir solicitud de cierre de carga iniciada o aprobada.
+//	@Tags			Comunicación de Embarque
+//	@Accept			json
+//	@Produce		json
+//	@Param			x-api-key	header		string								true	"API Key de acceso"
+//	@Param			request		body		wscoem.SolicitarCambioFechasRequest	true	"SolicitarCambioFechasRequest"
+//	@Success		200			{object}	wscoem.RegistrarEmbarqueRta
+//	@Failure		400			{object}	dto.ErrorResponse
+//	@Failure		401			{object}	dto.ErrorResponse
+//	@Failure		500			{object}	dto.ErrorResponse
+//	@Router			/coem/SolicitarCambioFechas [put]
+func SolicitarCambioFechasHandler(w http.ResponseWriter, r *http.Request) {
+	var post wscoem.SolicitarCambioFechasRequest
+	err := json.NewDecoder(r.Body).Decode(&post)
+	if err != nil {
+		util.HttpResponseJSON(w, http.StatusBadRequest, &dto.ErrorResponse{Error: "error leyendo parámetros de la solicitud"}, err)
+		return
+	}
+
+	resultado, err := Wscoem.SolicitarCambioFechas(&post)
+	if err != nil {
+		util.HttpResponseJSON(w, http.StatusInternalServerError, &dto.ErrorResponse{Error: err.Error()}, err)
+		return
+	}
+
+	util.HttpResponseJSON(w, http.StatusOK, resultado, nil)
+}
+
+// SolicitarCambioLOTHandler godoc
+//
+//	@Summary		Solicitar cambio de LOT
+//	@Description	Método a través del cual se modifica el Lugar Operativo de la Carátula. Deben existir COEMs presentadas o autorizadas, caso contrario aún se puede enviar la rectificación de la carátula. No debe existir solicitud de cierre de carga iniciada o aprobada.
+//	@Tags			Comunicación de Embarque
+//	@Accept			json
+//	@Produce		json
+//	@Param			x-api-key	header		string								true	"API Key de acceso"
+//	@Param			request		body		wscoem.SolicitarCambioLOTRequest	true	"SolicitarCambioLOTRequest"
+//	@Success		200			{object}	wscoem.RegistrarEmbarqueRta
+//	@Failure		400			{object}	dto.ErrorResponse
+//	@Failure		401			{object}	dto.ErrorResponse
+//	@Failure		500			{object}	dto.ErrorResponse
+//	@Router			/coem/SolicitarCambioLOT [put]
+func SolicitarCambioLOTHandler(w http.ResponseWriter, r *http.Request) {
+	var post wscoem.SolicitarCambioLOTRequest
+	err := json.NewDecoder(r.Body).Decode(&post)
+	if err != nil {
+		util.HttpResponseJSON(w, http.StatusBadRequest, &dto.ErrorResponse{Error: "error leyendo parámetros de la solicitud"}, err)
+		return
+	}
+	resultado, err := Wscoem.SolicitarCambioLOT(&post)
+	if err != nil {
+		util.HttpResponseJSON(w, http.StatusInternalServerError, &dto.ErrorResponse{Error: err.Error()}, err)
+		return
+	}
+
+	util.HttpResponseJSON(w, http.StatusOK, resultado, nil)
 }
 
 // RectificarCOEMHandler godoc
@@ -297,33 +258,28 @@ func RegistrarCOEMHandler(w http.ResponseWriter, r *http.Request) {
 //	@Tags			Comunicación de Embarque
 //	@Accept			json
 //	@Produce		json
-//	@Param			x-api-key	header		string						true	"API Key de acceso"
-//	@Param			request		body		afip.RectificarCOEMParams	true	"RectificarCOEMRequest"
-//	@Success		200			{object}	dto.MessageResponse
+//	@Param			x-api-key	header		string							true	"API Key de acceso"
+//	@Param			request		body		wscoem.RectificarCOEMRequest	true	"RectificarCOEMRequest"
+//	@Success		200			{object}	wscoem.RectificarEmbarqueRta
 //	@Failure		400			{object}	dto.ErrorResponse
 //	@Failure		401			{object}	dto.ErrorResponse
 //	@Failure		500			{object}	dto.ErrorResponse
-//	@Router			/coem/rectificar-coem [put]
+//	@Router			/coem/RectificarCOEM [put]
 func RectificarCOEMHandler(w http.ResponseWriter, r *http.Request) {
-	var post afip.RectificarCOEMParams
+	var post wscoem.RectificarCOEMRequest
 	err := json.NewDecoder(r.Body).Decode(&post)
 	if err != nil {
 		util.HttpResponseJSON(w, http.StatusBadRequest, &dto.ErrorResponse{Error: "error leyendo parámetros de la solicitud"}, err)
 		return
 	}
 
-	if err := validate.Struct(post); err != nil {
-		util.HttpResponseJSON(w, http.StatusBadRequest, &dto.ErrorResponse{Error: strings.Join(validator.ToErrResponse(err).Errors, ", ")}, err)
-		return
-	}
-
-	identificador, err := Wscoem.RectificarCOEM(&post)
+	resultado, err := Wscoem.RectificarCOEM(&post)
 	if err != nil {
 		util.HttpResponseJSON(w, http.StatusInternalServerError, &dto.ErrorResponse{Error: err.Error()}, err)
 		return
 	}
 
-	util.HttpResponseJSON(w, http.StatusOK, &dto.MessageResponse{Message: identificador}, nil)
+	util.HttpResponseJSON(w, http.StatusOK, resultado, nil)
 }
 
 // CerrarCOEMHandler godoc
@@ -333,33 +289,28 @@ func RectificarCOEMHandler(w http.ResponseWriter, r *http.Request) {
 //	@Tags			Comunicación de Embarque
 //	@Accept			json
 //	@Produce		json
-//	@Param			x-api-key	header		string							true	"API Key de acceso"
-//	@Param			request		body		afip.IdentificadorCOEMParams	true	"CerrarCOEMRequest"
-//	@Success		200			{object}	dto.MessageResponse
+//	@Param			x-api-key	header		string						true	"API Key de acceso"
+//	@Param			request		body		wscoem.CerrarCOEMRequest	true	"CerrarCOEMRequest"
+//	@Success		200			{object}	wscoem.RegistrarEmbarqueRta
 //	@Failure		400			{object}	dto.ErrorResponse
 //	@Failure		401			{object}	dto.ErrorResponse
 //	@Failure		500			{object}	dto.ErrorResponse
-//	@Router			/coem/cerrar-coem [post]
+//	@Router			/coem/CerrarCOEM [post]
 func CerrarCOEMHandler(w http.ResponseWriter, r *http.Request) {
-	var post afip.IdentificadorCOEMParams
+	var post wscoem.CerrarCOEMRequest
 	err := json.NewDecoder(r.Body).Decode(&post)
 	if err != nil {
 		util.HttpResponseJSON(w, http.StatusBadRequest, &dto.ErrorResponse{Error: "error leyendo parámetros de la solicitud"}, err)
 		return
 	}
 
-	if err := validate.Struct(post); err != nil {
-		util.HttpResponseJSON(w, http.StatusBadRequest, &dto.ErrorResponse{Error: strings.Join(validator.ToErrResponse(err).Errors, ", ")}, err)
-		return
-	}
-
-	identificador, err := Wscoem.CerrarCOEM(&post)
+	resultado, err := Wscoem.CerrarCOEM(&post)
 	if err != nil {
 		util.HttpResponseJSON(w, http.StatusInternalServerError, &dto.ErrorResponse{Error: err.Error()}, err)
 		return
 	}
 
-	util.HttpResponseJSON(w, http.StatusOK, &dto.MessageResponse{Message: identificador}, nil)
+	util.HttpResponseJSON(w, http.StatusOK, resultado, nil)
 }
 
 // AnularCOEMHandler godoc
@@ -369,33 +320,28 @@ func CerrarCOEMHandler(w http.ResponseWriter, r *http.Request) {
 //	@Tags			Comunicación de Embarque
 //	@Accept			json
 //	@Produce		json
-//	@Param			x-api-key	header		string							true	"API Key de acceso"
-//	@Param			request		body		afip.IdentificadorCOEMParams	true	"AnularCOEMRequest"
-//	@Success		200			{object}	dto.MessageResponse
+//	@Param			x-api-key	header		string						true	"API Key de acceso"
+//	@Param			request		body		wscoem.AnularCOEMRequest	true	"AnularCOEMRequest"
+//	@Success		200			{object}	wscoem.AnularEmbarqueRta
 //	@Failure		400			{object}	dto.ErrorResponse
 //	@Failure		401			{object}	dto.ErrorResponse
 //	@Failure		500			{object}	dto.ErrorResponse
-//	@Router			/coem/anular-coem [delete]
+//	@Router			/coem/AnularCOEM [delete]
 func AnularCOEMHandler(w http.ResponseWriter, r *http.Request) {
-	var post afip.IdentificadorCOEMParams
+	var post wscoem.AnularCOEMRequest
 	err := json.NewDecoder(r.Body).Decode(&post)
 	if err != nil {
 		util.HttpResponseJSON(w, http.StatusBadRequest, &dto.ErrorResponse{Error: "error leyendo parámetros de la solicitud"}, err)
 		return
 	}
 
-	if err := validate.Struct(post); err != nil {
-		util.HttpResponseJSON(w, http.StatusBadRequest, &dto.ErrorResponse{Error: strings.Join(validator.ToErrResponse(err).Errors, ", ")}, err)
-		return
-	}
-
-	identificador, err := Wscoem.AnularCOEM(&post)
+	resultado, err := Wscoem.AnularCOEM(&post)
 	if err != nil {
 		util.HttpResponseJSON(w, http.StatusInternalServerError, &dto.ErrorResponse{Error: err.Error()}, err)
 		return
 	}
 
-	util.HttpResponseJSON(w, http.StatusOK, &dto.MessageResponse{Message: identificador}, nil)
+	util.HttpResponseJSON(w, http.StatusOK, resultado, nil)
 }
 
 // SolicitarAnulacionCOEMHandler godoc
@@ -405,33 +351,28 @@ func AnularCOEMHandler(w http.ResponseWriter, r *http.Request) {
 //	@Tags			Comunicación de Embarque
 //	@Accept			json
 //	@Produce		json
-//	@Param			x-api-key	header		string							true	"API Key de acceso"
-//	@Param			request		body		afip.IdentificadorCOEMParams	true	"SolicitarAnulacionCOEMRequest"
-//	@Success		200			{object}	dto.MessageResponse
+//	@Param			x-api-key	header		string									true	"API Key de acceso"
+//	@Param			request		body		wscoem.SolicitarAnulacionCOEMRequest	true	"SolicitarAnulacionCOEMRequest"
+//	@Success		200			{object}	wscoem.RegistrarEmbarqueRta
 //	@Failure		400			{object}	dto.ErrorResponse
 //	@Failure		401			{object}	dto.ErrorResponse
 //	@Failure		500			{object}	dto.ErrorResponse
-//	@Router			/coem/solicitar-anulacion-coem [post]
+//	@Router			/coem/SolicitarAnulacionCOEM [post]
 func SolicitarAnulacionCOEMHandler(w http.ResponseWriter, r *http.Request) {
-	var post afip.IdentificadorCOEMParams
+	var post wscoem.SolicitarAnulacionCOEMRequest
 	err := json.NewDecoder(r.Body).Decode(&post)
 	if err != nil {
 		util.HttpResponseJSON(w, http.StatusBadRequest, &dto.ErrorResponse{Error: "error leyendo parámetros de la solicitud"}, err)
 		return
 	}
 
-	if err := validate.Struct(post); err != nil {
-		util.HttpResponseJSON(w, http.StatusBadRequest, &dto.ErrorResponse{Error: strings.Join(validator.ToErrResponse(err).Errors, ", ")}, err)
-		return
-	}
-
-	identificador, err := Wscoem.SolicitarAnulacionCOEM(&post)
+	resultado, err := Wscoem.SolicitarAnulacionCOEM(&post)
 	if err != nil {
 		util.HttpResponseJSON(w, http.StatusInternalServerError, &dto.ErrorResponse{Error: err.Error()}, err)
 		return
 	}
 
-	util.HttpResponseJSON(w, http.StatusOK, &dto.MessageResponse{Message: identificador}, nil)
+	util.HttpResponseJSON(w, http.StatusOK, resultado, nil)
 }
 
 // SolicitarNoABordoHandler godoc
@@ -442,32 +383,27 @@ func SolicitarAnulacionCOEMHandler(w http.ResponseWriter, r *http.Request) {
 //	@Accept			json
 //	@Produce		json
 //	@Param			x-api-key	header		string							true	"API Key de acceso"
-//	@Param			request		body		afip.SolicitarNoABordoParams	true	"SolicitarNoABordoRequest"
-//	@Success		200			{object}	dto.MessageResponse
+//	@Param			request		body		wscoem.SolicitarNoABordoRequest	true	"SolicitarNoABordoRequest"
+//	@Success		200			{object}	wscoem.RegistrarEmbarqueRta
 //	@Failure		400			{object}	dto.ErrorResponse
 //	@Failure		401			{object}	dto.ErrorResponse
 //	@Failure		500			{object}	dto.ErrorResponse
-//	@Router			/coem/solicitar-no-abordo [post]
+//	@Router			/coem/SolicitarNoABordo [post]
 func SolicitarNoABordoHandler(w http.ResponseWriter, r *http.Request) {
-	var post afip.SolicitarNoABordoParams
+	var post wscoem.SolicitarNoABordoRequest
 	err := json.NewDecoder(r.Body).Decode(&post)
 	if err != nil {
 		util.HttpResponseJSON(w, http.StatusBadRequest, &dto.ErrorResponse{Error: "error leyendo parámetros de la solicitud"}, err)
 		return
 	}
 
-	if err := validate.Struct(post); err != nil {
-		util.HttpResponseJSON(w, http.StatusBadRequest, &dto.ErrorResponse{Error: strings.Join(validator.ToErrResponse(err).Errors, ", ")}, err)
-		return
-	}
-
-	identificador, err := Wscoem.SolicitarNoABordo(&post)
+	resultado, err := Wscoem.SolicitarNoABordo(&post)
 	if err != nil {
 		util.HttpResponseJSON(w, http.StatusInternalServerError, &dto.ErrorResponse{Error: err.Error()}, err)
 		return
 	}
 
-	util.HttpResponseJSON(w, http.StatusOK, &dto.MessageResponse{Message: identificador}, nil)
+	util.HttpResponseJSON(w, http.StatusOK, resultado, nil)
 }
 
 // SolicitarCierreCargaContoBultoHandler godoc
@@ -477,33 +413,28 @@ func SolicitarNoABordoHandler(w http.ResponseWriter, r *http.Request) {
 //	@Tags			Comunicación de Embarque
 //	@Accept			json
 //	@Produce		json
-//	@Param			x-api-key	header		string										true	"API Key de acceso"
-//	@Param			request		body		afip.SolicitarCierreCargaContoBultoParams	true	"SolicitarCierreCargaContoBultoRequest"
-//	@Success		200			{object}	dto.MessageResponse
+//	@Param			x-api-key	header		string											true	"API Key de acceso"
+//	@Param			request		body		wscoem.SolicitarCierreCargaContoBultoRequest	true	"SolicitarCierreCargaContoBultoRequest"
+//	@Success		200			{object}	wscoem.RegistrarEmbarqueRta
 //	@Failure		400			{object}	dto.ErrorResponse
 //	@Failure		401			{object}	dto.ErrorResponse
 //	@Failure		500			{object}	dto.ErrorResponse
-//	@Router			/coem/solicitar-cierre-carga-conto-bulto [post]
+//	@Router			/coem/SolicitarCierreCargaContoBulto [post]
 func SolicitarCierreCargaContoBultoHandler(w http.ResponseWriter, r *http.Request) {
-	var post afip.SolicitarCierreCargaContoBultoParams
+	var post wscoem.SolicitarCierreCargaContoBultoRequest
 	err := json.NewDecoder(r.Body).Decode(&post)
 	if err != nil {
 		util.HttpResponseJSON(w, http.StatusBadRequest, &dto.ErrorResponse{Error: "error leyendo parámetros de la solicitud"}, err)
 		return
 	}
 
-	if err := validate.Struct(post); err != nil {
-		util.HttpResponseJSON(w, http.StatusBadRequest, &dto.ErrorResponse{Error: strings.Join(validator.ToErrResponse(err).Errors, ", ")}, err)
-		return
-	}
-
-	identificador, err := Wscoem.SolicitarCierreCargaContoBulto(&post)
+	resultado, err := Wscoem.SolicitarCierreCargaContoBulto(&post)
 	if err != nil {
 		util.HttpResponseJSON(w, http.StatusInternalServerError, &dto.ErrorResponse{Error: err.Error()}, err)
 		return
 	}
 
-	util.HttpResponseJSON(w, http.StatusOK, &dto.MessageResponse{Message: identificador}, nil)
+	util.HttpResponseJSON(w, http.StatusOK, resultado, nil)
 }
 
 // SolicitarCierreCargaGranelHandler godoc
@@ -513,31 +444,26 @@ func SolicitarCierreCargaContoBultoHandler(w http.ResponseWriter, r *http.Reques
 //	@Tags			Comunicación de Embarque
 //	@Accept			json
 //	@Produce		json
-//	@Param			x-api-key	header		string									true	"API Key de acceso"
-//	@Param			request		body		afip.SolicitarCierreCargaGranelParams	true	"SolicitarCierreCargaGranel"
-//	@Success		200			{object}	dto.MessageResponse
+//	@Param			x-api-key	header		string										true	"API Key de acceso"
+//	@Param			request		body		wscoem.SolicitarCierreCargaGranelRequest	true	"SolicitarCierreCargaGranelRequest"
+//	@Success		200			{object}	wscoem.RegistrarEmbarqueRta
 //	@Failure		400			{object}	dto.ErrorResponse
 //	@Failure		401			{object}	dto.ErrorResponse
 //	@Failure		500			{object}	dto.ErrorResponse
-//	@Router			/coem/solicitar-cierre-carga-granel [post]
+//	@Router			/coem/SolicitarCierreCargaGranel [post]
 func SolicitarCierreCargaGranelHandler(w http.ResponseWriter, r *http.Request) {
-	var post afip.SolicitarCierreCargaGranelParams
+	var post wscoem.SolicitarCierreCargaGranelRequest
 	err := json.NewDecoder(r.Body).Decode(&post)
 	if err != nil {
 		util.HttpResponseJSON(w, http.StatusBadRequest, &dto.ErrorResponse{Error: "error leyendo parámetros de la solicitud"}, err)
 		return
 	}
 
-	if err := validate.Struct(post); err != nil {
-		util.HttpResponseJSON(w, http.StatusBadRequest, &dto.ErrorResponse{Error: strings.Join(validator.ToErrResponse(err).Errors, ", ")}, err)
-		return
-	}
-
-	identificador, err := Wscoem.SolicitarCierreCargaGranel(&post)
+	respuesta, err := Wscoem.SolicitarCierreCargaGranel(&post)
 	if err != nil {
 		util.HttpResponseJSON(w, http.StatusInternalServerError, &dto.ErrorResponse{Error: err.Error()}, err)
 		return
 	}
 
-	util.HttpResponseJSON(w, http.StatusOK, &dto.MessageResponse{Message: identificador}, nil)
+	util.HttpResponseJSON(w, http.StatusOK, respuesta, nil)
 }

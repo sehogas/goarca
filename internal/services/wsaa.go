@@ -1,7 +1,8 @@
-package afip
+package services
 
 import (
 	"crypto/rsa"
+	"crypto/tls"
 	"encoding/base64"
 	"encoding/xml"
 	"fmt"
@@ -10,6 +11,7 @@ import (
 	"time"
 
 	"github.com/hooklift/gowsdl/soap"
+	"github.com/sehogas/goarca/internal/util"
 	"github.com/sehogas/goarca/ws/wsaa"
 )
 
@@ -20,6 +22,7 @@ type Wsaa struct {
 	privateKeyFile  string
 	certificateFile string
 	cuit            int64
+	soapTlsConfig   tls.Config
 }
 
 type LoginTicket struct {
@@ -81,6 +84,9 @@ func NewWsaa(environment Environment, privateKeyFile string, certificateFile str
 		privateKeyFile:  privateKeyFile,
 		certificateFile: certificateFile,
 		cuit:            cuit,
+		soapTlsConfig: tls.Config{
+			InsecureSkipVerify: true,
+		},
 	}, nil
 }
 
@@ -102,12 +108,12 @@ func (c *Wsaa) GetLoginTicket(serviceName string) (*LoginTicket, error) {
 		generationTime := time.Now().Add(-10 * time.Minute).Format(time.RFC3339)
 		expirationTime := expiration.Format(time.RFC3339)
 
-		privateKey, err := readPrivateKey(c.privateKeyFile)
+		privateKey, err := util.ReadPrivateKey(c.privateKeyFile)
 		if err != nil {
 			return nil, fmt.Errorf("GetLoginTicket: Error leyendo clave privada: %s", err)
 		}
 
-		certificate, err := readCertificate(c.certificateFile)
+		certificate, err := util.ReadCertificate(c.certificateFile)
 		if err != nil {
 			return nil, fmt.Errorf("GetLoginTicket: Error leyendo certificado: %s", err)
 		}
@@ -130,7 +136,7 @@ func (c *Wsaa) GetLoginTicket(serviceName string) (*LoginTicket, error) {
 		content := []byte(string(loginTicketRequestXML))
 
 		// Creo CMS (Cryptographic Message Syntax)
-		cms, err := encodeCMS(content, certificate, privateKey.(*rsa.PrivateKey))
+		cms, err := util.EncodeCMS(content, certificate, privateKey.(*rsa.PrivateKey))
 		if err != nil {
 			return nil, fmt.Errorf("GetLoginTicket: Error creando CMS: %s", err)
 		}
